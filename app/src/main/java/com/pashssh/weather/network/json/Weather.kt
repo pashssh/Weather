@@ -1,7 +1,8 @@
 package com.pashssh.weather.network.json
 
-import com.google.gson.Gson
+import com.pashssh.weather.database.DatabaseDaily
 import com.pashssh.weather.database.DatabaseCurrent
+import com.pashssh.weather.database.DatabaseHourly
 
 
 data class Weather(
@@ -15,50 +16,39 @@ data class Weather(
 )
 
 
-fun Weather.asDatabaseModel(): DatabaseCurrent {
+fun Weather.asCurrentDatabaseModel(): DatabaseCurrent {
     return DatabaseCurrent(
         temperature = this.current.temp.toInt(),
         maxTemp = this.daily[0].temp.max.toInt(),
         minTemp = this.daily[0].temp.min.toInt(),
         feelsLike = this.current.feels_like.toInt(),
         cloudsDescription = this.current.weather[0].description,
-        location = this.timezone,
-        hourlyWeather = this.toJsonStringHourly(),
-        dailyWeather = this.toJsonStringDaily()
-//        hourlyList = hourly.map {
-//            DatabaseHourly(
-//                temperature = it.temp.toInt(),
-//                cloudsDescription = it.weather[0].description
-//            )
-//        }
+        location = this.timezone
     )
 }
 
-fun Weather.toJsonStringHourly(): String {
-    val list = this.hourly.map {
-        HourlyWeather(it.dt, this.timezone, it.temp.toInt(), it.weather[0].description)
-    }
-    return Gson().toJson(list)
+fun Weather.asHourlyDatabaseModel(): Array<DatabaseHourly> {
+    return this.hourly.map {
+        DatabaseHourly(
+            time = it.dt,
+            location = this.timezone,
+            temperature = it.temp.toInt(),
+            cloudsDescription = it.weather[0].description
+        )
+    }.toTypedArray()
 }
 
-fun Weather.toJsonStringDaily(): String {
-    val list = this.daily.map {
-        DailyWeather(it.dt, it.temp.min.toInt(), it.temp.max.toInt(), it.weather[0].icon)
-    }
-    return Gson().toJson(list)
+fun Weather.asDailyDatabaseModel(): Array<DatabaseDaily> {
+    return this.daily.map {
+        DatabaseDaily(
+            time = it.dt,
+        location = this.timezone,
+        minTemp = it.temp.min.toInt(),
+        maxTemp = it.temp.max.toInt(),
+        statusImage = it.weather[0].icon
+        )
+    }.toTypedArray()
 }
 
 
-data class HourlyWeather(
-    val time: Int,
-    val location: String,
-    val temperature: Int,
-    val cloudsDescription: String,
-)
 
-data class DailyWeather(
-    val time: Int,
-    val minTemp: Int,
-    val maxTemp: Int,
-    val statusImage: String
-)

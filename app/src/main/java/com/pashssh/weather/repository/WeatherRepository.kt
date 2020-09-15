@@ -1,18 +1,10 @@
 package com.pashssh.weather.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.pashssh.weather.database.DatabaseCurrent
 import com.pashssh.weather.database.WeatherDatabase
-import com.pashssh.weather.database.asDomainModel
-import com.pashssh.weather.database.loc
-import com.pashssh.weather.domain.WeatherDomain
 import com.pashssh.weather.network.Network
-import com.pashssh.weather.network.json.HourlyWeather
-import com.pashssh.weather.network.json.asDatabaseModel
+import com.pashssh.weather.network.json.asCurrentDatabaseModel
+import com.pashssh.weather.network.json.asDailyDatabaseModel
+import com.pashssh.weather.network.json.asHourlyDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -21,6 +13,8 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
 
 
     val currentWeather = weatherDatabase.weatherDao.getCurrentWeather("Asia/Tehran")
+    val hourlyWeather = weatherDatabase.weatherDao.getHourlyWeather("Asia/Tehran")
+    val dailyWeather = weatherDatabase.weatherDao.getDailyWeather("Asia/Tehran")
 
 
     suspend fun refreshWeather() {
@@ -33,7 +27,9 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                 "ru",
                 "minutely"
             ).await()
-            weatherDatabase.weatherDao.insertCurrent(weatherData.asDatabaseModel())
+            weatherDatabase.weatherDao.insertCurrent(weatherData.asCurrentDatabaseModel())
+            weatherDatabase.weatherDao.insertHourly(*weatherData.asHourlyDatabaseModel())
+            weatherDatabase.weatherDao.insertDaily(*weatherData.asDailyDatabaseModel())
 //            weatherDatabase.weatherDao.insertHourly(*weatherData.asDatabaseHourly())
 
         }

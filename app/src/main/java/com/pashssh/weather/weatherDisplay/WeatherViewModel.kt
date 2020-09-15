@@ -1,21 +1,17 @@
 package com.pashssh.weather.weatherDisplay
 
 import android.app.Application
-import android.content.LocusId
-import androidx.lifecycle.*
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.pashssh.weather.database.DatabaseCurrent
-import com.pashssh.weather.database.asDomainModel
 import com.pashssh.weather.database.getDatabase
-import com.pashssh.weather.domain.HourlyDomain
-import com.pashssh.weather.domain.WeatherDomain
-import com.pashssh.weather.network.Network
-import com.pashssh.weather.network.json.DailyWeather
-import com.pashssh.weather.network.json.HourlyWeather
-import com.pashssh.weather.network.json.asDatabaseModel
 import com.pashssh.weather.repository.WeatherRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class WeatherViewModel(app: Application) : ViewModel() {
 
@@ -27,9 +23,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
     val x: LiveData<DatabaseCurrent>
         get() = _x
 
-    private val _y = MutableLiveData<List<DailyWeather>>()
-    val y: LiveData<List<DailyWeather>>
-        get() = _y
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -40,6 +33,8 @@ class WeatherViewModel(app: Application) : ViewModel() {
 //    val currentWeather = weatherRepository.currentWeather
 
     var currentWeather =  weatherRepository.currentWeather
+    var hourlyWeather =  weatherRepository.hourlyWeather
+    var dailyWeather =  weatherRepository.dailyWeather
 
 
 
