@@ -1,6 +1,9 @@
 package com.pashssh.weather.repository
 
+import androidx.lifecycle.Transformations
 import com.pashssh.weather.database.WeatherDatabase
+import com.pashssh.weather.database.asDomainDailyModel
+import com.pashssh.weather.database.asDomainHourlyModel
 import com.pashssh.weather.network.Network
 import com.pashssh.weather.network.json.asCurrentDatabaseModel
 import com.pashssh.weather.network.json.asDailyDatabaseModel
@@ -13,8 +16,12 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
 
 
     val currentWeather = weatherDatabase.weatherDao.getCurrentWeather("Asia/Tehran")
-    val hourlyWeather = weatherDatabase.weatherDao.getHourlyWeather("Asia/Tehran")
-    val dailyWeather = weatherDatabase.weatherDao.getDailyWeather("Asia/Tehran")
+    val hourlyWeather = Transformations.map(weatherDatabase.weatherDao.getHourlyWeather("Asia/Tehran")) {
+        it.asDomainHourlyModel()
+    }
+    val dailyWeather = Transformations.map(weatherDatabase.weatherDao.getDailyWeather("Asia/Tehran")) {
+        it.asDomainDailyModel()
+    }
 
 
     suspend fun refreshWeather() {

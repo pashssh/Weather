@@ -2,10 +2,7 @@ package com.pashssh.weather.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import com.pashssh.weather.domain.WeatherDomain
-import com.pashssh.weather.network.json.WeatherCurrent
 
 const val loc = "Europe/Moscow"
 

@@ -2,6 +2,8 @@ package com.pashssh.weather.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.pashssh.weather.domain.DomainDaily
+import com.pashssh.weather.domain.DomainHourly
 
 
 @Entity
@@ -34,6 +36,27 @@ data class DatabaseDaily constructor(
     val statusImage: String
 )
 
+fun List<DatabaseHourly>.asDomainHourlyModel(): List<DomainHourly> {
+    return map {
+        DomainHourly(
+            time = it.time,
+            location = it.location,
+            temperature = it.temperature,
+            cloudsDescription = it.cloudsDescription
+        )
+    }
+}
+
+fun List<DatabaseDaily>.asDomainDailyModel(): List<DomainDaily> {
+    return map {
+        DomainDaily(
+            time = it.time,
+            minTemp = it.minTemp,
+            maxTemp = it.maxTemp,
+            statusImage = it.statusImage
+        )
+    }
+}
 
 
 
