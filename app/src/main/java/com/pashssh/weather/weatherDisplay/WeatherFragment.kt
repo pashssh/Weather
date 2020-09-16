@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +32,7 @@ class WeatherFragment : Fragment() {
         binding.lifecycleOwner = this
 //        binding.viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         binding.viewModel = viewModel
+        binding.hourlyWeatherView.adapter = HourlyAdapter()
 
 
 

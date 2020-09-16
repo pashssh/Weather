@@ -25,7 +25,7 @@ class HourlyAdapter() :
 
     companion object DiffCallback : DiffUtil.ItemCallback<DomainHourly>() {
         override fun areItemsTheSame(oldItem: DomainHourly, newItem: DomainHourly): Boolean {
-            return oldItem == newItem
+            return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: DomainHourly, newItem: DomainHourly): Boolean {
@@ -48,4 +48,6 @@ class HourlyAdapter() :
         val domainHourly = getItem(position)
         holder.bind(domainHourly)
     }
+
+
 }

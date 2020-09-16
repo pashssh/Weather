@@ -1,9 +1,11 @@
 package com.pashssh.weather.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.pashssh.weather.database.WeatherDatabase
 import com.pashssh.weather.database.asDomainDailyModel
 import com.pashssh.weather.database.asDomainHourlyModel
+import com.pashssh.weather.domain.DomainHourly
 import com.pashssh.weather.network.Network
 import com.pashssh.weather.network.json.asCurrentDatabaseModel
 import com.pashssh.weather.network.json.asDailyDatabaseModel
@@ -15,11 +17,11 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
 
 
 
-    val currentWeather = weatherDatabase.weatherDao.getCurrentWeather("Asia/Tehran")
-    val hourlyWeather = Transformations.map(weatherDatabase.weatherDao.getHourlyWeather("Asia/Tehran")) {
+    val currentWeather = weatherDatabase.weatherDao.getCurrentWeather("Europe/Minsk")
+    val hourlyWeather = Transformations.map(weatherDatabase.weatherDao.getHourlyWeather("Europe/Minsk")) {
         it.asDomainHourlyModel()
     }
-    val dailyWeather = Transformations.map(weatherDatabase.weatherDao.getDailyWeather("Asia/Tehran")) {
+    val dailyWeather = Transformations.map(weatherDatabase.weatherDao.getDailyWeather("Europe/Minsk")) {
         it.asDomainDailyModel()
     }
 
@@ -27,8 +29,8 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
     suspend fun refreshWeather() {
         withContext(Dispatchers.IO) {
             val weatherData = Network.weather.getWeatherOneCall(
-                35.21,
-                59.1,
+                53.893009,
+                27.567444,
                 "01cc66d20087c883ac0f3bdfacfdfb48",
                 "metric",
                 "ru",

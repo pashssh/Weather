@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pashssh.weather.database.DatabaseCurrent
 import com.pashssh.weather.database.getDatabase
+import com.pashssh.weather.domain.DomainHourly
 import com.pashssh.weather.repository.WeatherRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,9 +20,8 @@ class WeatherViewModel(app: Application) : ViewModel() {
 //    val currentWeather: LiveData<DatabaseCurrent>
 //        get() = _currentWeather
 
-    private var _x = MutableLiveData<DatabaseCurrent>()
-    val x: LiveData<DatabaseCurrent>
-        get() = _x
+
+
 
 
     private var viewModelJob = Job()
@@ -34,6 +34,7 @@ class WeatherViewModel(app: Application) : ViewModel() {
 
     var currentWeather =  weatherRepository.currentWeather
     var hourlyWeather =  weatherRepository.hourlyWeather
+
     var dailyWeather =  weatherRepository.dailyWeather
 
 
@@ -41,7 +42,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
     init {
         coroutineScope.launch {
             weatherRepository.refreshWeather()
-
 //            val targetClassHourlyWeather = object : TypeToken<List<HourlyWeather>>(){}.type
 //            val gsonHourly: List<HourlyWeather> = Gson().fromJson(currentWeather.value?.hourlyWeather, targetClassHourlyWeather)
 //            _x.value = gsonHourly
