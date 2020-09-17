@@ -20,7 +20,7 @@
             android:id="@+id/current_weather"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="156dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -41,6 +41,7 @@
                 android:id="@+id/currentTemp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:text="@{@string/temp_format(viewModel.currentWeather.temperature)}"
                 android:textAlignment="center"
                 android:textSize="50sp"
@@ -66,6 +67,7 @@
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@+id/minmax_split"
                     app:layout_constraintEnd_toStartOf="@id/minmax_split"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/minmax_split"
                     tools:text="10" />
 
@@ -88,6 +90,7 @@
                     android:text="@{@string/temp_format(viewModel.currentWeather.maxTemp)}"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="@+id/minmax_split"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/minmax_split"
                     app:layout_constraintTop_toTopOf="@+id/minmax_split"
                     tools:text="15" />
@@ -113,23 +116,20 @@
             android:id="@+id/hourly_weather_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_weather"
-            app:layout_constraintVertical_bias="0.023"
             app:listHourly="@{viewModel.hourlyWeather}"
             tools:listitem="@layout/hourly_weather_view_item" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hourly_weather_view">
 

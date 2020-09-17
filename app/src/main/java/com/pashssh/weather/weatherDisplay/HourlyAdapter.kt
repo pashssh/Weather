@@ -45,9 +45,7 @@ class HourlyAdapter() :
     }
 
     override fun onBindViewHolder(holder: DomainHourlyViewHolder, position: Int) {
-        val domainHourly = getItem(position)
-        holder.bind(domainHourly)
+            val domainHourly = getItem(position)
+            holder.bind(domainHourly)
     }
-
-
 }

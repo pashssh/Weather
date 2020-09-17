@@ -3,6 +3,7 @@ package com.pashssh.weather
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.pashssh.weather.domain.DomainDaily
 import com.pashssh.weather.domain.DomainHourly
 import com.pashssh.weather.weatherDisplay.HourlyAdapter
 import java.text.SimpleDateFormat
@@ -13,6 +14,8 @@ import java.util.*
 @BindingAdapter("listHourly")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<DomainHourly>?) {
     val adapter = recyclerView.adapter as HourlyAdapter
+//    val list = data?.chunked(24)
+//    adapter.submitList(list?.get(0))
     adapter.submitList(data)
 }
 
@@ -24,7 +27,13 @@ fun TextView.setHourlyDateString(item: DomainHourly?) {
         val date = Date(it.time.toLong() * 1000)
         sdf.format(date)
         text = sdf.format(date)
+    }
+}
 
+@BindingAdapter("dailyText")
+fun TextView.setDailyText(item: DomainDaily?) {
+    item?.let {
+        text = it.minTemp.toString()
     }
 }
 

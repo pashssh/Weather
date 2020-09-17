@@ -28,7 +28,7 @@ fun Weather.asCurrentDatabaseModel(): DatabaseCurrent {
 }
 
 fun Weather.asHourlyDatabaseModel(): Array<DatabaseHourly> {
-    return this.hourly.map {
+    return this.hourly.chunked(24)[0].map {
         DatabaseHourly(
             time = it.dt,
             location = this.timezone,
