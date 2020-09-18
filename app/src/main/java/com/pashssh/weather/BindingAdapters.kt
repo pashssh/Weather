@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.domain.DomainDaily
 import com.pashssh.weather.domain.DomainHourly
+import com.pashssh.weather.weatherDisplay.DailyAdapter
 import com.pashssh.weather.weatherDisplay.HourlyAdapter
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
@@ -34,6 +35,34 @@ fun TextView.setHourlyDateString(item: DomainHourly?) {
 fun TextView.setDailyText(item: DomainDaily?) {
     item?.let {
         text = it.minTemp.toString()
+    }
+}
+
+
+//DailyAdapters
+@BindingAdapter("listDaily")
+fun bindRecyclerDaily(recyclerView: RecyclerView, data: List<DomainDaily>?) {
+    val adapter = recyclerView.adapter as DailyAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("dateDailyString")
+fun TextView.setDailyDate(item: DomainDaily?) {
+    item?.let {
+
+        val sdf = SimpleDateFormat("dd.MM '/' HH:mm")
+        val date = Date(it.time.toLong() * 1000)
+        sdf.format(date)
+        text = sdf.format(date)
+    }
+}
+
+
+@BindingAdapter("dailyTemp")
+fun TextView.setDailyTemp(item: DomainDaily?) {
+    item?.let {
+        val t: String = "${it.minTemp} / ${it.maxTemp}"
+        text = t
     }
 }
 

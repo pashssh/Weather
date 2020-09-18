@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.databinding.WeatherFragmentBinding
 import kotlinx.android.synthetic.main.weather_fragment.*
 
@@ -33,6 +34,7 @@ class WeatherFragment : Fragment() {
 //        binding.viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
         binding.viewModel = viewModel
         binding.hourlyWeatherView.adapter = HourlyAdapter()
+        binding.dailyWeatherView.adapter = DailyAdapter()
 
 
 

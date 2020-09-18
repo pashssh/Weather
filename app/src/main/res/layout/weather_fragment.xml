@@ -125,15 +125,18 @@
             app:listHourly="@{viewModel.hourlyWeather}"
             tools:listitem="@layout/hourly_weather_view_item" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/daily_weather_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:listDaily="@{viewModel.dailyWeather}"
+            app:layout_constraintTop_toBottomOf="@+id/hourly_weather_view"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hourly_weather_view">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/daily_view_item"/>
 
 
 
