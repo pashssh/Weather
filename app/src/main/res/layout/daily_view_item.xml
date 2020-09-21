@@ -7,7 +7,7 @@
 
         <variable
             name="dailyItem"
-            type="com.pashssh.weather.domain.DomainDaily" />
+            type="com.pashssh.weather.database.DatabaseDaily" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
             android:textSize="20sp"
-            app:dailyTemp="@{dailyItem}"
+            app:tempDaily="@{dailyItem}"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageView"

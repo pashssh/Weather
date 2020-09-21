@@ -1,7 +1,7 @@
 package com.pashssh.weather.network.json
 
-import com.pashssh.weather.database.DatabaseDaily
 import com.pashssh.weather.database.DatabaseCurrent
+import com.pashssh.weather.database.DatabaseDaily
 import com.pashssh.weather.database.DatabaseHourly
 
 
@@ -12,7 +12,15 @@ data class Weather(
     val lat: Double,
     val lon: Double,
     val timezone: String,
-    val timezone_offset: Int?
+    val timezone_offset: Int?,
+)
+
+
+data class HourlyList (
+    val time: Int,
+    val temperature: Int,
+    val imageId: Int
+
 )
 
 
@@ -23,32 +31,25 @@ fun Weather.asCurrentDatabaseModel(): DatabaseCurrent {
         minTemp = this.daily[0].temp.min.toInt(),
         feelsLike = this.current.feels_like.toInt(),
         cloudsDescription = this.current.weather[0].description,
-        location = this.timezone
+        location = this.timezone,
+        hourlyWeather = this.hourly.map {
+            return@map DatabaseHourly(
+                time = it.dt,
+                temperature = it.temp.toInt(),
+                imageId = it.weather[0].id
+            )
+        },
+        dailyWeather = this.daily.map {
+            return@map DatabaseDaily(
+                time = it.dt,
+                minTemp = it.temp.min.toInt(),
+                maxTemp = it.temp.max.toInt(),
+                imageId = it.weather[0].id
+            )
+        }
     )
 }
 
-fun Weather.asHourlyDatabaseModel(): Array<DatabaseHourly> {
-    return this.hourly.chunked(24)[0].map {
-        DatabaseHourly(
-            time = it.dt,
-            location = this.timezone,
-            temperature = it.temp.toInt(),
-            cloudsDescription = it.weather[0].description
-        )
-    }.toTypedArray()
-}
-
-fun Weather.asDailyDatabaseModel(): Array<DatabaseDaily> {
-    return this.daily.map {
-        DatabaseDaily(
-            time = it.dt,
-        location = this.timezone,
-        minTemp = it.temp.min.toInt(),
-        maxTemp = it.temp.max.toInt(),
-        statusImage = it.weather[0].icon
-        )
-    }.toTypedArray()
-}
 
 
 

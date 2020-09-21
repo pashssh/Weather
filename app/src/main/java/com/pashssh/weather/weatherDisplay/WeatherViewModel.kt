@@ -20,10 +20,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
 //    val currentWeather: LiveData<DatabaseCurrent>
 //        get() = _currentWeather
 
-
-
-
-
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
@@ -33,9 +29,7 @@ class WeatherViewModel(app: Application) : ViewModel() {
 //    val currentWeather = weatherRepository.currentWeather
 
     var currentWeather =  weatherRepository.currentWeather
-    var hourlyWeather =  weatherRepository.hourlyWeather
 
-    var dailyWeather =  weatherRepository.dailyWeather
 
 
 

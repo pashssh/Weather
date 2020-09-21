@@ -9,32 +9,30 @@ const val loc = "Europe/Moscow"
 @Dao
 interface WeatherDao {
     @Query("select * from databasecurrent where location = :loc")
-    fun getCurrentWeather(loc:String): LiveData<DatabaseCurrent>
-
-    @Query("select * from databasehourly where location = :loc")
-    fun getHourlyWeather(loc:String): LiveData<List<DatabaseHourly>>
-
-    @Query("select * from databasedaily where location = :loc")
-    fun getDailyWeather(loc:String): LiveData<List<DatabaseDaily>>
+    fun getCurrentWeather(loc: String): LiveData<DatabaseCurrent>
+//
+//    @Query("select * from databasehourly where location = :loc")
+//    fun getHourlyWeather(loc: String): LiveData<List<DatabaseHourly>>
+//
+//    @Query("select * from databasedaily where location = :loc")
+//    fun getDailyWeather(loc: String): LiveData<List<DatabaseDaily>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrent(databaseCurrent: DatabaseCurrent)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertHourly(vararg databaseHourly: DatabaseHourly)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDaily(vararg databaseDaily: DatabaseDaily)
-
-
-
-
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
 //    fun insertHourly(vararg databaseHourly: DatabaseHourly)
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    fun insertDaily(vararg databaseDaily: DatabaseDaily)
 
 }
 
-@Database(entities = [DatabaseCurrent::class, DatabaseHourly::class, DatabaseDaily::class], version = 1)
+@Database(
+    entities = [DatabaseCurrent::class],
+    version = 1
+)
+@TypeConverters(HourlyConverter::class, DailyConverter::class)
 abstract class WeatherDatabase : RoomDatabase() {
     abstract val weatherDao: WeatherDao
 }

@@ -37,6 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Europe/Minsk" />
 
+<!--            android:text="@{@string/temp_format(viewModel.currentWeather.temperature)}"   -->
             <TextView
                 android:id="@+id/currentTemp"
                 android:layout_width="wrap_content"
@@ -122,7 +123,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_weather"
-            app:listHourly="@{viewModel.hourlyWeather}"
+            app:listHourly="@{viewModel.currentWeather.hourlyWeather}"
             tools:listitem="@layout/hourly_weather_view_item" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -132,48 +133,42 @@
             android:layout_marginTop="16dp"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:listDaily="@{viewModel.dailyWeather}"
-            app:layout_constraintTop_toBottomOf="@+id/hourly_weather_view"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/daily_view_item"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hourly_weather_view"
+            app:listDaily="@{viewModel.currentWeather.dailyWeather}"
+            tools:listitem="@layout/daily_view_item" />
 
 
+        <!--        TEST-->
 
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/constraintLayout"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/current_weather">-->
 
+        <!--            <TextView-->
+        <!--                android:id="@+id/textView123"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="@{viewModel.hourlyWeather.toString()}"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                tools:text="asdasd" />-->
 
-
-
-
-<!--        TEST-->
-
-<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--            android:id="@+id/constraintLayout"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/current_weather">-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/textView123"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@{viewModel.hourlyWeather.toString()}"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                tools:text="asdasd" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@{viewModel.dailyWeather.toString()}"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/textView123"-->
-<!--                tools:text="asdasd" />-->
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="@{viewModel.dailyWeather.toString()}"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toBottomOf="@+id/textView123"-->
+        <!--                tools:text="asdasd" />-->
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

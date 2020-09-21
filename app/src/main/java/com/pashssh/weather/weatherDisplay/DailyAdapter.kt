@@ -5,15 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.pashssh.weather.database.DatabaseDaily
 import com.pashssh.weather.databinding.DailyViewItemBinding
 import com.pashssh.weather.domain.DomainDaily
 
-class DailyAdapter() : ListAdapter<DomainDaily, DailyAdapter.DailyViewHolder>(DiffCall) {
+class DailyAdapter() : ListAdapter<DatabaseDaily, DailyAdapter.DailyViewHolder>(DiffCall) {
 
     class DailyViewHolder(private val binding: DailyViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(domainDaily: DomainDaily) {
-            binding.dailyItem = domainDaily
+        fun bind(databaseDaily: DatabaseDaily) {
+            binding.dailyItem = databaseDaily
             binding.executePendingBindings()
         }
     }
@@ -27,16 +28,16 @@ class DailyAdapter() : ListAdapter<DomainDaily, DailyAdapter.DailyViewHolder>(Di
     }
 
     override fun onBindViewHolder(holder: DailyViewHolder, position: Int) {
-        val domainDaily = getItem(position)
-        holder.bind(domainDaily)
+        val databaseDaily = getItem(position)
+        holder.bind(databaseDaily)
     }
 
-    companion object DiffCall : DiffUtil.ItemCallback<DomainDaily>() {
-        override fun areItemsTheSame(oldItem: DomainDaily, newItem: DomainDaily): Boolean {
+    companion object DiffCall : DiffUtil.ItemCallback<DatabaseDaily>() {
+        override fun areItemsTheSame(oldItem: DatabaseDaily, newItem: DatabaseDaily): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: DomainDaily, newItem: DomainDaily): Boolean {
+        override fun areContentsTheSame(oldItem: DatabaseDaily, newItem: DatabaseDaily): Boolean {
             return oldItem == newItem
         }
 
