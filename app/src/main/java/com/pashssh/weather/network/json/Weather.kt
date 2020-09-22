@@ -26,25 +26,28 @@ data class HourlyList (
 
 fun Weather.asCurrentDatabaseModel(): DatabaseCurrent {
     return DatabaseCurrent(
+        time = this.current.dt,
         temperature = this.current.temp.toInt(),
         maxTemp = this.daily[0].temp.max.toInt(),
         minTemp = this.daily[0].temp.min.toInt(),
         feelsLike = this.current.feels_like.toInt(),
         cloudsDescription = this.current.weather[0].description,
         location = this.timezone,
-        hourlyWeather = this.hourly.map {
+        hourlyWeather = this.hourly.chunked(24)[0].map {
             return@map DatabaseHourly(
                 time = it.dt,
                 temperature = it.temp.toInt(),
-                imageId = it.weather[0].id
+                imageId = it.weather[0].id,
+                iconIdWithUrl = it.weather[0].icon
             )
         },
-        dailyWeather = this.daily.map {
+        dailyWeather = this.daily.chunked(5)[0].map {
             return@map DatabaseDaily(
                 time = it.dt,
                 minTemp = it.temp.min.toInt(),
                 maxTemp = it.temp.max.toInt(),
-                imageId = it.weather[0].id
+                imageId = it.weather[0].id,
+                iconIdWithUrl = it.weather[0].icon
             )
         }
     )

@@ -10,6 +10,7 @@ import com.pashssh.weather.network.json.HourlyList
 
 @Entity
 data class DatabaseCurrent constructor(
+    val time: Int,
     val temperature: Int,
     val maxTemp: Int,
     val minTemp: Int,
@@ -25,13 +26,15 @@ data class DatabaseHourly(
     val time: Int,
     val temperature: Int,
     val imageId: Int,
+    val iconIdWithUrl: String
 )
 
 data class DatabaseDaily(
     val time: Int,
     val minTemp: Int,
     val maxTemp: Int,
-    val imageId: Int
+    val imageId: Int,
+    val iconIdWithUrl: String
 )
 
 fun DatabaseCurrent.asDomainModel(): DomainCurrent {
