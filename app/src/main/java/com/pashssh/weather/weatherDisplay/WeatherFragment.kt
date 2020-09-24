@@ -49,13 +49,15 @@ class WeatherFragment : Fragment() {
         }
 
         binding.button.setOnClickListener {
-            viewModel.currentWeather = viewModel.updateCurrent("Europe/Minsk")
 
+            viewModel.updateCurrent("America/Toronto")
+//
 //            val fields = listOf(Place.Field.LAT_LNG)
 //            // Start the autocomplete intent.
 //            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
 //                .build(this.requireContext())
 //            startActivityForResult(intent, 1)
+
 
         }
 

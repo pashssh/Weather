@@ -24,19 +24,19 @@ class WeatherViewModel(app: Application) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = getDatabase(app.applicationContext)
-     val weatherRepository = WeatherRepository(database)
+    val weatherRepository = WeatherRepository(database)
 
 //    val currentWeather = weatherRepository.currentWeather
 
-//    var currentWeather =  weatherRepository.currentWeather
-    var currentWeather =  weatherRepository.getCurrentWeather("Asia/Dubai")
+    //    var currentWeather =  weatherRepository.currentWeather
+    var currentWeather = weatherRepository.getCurrentWeather("Europe/Minsk")
 
 
-    fun updateCurrent(x: String): LiveData<DatabaseCurrent> {
-        return weatherRepository.getCurrentWeather(x)
+    fun updateCurrent(x: String) {
+        currentWeather = weatherRepository.getCurrentWeather(x)
     }
 
-    fun refWe(lat:Double, lon:Double) {
+    fun refWe(lat: Double, lon: Double) {
         coroutineScope.launch {
             weatherRepository.refreshWeather(lat, lon)
         }
@@ -61,7 +61,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
         super.onCleared()
         viewModelJob.cancel()
     }
-
 
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
