@@ -32,6 +32,8 @@ fun Weather.asCurrentDatabaseModel(): DatabaseCurrent {
         minTemp = this.daily[0].temp.min.toInt(),
         feelsLike = this.current.feels_like.toInt(),
         cloudsDescription = this.current.weather[0].description,
+        latitude = this.lat,
+        longitude = this.lon,
         location = this.timezone,
         hourlyWeather = this.hourly.chunked(24)[0].map {
             return@map DatabaseHourly(

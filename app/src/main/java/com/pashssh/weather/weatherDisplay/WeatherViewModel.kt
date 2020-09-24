@@ -24,18 +24,28 @@ class WeatherViewModel(app: Application) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = getDatabase(app.applicationContext)
-    private val weatherRepository = WeatherRepository(database)
+     val weatherRepository = WeatherRepository(database)
 
 //    val currentWeather = weatherRepository.currentWeather
 
-    var currentWeather =  weatherRepository.currentWeather
+//    var currentWeather =  weatherRepository.currentWeather
+    var currentWeather =  weatherRepository.getCurrentWeather("Asia/Dubai")
 
 
+    fun updateCurrent(x: String): LiveData<DatabaseCurrent> {
+        return weatherRepository.getCurrentWeather(x)
+    }
+
+    fun refWe(lat:Double, lon:Double) {
+        coroutineScope.launch {
+            weatherRepository.refreshWeather(lat, lon)
+        }
+    }
 
 
     init {
         coroutineScope.launch {
-            weatherRepository.refreshWeather()
+            weatherRepository.refreshWeather(53.893009, 27.567444)
 //            val targetClassHourlyWeather = object : TypeToken<List<HourlyWeather>>(){}.type
 //            val gsonHourly: List<HourlyWeather> = Gson().fromJson(currentWeather.value?.hourlyWeather, targetClassHourlyWeather)
 //            _x.value = gsonHourly
