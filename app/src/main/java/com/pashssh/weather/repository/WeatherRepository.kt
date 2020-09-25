@@ -1,14 +1,12 @@
 package com.pashssh.weather.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.pashssh.weather.database.DatabaseCurrent
 import com.pashssh.weather.database.WeatherDatabase
-import com.pashssh.weather.database.asDomainModel
 import com.pashssh.weather.network.Network
 import com.pashssh.weather.network.json.asCurrentDatabaseModel
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -20,7 +18,10 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
 //    val currentWeather = weatherDatabase.weatherDao.getCurrentWeather(x)
 
     fun getCurrentWeather(x: String): LiveData<DatabaseCurrent> {
-        return weatherDatabase.weatherDao.getCurrentWeather(x)
+
+        val currentWeather = weatherDatabase.weatherDao.getCurrentWeather(x)
+
+        return currentWeather
     }
 
 
@@ -30,7 +31,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
 //    val dailyWeather = Transformations.map(weatherDatabase.weatherDao.getDailyWeather("Europe/Minsk")) {
 //        it.asDomainDailyModel()
 
-    suspend fun refreshWeather(lat: Double, lon:Double) {
+    suspend fun refreshWeather(lat: Double, lon: Double) {
         withContext(Dispatchers.IO) {
             val weatherData = Network.weather.getWeatherOneCall(
                 lat,

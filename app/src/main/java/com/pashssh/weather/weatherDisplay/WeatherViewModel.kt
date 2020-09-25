@@ -1,13 +1,11 @@
 package com.pashssh.weather.weatherDisplay
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pashssh.weather.database.DatabaseCurrent
 import com.pashssh.weather.database.getDatabase
-import com.pashssh.weather.domain.DomainHourly
 import com.pashssh.weather.repository.WeatherRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,15 +23,47 @@ class WeatherViewModel(app: Application) : ViewModel() {
 
     private val database = getDatabase(app.applicationContext)
     val weatherRepository = WeatherRepository(database)
-
 //    val currentWeather = weatherRepository.currentWeather
 
+
+
+
     //    var currentWeather =  weatherRepository.currentWeather
-    var currentWeather = weatherRepository.getCurrentWeather("Europe/Minsk")
+    var currentWeather = MediatorLiveData<DatabaseCurrent>()
+
+
+    init {
+        coroutineScope.launch {
+            weatherRepository.refreshWeather(53.893009, 27.567444)
+
+//            val targetClassHourlyWeather = object : TypeToken<List<HourlyWeather>>(){}.type
+//            val gsonHourly: List<HourlyWeather> = Gson().fromJson(currentWeather.value?.hourlyWeather, targetClassHourlyWeather)
+//            _x.value = gsonHourly
+//
+//            val targetClassDailyWeather  = object : TypeToken<List<DailyWeather>>(){}.type
+//            val gsonDaily: List<DailyWeather> = Gson().fromJson(currentWeather.value?.dailyWeather, targetClassDailyWeather)
+//            _y.value = gsonDaily
+        }
+
+        val dataSource = weatherRepository.getCurrentWeather("Europe/Minsk")
+        currentWeather.addSource(dataSource) {
+
+                s -> currentWeather.value = s
+
+        }
+    }
 
 
     fun updateCurrent(x: String) {
-        currentWeather = weatherRepository.getCurrentWeather(x)
+        val result = weatherRepository.getCurrentWeather(x)
+
+        currentWeather.addSource(result) {
+
+                s -> currentWeather.value = s
+
+        }
+
+
     }
 
     fun refWe(lat: Double, lon: Double) {
@@ -43,18 +73,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
     }
 
 
-    init {
-        coroutineScope.launch {
-            weatherRepository.refreshWeather(53.893009, 27.567444)
-//            val targetClassHourlyWeather = object : TypeToken<List<HourlyWeather>>(){}.type
-//            val gsonHourly: List<HourlyWeather> = Gson().fromJson(currentWeather.value?.hourlyWeather, targetClassHourlyWeather)
-//            _x.value = gsonHourly
-//
-//            val targetClassDailyWeather  = object : TypeToken<List<DailyWeather>>(){}.type
-//            val gsonDaily: List<DailyWeather> = Gson().fromJson(currentWeather.value?.dailyWeather, targetClassDailyWeather)
-//            _y.value = gsonDaily
-        }
-    }
 
 
     override fun onCleared() {
