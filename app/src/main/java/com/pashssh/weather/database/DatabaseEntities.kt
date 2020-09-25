@@ -14,6 +14,8 @@ data class DatabaseCurrent constructor(
     val temperature: Int,
     val maxTemp: Int,
     val minTemp: Int,
+    val latitude: Double,
+    val longitude: Double,
     @PrimaryKey
     val location: String,
     val feelsLike: Int,
