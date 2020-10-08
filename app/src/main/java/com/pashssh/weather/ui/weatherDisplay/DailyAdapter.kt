@@ -1,4 +1,4 @@
-package com.pashssh.weather.weatherDisplay
+package com.pashssh.weather.ui.weatherDisplay
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.database.DatabaseDaily
 import com.pashssh.weather.databinding.DailyViewItemBinding
-import com.pashssh.weather.domain.DomainDaily
 
 class DailyAdapter() : ListAdapter<DatabaseDaily, DailyAdapter.DailyViewHolder>(DiffCall) {
 

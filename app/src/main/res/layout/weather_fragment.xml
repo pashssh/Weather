@@ -8,14 +8,14 @@
 
         <variable
             name="viewModel"
-            type="com.pashssh.weather.weatherDisplay.WeatherViewModel" />
+            type="com.pashssh.weather.ui.weatherDisplay.WeatherViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#E8E9EC"
-        tools:context=".weatherDisplay.WeatherFragment">
+        tools:context=".ui.weatherDisplay.WeatherFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/current_weather"
@@ -26,12 +26,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+<!--            android:text="@{viewModel.currentWeather.location}"-->
             <TextView
                 android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{viewModel.currentWeather.location}"
+                android:text="@{viewModel.locList.toString()}"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

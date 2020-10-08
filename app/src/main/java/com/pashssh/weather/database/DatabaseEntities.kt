@@ -39,6 +39,7 @@ data class DatabaseDaily(
     val iconIdWithUrl: String
 )
 
+
 fun DatabaseCurrent.asDomainModel(): DomainCurrent {
     return DomainCurrent(
         temperature = this.temperature,

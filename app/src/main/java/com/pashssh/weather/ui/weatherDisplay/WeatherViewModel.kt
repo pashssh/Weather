@@ -1,4 +1,4 @@
-package com.pashssh.weather.weatherDisplay
+package com.pashssh.weather.ui.weatherDisplay
 
 import android.app.Application
 import androidx.lifecycle.MediatorLiveData
@@ -22,48 +22,30 @@ class WeatherViewModel(app: Application) : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = getDatabase(app.applicationContext)
-    val weatherRepository = WeatherRepository(database)
-//    val currentWeather = weatherRepository.currentWeather
+    private val weatherRepository = WeatherRepository(database)
 
 
-
-
-    //    var currentWeather =  weatherRepository.currentWeather
     var currentWeather = MediatorLiveData<DatabaseCurrent>()
+    val locList = weatherRepository.getLocations()
 
 
     init {
         coroutineScope.launch {
-            weatherRepository.refreshWeather(53.893009, 27.567444)
-
-//            val targetClassHourlyWeather = object : TypeToken<List<HourlyWeather>>(){}.type
-//            val gsonHourly: List<HourlyWeather> = Gson().fromJson(currentWeather.value?.hourlyWeather, targetClassHourlyWeather)
-//            _x.value = gsonHourly
-//
-//            val targetClassDailyWeather  = object : TypeToken<List<DailyWeather>>(){}.type
-//            val gsonDaily: List<DailyWeather> = Gson().fromJson(currentWeather.value?.dailyWeather, targetClassDailyWeather)
-//            _y.value = gsonDaily
+            weatherRepository.refreshWeather(53.993009, 27.567444)
         }
 
         val dataSource = weatherRepository.getCurrentWeather("Europe/Minsk")
-        currentWeather.addSource(dataSource) {
-
-                s -> currentWeather.value = s
+        currentWeather.addSource(dataSource) { s ->
+            currentWeather.value = s
 
         }
     }
 
-
     fun updateCurrent(x: String) {
         val result = weatherRepository.getCurrentWeather(x)
-
         currentWeather.addSource(result) {
-
-                s -> currentWeather.value = s
-
+            currentWeather.value = it
         }
-
-
     }
 
     fun refWe(lat: Double, lon: Double) {
@@ -71,9 +53,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
             weatherRepository.refreshWeather(lat, lon)
         }
     }
-
-
-
 
     override fun onCleared() {
         super.onCleared()

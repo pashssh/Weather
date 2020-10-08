@@ -1,8 +1,6 @@
 package com.pashssh.weather.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.pashssh.weather.database.DatabaseCurrent
 import com.pashssh.weather.database.WeatherDatabase
 import com.pashssh.weather.network.Network
@@ -13,23 +11,18 @@ import kotlinx.coroutines.withContext
 class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
 
     val x = "Europe/Minsk"
-    val xm = MutableLiveData("Europe/Minsk")
 
 //    val currentWeather = weatherDatabase.weatherDao.getCurrentWeather(x)
 
     fun getCurrentWeather(x: String): LiveData<DatabaseCurrent> {
-
         val currentWeather = weatherDatabase.weatherDao.getCurrentWeather(x)
-
         return currentWeather
     }
 
-
-//    val hourlyWeather = Transformations.map(weatherDatabase.weatherDao.getHourlyWeather("Europe/Minsk")) {
-//        it.asDomainHourlyModel()
-//    }
-//    val dailyWeather = Transformations.map(weatherDatabase.weatherDao.getDailyWeather("Europe/Minsk")) {
-//        it.asDomainDailyModel()
+    fun getLocations(): LiveData<List<String>> {
+        val locList = weatherDatabase.weatherDao.getLocationList()
+        return locList
+    }
 
     suspend fun refreshWeather(lat: Double, lon: Double) {
         withContext(Dispatchers.IO) {
@@ -42,11 +35,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                 "minutely"
             ).await()
             weatherDatabase.weatherDao.insertCurrent(weatherData.asCurrentDatabaseModel())
-//            weatherDatabase.weatherDao.insertHourly(*weatherData.asHourlyDatabaseModel())
-//            weatherDatabase.weatherDao.insertDaily(*weatherData.asDailyDatabaseModel())
-
         }
-
     }
 }
 

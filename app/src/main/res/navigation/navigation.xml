@@ -6,6 +6,14 @@
     app:startDestination="@id/weatherFragment">
     <fragment
         android:id="@+id/weatherFragment"
-        android:name="com.pashssh.weather.weatherDisplay.WeatherFragment"
-        android:label="WeatherFragment" />
+        android:name="com.pashssh.weather.ui.weatherDisplay.WeatherFragment"
+        android:label="WeatherFragment" >
+        <action
+            android:id="@+id/action_weatherFragment_to_changeCityFragment"
+            app:destination="@id/changeCityFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/changeCityFragment"
+        android:name="com.pashssh.weather.ui.changeCity.ChangeCityFragment"
+        android:label="ChangeCityFragment" />
 </navigation>

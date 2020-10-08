@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pashssh.weather.database.DatabaseDaily
 import com.pashssh.weather.database.DatabaseHourly
-import com.pashssh.weather.weatherDisplay.DailyAdapter
-import com.pashssh.weather.weatherDisplay.HourlyAdapter
+import com.pashssh.weather.ui.weatherDisplay.DailyAdapter
+import com.pashssh.weather.ui.weatherDisplay.HourlyAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 

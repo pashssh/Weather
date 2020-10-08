@@ -10,21 +10,15 @@ const val loc = "Europe/Moscow"
 interface WeatherDao {
     @Query("select * from databasecurrent where location = :loc")
     fun getCurrentWeather(loc: String): LiveData<DatabaseCurrent>
-//
-//    @Query("select * from databasehourly where location = :loc")
-//    fun getHourlyWeather(loc: String): LiveData<List<DatabaseHourly>>
+
+    @Query("select location from databasecurrent")
+    fun getLocationList(): LiveData<List<String>>
 //
 //    @Query("select * from databasedaily where location = :loc")
 //    fun getDailyWeather(loc: String): LiveData<List<DatabaseDaily>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCurrent(databaseCurrent: DatabaseCurrent)
-
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    fun insertHourly(vararg databaseHourly: DatabaseHourly)
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    fun insertDaily(vararg databaseDaily: DatabaseDaily)
 
 }
 
