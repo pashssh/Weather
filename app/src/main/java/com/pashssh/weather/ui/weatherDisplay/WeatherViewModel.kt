@@ -26,6 +26,7 @@ class WeatherViewModel(app: Application) : ViewModel() {
 
 
     var currentWeather = MediatorLiveData<DatabaseCurrent>()
+
     val locList = weatherRepository.getLocations()
 
 
