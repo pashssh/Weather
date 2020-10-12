@@ -21,7 +21,7 @@ class DailyAdapter() : ListAdapter<DatabaseDaily, DailyAdapter.DailyViewHolder>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder {
         return DailyViewHolder(
             DailyViewItemBinding.inflate(
-                LayoutInflater.from(parent.context)
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }

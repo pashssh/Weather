@@ -21,7 +21,7 @@ class ChangeCityAdapter() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChangeCityViewHolder {
         return ChangeCityViewHolder(
-            ChangeCityItemBinding.inflate(LayoutInflater.from(parent.context))
+            ChangeCityItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
