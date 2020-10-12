@@ -32,10 +32,10 @@ class WeatherViewModel(app: Application) : ViewModel() {
 
     init {
         coroutineScope.launch {
-            weatherRepository.refreshWeather(53.993009, 27.567444)
+            weatherRepository.refreshWeather(53.993009, 27.567444, "Minsk")
         }
 
-        val dataSource = weatherRepository.getCurrentWeather("Europe/Minsk")
+        val dataSource = weatherRepository.getCurrentWeather("Minsk")
         currentWeather.addSource(dataSource) { s ->
             currentWeather.value = s
 
@@ -49,9 +49,9 @@ class WeatherViewModel(app: Application) : ViewModel() {
         }
     }
 
-    fun refWe(lat: Double, lon: Double) {
+    fun refWe(lat: Double, lon: Double, city: String) {
         coroutineScope.launch {
-            weatherRepository.refreshWeather(lat, lon)
+            weatherRepository.refreshWeather(lat, lon, city)
         }
     }
 

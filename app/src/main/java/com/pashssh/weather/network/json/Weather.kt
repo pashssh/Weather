@@ -24,7 +24,7 @@ data class HourlyList (
 )
 
 
-fun Weather.asCurrentDatabaseModel(): DatabaseCurrent {
+fun Weather.asCurrentDatabaseModel(city: String): DatabaseCurrent {
     return DatabaseCurrent(
         time = this.current.dt,
         temperature = this.current.temp.toInt(),
@@ -34,7 +34,8 @@ fun Weather.asCurrentDatabaseModel(): DatabaseCurrent {
         cloudsDescription = this.current.weather[0].description,
         latitude = this.lat,
         longitude = this.lon,
-        location = this.timezone,
+        location = city,
+        timezone = this.timezone,
         hourlyWeather = this.hourly.chunked(24)[0].map {
             return@map DatabaseHourly(
                 time = it.dt,

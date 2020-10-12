@@ -59,7 +59,7 @@ class WeatherFragment : Fragment() {
         })
 
         binding.button.setOnClickListener {
-            val fields = listOf(Place.Field.LAT_LNG)
+            val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME)
             // Start the autocomplete intent.
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
                 .build(this.requireContext())
@@ -77,7 +77,7 @@ class WeatherFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.changeCity -> this.findNavController().navigate(R.id.changeCityFragment)
         }
         return true
@@ -91,10 +91,14 @@ class WeatherFragment : Fragment() {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        viewModel.refWe(place.latLng!!.latitude, place.latLng!!.longitude)
+                        viewModel.refWe(
+                            place.latLng!!.latitude, place.latLng!!.longitude,
+                            place.name!!
+                        )
+                        viewModel.updateCurrent(place.name!!)
                         Toast.makeText(
                             this.requireContext(),
-                            "${place.latLng!!.latitude}, ${place.latLng!!.longitude}",
+                            "${place.latLng!!.latitude}, ${place.latLng!!.longitude}, ${place.name}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }

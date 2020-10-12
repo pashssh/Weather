@@ -24,7 +24,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         return locList
     }
 
-    suspend fun refreshWeather(lat: Double, lon: Double) {
+    suspend fun refreshWeather(lat: Double, lon: Double, city: String) {
         withContext(Dispatchers.IO) {
             val weatherData = Network.weather.getWeatherOneCall(
                 lat,
@@ -34,7 +34,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                 "ru",
                 "minutely"
             ).await()
-            weatherDatabase.weatherDao.insertCurrent(weatherData.asCurrentDatabaseModel())
+            weatherDatabase.weatherDao.insertCurrent(weatherData.asCurrentDatabaseModel(city))
         }
     }
 }

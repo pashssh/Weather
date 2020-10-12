@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pashssh.weather.database.DatabaseDaily
 import com.pashssh.weather.database.DatabaseHourly
+import com.pashssh.weather.ui.changeCity.ChangeCityAdapter
 import com.pashssh.weather.ui.weatherDisplay.DailyAdapter
 import com.pashssh.weather.ui.weatherDisplay.HourlyAdapter
 import java.text.SimpleDateFormat
@@ -24,7 +25,6 @@ fun TextView.setUpdateTime(time: Int) {
         text = "Обновлено: ${sdf.format(date)}"
     }
 }
-
 
 
 
@@ -56,10 +56,6 @@ fun TextView.setDailyText(item: DatabaseHourly?) {
 
 
 
-
-
-
-
 //DailyAdapters
 @BindingAdapter("listDaily")
 fun bindRecyclerDaily(recyclerView: RecyclerView, data: List<DatabaseDaily>?) {
@@ -87,13 +83,6 @@ fun TextView.setDailyTemp(item: DatabaseDaily?) {
 
 
 
-
-
-
-
-
-
-
 //Any adapters
 @BindingAdapter("setWeatherIcon")
 fun ImageView.setStatusIcon(iconId: String) {
@@ -108,25 +97,18 @@ fun ImageView.setStatusIcon(iconId: String) {
 
 }
 
-//@BindingAdapter("timeHourly")
-//fun bindTextHourlyTime(textView: TextView, time:String?) {
-//    textView.text = time
-//}
-
-//@BindingAdapter("sleepQualityString")
-//fun TextView.setSleepQualityString(item: SleepNight?) {
-//    item?.let {
-//        text = convertNumericQualityToString(item.sleepQuality, context.resources)
-//    }
-//}
 
 
-//private fun getDateTime(s: String): String? {
-//    try {
-//        val sdf = SimpleDateFormat("MM/dd/yyyy")
-//        val netDate = Date(Long.parseLong(s))
-//        return sdf.format(netDate)
-//    } catch (e: Exception) {
-//        return e.toString()
-//    }
-//}
+//ChangeCity Adapters
+@BindingAdapter("listCities")
+fun bindRecyclerChangeCity(recyclerView: RecyclerView, data: List<String>?) {
+    val adapter = recyclerView.adapter as ChangeCityAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("setCityName")
+fun TextView.setDailyTemp(city: String?) {
+    city?.let {
+        text = it
+    }
+}

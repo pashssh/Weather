@@ -28,6 +28,7 @@ class ChangeCityFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        binding.changeCityRecyclerView.adapter = ChangeCityAdapter()
 
 
 

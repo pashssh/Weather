@@ -18,6 +18,7 @@ data class DatabaseCurrent constructor(
     val longitude: Double,
     @PrimaryKey
     val location: String,
+    val timezone: String,
     val feelsLike: Int,
     val cloudsDescription: String,
     val hourlyWeather: List<DatabaseHourly>,
