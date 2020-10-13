@@ -45,6 +45,11 @@ class WeatherFragment : Fragment() {
         binding.hourlyWeatherView.adapter = HourlyAdapter()
         binding.dailyWeatherView.adapter = DailyAdapter()
 
+        arguments?.let {
+            viewModel.updateCurrent(WeatherFragmentArgs.fromBundle(it).selectedCity)
+        }
+
+
         if (!Places.isInitialized()) {
             Places.initialize(this.requireContext(), "AIzaSyCs_3xUDy1n-m6UKp47vvpKflxtWqpHVY4")
         }

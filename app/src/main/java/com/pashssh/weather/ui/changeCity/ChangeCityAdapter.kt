@@ -2,13 +2,16 @@ package com.pashssh.weather.ui.changeCity
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.databinding.ChangeCityFragmentBinding
 import com.pashssh.weather.databinding.ChangeCityItemBinding
+import kotlinx.android.synthetic.main.change_city_item.view.*
+import kotlin.coroutines.coroutineContext
 
-class ChangeCityAdapter() :
+class ChangeCityAdapter(val onClickListener: OnClickListener) :
     ListAdapter<String, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
 
     class ChangeCityViewHolder(private val binding: ChangeCityItemBinding) :
@@ -27,6 +30,9 @@ class ChangeCityAdapter() :
 
     override fun onBindViewHolder(holder: ChangeCityViewHolder, position: Int) {
         val city = getItem(position)
+        holder.itemView.setOnClickListener {
+            onClickListener.clickListener(city)
+        }
         holder.bind(city)
     }
 
@@ -41,4 +47,9 @@ class ChangeCityAdapter() :
 
     }
 
+    class OnClickListener(val clickListener: (city: String) -> Unit) {
+        fun onClick(city: String) {
+            clickListener(city)
+        }
+    }
 }
