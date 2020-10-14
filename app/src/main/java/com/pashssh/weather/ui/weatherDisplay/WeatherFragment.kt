@@ -1,6 +1,7 @@
 package com.pashssh.weather.ui.weatherDisplay
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,20 +10,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.pashssh.weather.App
+
 import com.pashssh.weather.R
+
 import com.pashssh.weather.databinding.WeatherFragmentBinding
-import com.pashssh.weather.ui.changeCity.ChangeCityFragment
 
 class WeatherFragment : Fragment() {
-
 
     private val viewModel: WeatherViewModel by lazy {
         val activity = requireNotNull(this.activity) {
@@ -36,7 +36,6 @@ class WeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
 //        binding.viewModel = ViewModelProvider(this).get(WeatherViewModel::class.java)
 
         val binding = WeatherFragmentBinding.inflate(inflater)
@@ -45,9 +44,14 @@ class WeatherFragment : Fragment() {
         binding.hourlyWeatherView.adapter = HourlyAdapter()
         binding.dailyWeatherView.adapter = DailyAdapter()
 
-        arguments?.let {
-            viewModel.updateCurrent(WeatherFragmentArgs.fromBundle(it).selectedCity)
-            Toast.makeText(this.context, WeatherFragmentArgs.fromBundle(it).selectedCity, Toast.LENGTH_SHORT).show()
+//        arguments?.let {
+//            viewModel.updateCurrent(WeatherFragmentArgs.fromBundle(it).selectedCity)
+//            Toast.makeText(this.context, WeatherFragmentArgs.fromBundle(it).selectedCity, Toast.LENGTH_SHORT).show()
+//        }
+
+        val sharedPref = this.requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        if (sharedPref.contains("cityName")) {
+            sharedPref.getString("cityName", "")?.let { viewModel.updateCurrent(it) }
         }
 
 

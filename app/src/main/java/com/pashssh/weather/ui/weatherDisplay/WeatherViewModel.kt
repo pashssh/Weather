@@ -1,6 +1,7 @@
 package com.pashssh.weather.ui.weatherDisplay
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -31,15 +32,18 @@ class WeatherViewModel(app: Application) : ViewModel() {
 
 
     init {
-        coroutineScope.launch {
-            weatherRepository.refreshWeather(53.993009, 27.567444, "Minsk")
-        }
 
-        val dataSource = weatherRepository.getCurrentWeather("Minsk")
-        currentWeather.addSource(dataSource) { s ->
-            currentWeather.value = s
+//        coroutineScope.launch {
+//            weatherRepository.refreshWeather(53.993009, 27.567444, "Minsk")
+//        }
 
-        }
+
+//
+//        val dataSource = weatherRepository.getCurrentWeather("Minsk")
+//        currentWeather.addSource(dataSource) { s ->
+//            currentWeather.value = s
+//
+//        }
     }
 
     fun updateCurrent(x: String) {

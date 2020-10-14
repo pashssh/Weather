@@ -1,5 +1,6 @@
 package com.pashssh.weather.ui.changeCity
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +43,8 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 
     override fun onItemSelectClick(city: String) {
         this.findNavController().navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
+        val sharedPref = this.requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit().putString("cityName", city).apply()
     }
 
     override fun onItemDeleteClick(city: String) {
