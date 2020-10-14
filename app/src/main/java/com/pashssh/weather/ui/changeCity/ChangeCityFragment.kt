@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.pashssh.weather.WeatherClickListener
 import com.pashssh.weather.databinding.ChangeCityFragmentBinding
 
 
-class ChangeCityFragment : Fragment() {
+class ChangeCityFragment : Fragment(), WeatherClickListener {
 
         private val viewModel: ChangeCityViewModel by lazy {
         val activity = requireNotNull(this.activity)
@@ -29,13 +30,21 @@ class ChangeCityFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.changeCityRecyclerView.adapter = ChangeCityAdapter(ChangeCityAdapter.OnClickListener {
-            this.findNavController().navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(it))
-        })
+        binding.changeCityRecyclerView.adapter = ChangeCityAdapter(this)
+//        binding.changeCityRecyclerView.adapter = ChangeCityAdapter(ChangeCityAdapter.OnClickListener {
+//            this.findNavController().navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(it))
+//        })
 
 
 
         return binding.root
+    }
+
+    override fun onItemSelectClick(city: String) {
+        this.findNavController().navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
+    }
+
+    override fun onItemDeleteClick(city: String) {
     }
 
 }

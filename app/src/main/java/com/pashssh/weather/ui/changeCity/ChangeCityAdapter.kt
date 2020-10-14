@@ -6,12 +6,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.pashssh.weather.WeatherClickListener
 import com.pashssh.weather.databinding.ChangeCityFragmentBinding
 import com.pashssh.weather.databinding.ChangeCityItemBinding
 import kotlinx.android.synthetic.main.change_city_item.view.*
 import kotlin.coroutines.coroutineContext
 
-class ChangeCityAdapter(val onClickListener: OnClickListener) :
+//class ChangeCityAdapter(val onClickListener: OnClickListener) :
+class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) :
     ListAdapter<String, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
 
     class ChangeCityViewHolder(private val binding: ChangeCityItemBinding) :
@@ -30,8 +32,11 @@ class ChangeCityAdapter(val onClickListener: OnClickListener) :
 
     override fun onBindViewHolder(holder: ChangeCityViewHolder, position: Int) {
         val city = getItem(position)
+//        holder.itemView.setOnClickListener {
+//            onClickListener.clickListener(city)
+//        }
         holder.itemView.setOnClickListener {
-            onClickListener.clickListener(city)
+            weatherClickListener.onItemSelectClick(city)
         }
         holder.bind(city)
     }
@@ -47,9 +52,9 @@ class ChangeCityAdapter(val onClickListener: OnClickListener) :
 
     }
 
-    class OnClickListener(val clickListener: (city: String) -> Unit) {
-        fun onClick(city: String) {
-            clickListener(city)
-        }
-    }
+//    class OnClickListener(val clickListener: (city: String) -> Unit) {
+//        fun onClick(city: String) {
+//            clickListener(city)
+//        }
+//    }
 }

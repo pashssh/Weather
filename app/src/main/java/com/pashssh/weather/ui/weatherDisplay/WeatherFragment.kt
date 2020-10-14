@@ -47,6 +47,7 @@ class WeatherFragment : Fragment() {
 
         arguments?.let {
             viewModel.updateCurrent(WeatherFragmentArgs.fromBundle(it).selectedCity)
+            Toast.makeText(this.context, WeatherFragmentArgs.fromBundle(it).selectedCity, Toast.LENGTH_SHORT).show()
         }
 
 
@@ -75,6 +76,8 @@ class WeatherFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.weather_menu, menu)
