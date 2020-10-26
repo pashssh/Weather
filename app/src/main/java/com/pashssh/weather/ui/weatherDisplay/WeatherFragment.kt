@@ -21,6 +21,7 @@ import com.pashssh.weather.App
 import com.pashssh.weather.R
 
 import com.pashssh.weather.databinding.WeatherFragmentBinding
+import com.pashssh.weather.sharedPreferences
 
 class WeatherFragment : Fragment() {
 
@@ -44,16 +45,11 @@ class WeatherFragment : Fragment() {
         binding.hourlyWeatherView.adapter = HourlyAdapter()
         binding.dailyWeatherView.adapter = DailyAdapter()
 
+
 //        arguments?.let {
 //            viewModel.updateCurrent(WeatherFragmentArgs.fromBundle(it).selectedCity)
 //            Toast.makeText(this.context, WeatherFragmentArgs.fromBundle(it).selectedCity, Toast.LENGTH_SHORT).show()
 //        }
-
-        val sharedPref = this.requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
-        if (sharedPref.contains("cityName")) {
-            sharedPref.getString("cityName", "")?.let { viewModel.updateCurrent(it) }
-        }
-
 
         if (!Places.isInitialized()) {
             Places.initialize(this.requireContext(), "AIzaSyCs_3xUDy1n-m6UKp47vvpKflxtWqpHVY4")
@@ -61,7 +57,7 @@ class WeatherFragment : Fragment() {
 
         viewModel.currentWeather.observe(viewLifecycleOwner, Observer {
             if (it == null) {
-                Log.e("REPO", "не удалось получить данные по запросу")
+                Log.e("REPO", "данные по запросу не получены")
             } else {
                 Log.e("REPO", "получены данные по запросу")
             }
