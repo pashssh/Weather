@@ -2,6 +2,7 @@ package com.pashssh.weather.ui.changeCity
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,8 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.pashssh.weather.R
 import com.pashssh.weather.WeatherClickListener
 import com.pashssh.weather.databinding.ChangeCityFragmentBinding
+import com.pashssh.weather.putDouble
+import com.pashssh.weather.sharedPreferences
 
 
 class ChangeCityFragment : Fragment(), WeatherClickListener {
@@ -52,19 +55,22 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                Toast.makeText(context, "Place: ${place.name}, ${place.id}", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Place: ${place.name}, ${place.latLng}", Toast.LENGTH_SHORT)
                     .show()
-                navigateOnWeatherFragment(
-                    place.name!!,
-                    place.latLng!!.latitude,
-                    place.latLng!!.longitude
-                )
+                try {
+                    navigateOnWeatherFragment(
+                        place.name!!,
+                        place.latLng!!.latitude,
+                        place.latLng!!.longitude
+                    )
+                } catch (e: Exception) {
+                    Log.i("APP_ERR", e.message.toString())
+                }
             }
 
             override fun onError(p0: Status) {
                 Toast.makeText(context, p0.statusMessage, Toast.LENGTH_SHORT).show()
             }
-
         })
 
 
@@ -77,15 +83,14 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
     }
 
     private fun navigateOnWeatherFragment(city: String, lat: Double, lon: Double) {
+
+        sharedPreferences.edit()
+            .putString("cityName", city)
+            .putDouble("lat", lat)
+            .putDouble("lon", lon)
+            .apply()
         this.findNavController()
             .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
-        val sharedPref =
-            this.requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
-        sharedPref.edit()
-            .putString("cityName", city)
-            .putFloat("lat", lat.toFloat())
-            .putFloat("lon", lon.toFloat())
-            .apply()
     }
 
     override fun onItemDeleteClick(city: String) {

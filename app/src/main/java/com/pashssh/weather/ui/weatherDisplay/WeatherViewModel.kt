@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.facebook.stetho.inspector.domstorage.SharedPreferencesHelper
 import com.pashssh.weather.database.DatabaseCurrent
 import com.pashssh.weather.database.getDatabase
+import com.pashssh.weather.getDouble
 import com.pashssh.weather.initSharedPref
 import com.pashssh.weather.repository.WeatherRepository
+import com.pashssh.weather.sharedPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,10 +37,9 @@ class WeatherViewModel(app: Application) : ViewModel() {
     init {
         initSharedPref(app.applicationContext)
 
-//        val sharedPref = app.applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        refWe(sharedPref.getFloat("lat", 1.0F).toDouble(), sharedPref.getFloat("lon", 1.0F).toDouble(), sharedPref.getString("cityName" , "")!!)
-        if (sharedPref.contains("cityName")) {
-            sharedPref.getString("cityName", "")?.let { updateCurrent(it) }
+        if (sharedPreferences.contains("cityName") && sharedPreferences.contains("lat") && sharedPreferences.contains("lon")) {
+            sharedPreferences.getString("cityName", "")?.let { updateCurrent(it) }
+            refWe(sharedPreferences.getDouble("lat", 1.0), sharedPreferences.getDouble("lon", 1.0), sharedPreferences.getString("cityName" , "")!!)
         }
 //        coroutineScope.launch {
 //            weatherRepository.refreshWeather(53.993009, 27.567444, "Minsk")
@@ -61,7 +62,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
     }
 
     fun refWe(lat: Double, lon: Double, city: String) {
-
         coroutineScope.launch {
             weatherRepository.refreshWeather(lat, lon, city)
         }
