@@ -7,7 +7,7 @@
 
         <variable
             name="hourlyModel"
-            type="com.pashssh.weather.database.DatabaseHourly" />
+            type="com.pashssh.weather.database.DatabaseWeatherHourly" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

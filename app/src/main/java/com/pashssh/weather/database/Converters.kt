@@ -3,39 +3,38 @@ package com.pashssh.weather.database
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.pashssh.weather.network.json.HourlyList
 
 
 class HourlyConverter {
 
     @TypeConverter
-    fun fromListHourly(weathers: List<DatabaseHourly>): String? {
+    fun fromListHourly(weathers: List<DatabaseWeatherHourly>): String? {
         val gson = Gson()
         val json: String = gson.toJson(weathers)
         return json
     }
 
     @TypeConverter
-    fun fromHourly(weathersString: String): List<DatabaseHourly> {
-        val listType = object : TypeToken<List<DatabaseHourly>>() {}.type
-        val x: List<DatabaseHourly> = Gson().fromJson<List<DatabaseHourly>>(weathersString, listType)
-        return x
+    fun fromHourly(weathersString: String): List<DatabaseWeatherHourly> {
+        val listType = object : TypeToken<List<DatabaseWeatherHourly>>() {}.type
+        val xes: List<DatabaseWeatherHourly> = Gson().fromJson<List<DatabaseWeatherHourly>>(weathersString, listType)
+        return xes
     }
 }
 
 class DailyConverter {
 
     @TypeConverter
-    fun fromListDaily(weathers: List<DatabaseDaily>): String? {
+    fun fromListDaily(weathers: List<DatabaseWeatherDaily>): String? {
         val gson = Gson()
         val json: String = gson.toJson(weathers)
         return json
     }
 
     @TypeConverter
-    fun fromDaily(weathersString: String): List<DatabaseDaily> {
-        val list = object : TypeToken<List<DatabaseDaily>>() {}.type
-        val x: List<DatabaseDaily> = Gson().fromJson<List<DatabaseDaily>>(weathersString, list)
-        return x
+    fun fromDaily(weathersString: String): List<DatabaseWeatherDaily> {
+        val list = object : TypeToken<List<DatabaseWeatherDaily>>() {}.type
+        val xes: List<DatabaseWeatherDaily> = Gson().fromJson<List<DatabaseWeatherDaily>>(weathersString, list)
+        return xes
     }
 }

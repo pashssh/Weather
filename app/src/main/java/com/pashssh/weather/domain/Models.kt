@@ -1,24 +1,24 @@
 package com.pashssh.weather.domain
 
 
-data class DomainCurrent (
+data class DomainWeatherData (
     val temperature: Int,
     val minTemp: Int,
     val maxTemp: Int,
     val location: String,
     val feelsLike: Int,
     val cloudsDescription: String,
-    val listHourly: List<DomainHourly>,
-    val listDaily: List<DomainDaily>
+    val listWeatherHourly: List<DomainWeatherHourly>,
+    val listWeatherDaily: List<DomainWeatherDaily>
 )
 
-data class DomainHourly(
+data class DomainWeatherHourly(
     val time: Int,
     val temperature: Int,
     val imageId: Int,
 )
 
-data class DomainDaily(
+data class DomainWeatherDaily(
     val time: Int,
     val minTemp: Int,
     val maxTemp: Int,

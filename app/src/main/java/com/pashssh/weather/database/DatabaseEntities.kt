@@ -2,14 +2,13 @@ package com.pashssh.weather.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pashssh.weather.domain.DomainCurrent
-import com.pashssh.weather.domain.DomainDaily
-import com.pashssh.weather.domain.DomainHourly
-import com.pashssh.weather.network.json.HourlyList
+import com.pashssh.weather.domain.DomainWeatherData
+import com.pashssh.weather.domain.DomainWeatherDaily
+import com.pashssh.weather.domain.DomainWeatherHourly
 
 
 @Entity
-data class DatabaseCurrent constructor(
+data class DatabaseWeatherData constructor(
     val time: Int,
     val temperature: Int,
     val maxTemp: Int,
@@ -21,18 +20,18 @@ data class DatabaseCurrent constructor(
     val timezone: String,
     val feelsLike: Int,
     val cloudsDescription: String,
-    val hourlyWeather: List<DatabaseHourly>,
-    val dailyWeather: List<DatabaseDaily>
+    val weatherHourlyWeather: List<DatabaseWeatherHourly>,
+    val weatherDailyWeather: List<DatabaseWeatherDaily>
 )
 
-data class DatabaseHourly(
+data class DatabaseWeatherHourly(
     val time: Int,
     val temperature: Int,
     val imageId: Int,
     val iconIdWithUrl: String
 )
 
-data class DatabaseDaily(
+data class DatabaseWeatherDaily(
     val time: Int,
     val minTemp: Int,
     val maxTemp: Int,
@@ -41,23 +40,23 @@ data class DatabaseDaily(
 )
 
 
-fun DatabaseCurrent.asDomainModel(): DomainCurrent {
-    return DomainCurrent(
+fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
+    return DomainWeatherData(
         temperature = this.temperature,
         minTemp = this.minTemp,
         maxTemp = this.maxTemp,
         location = this.location,
         feelsLike = this.feelsLike,
         cloudsDescription = this.cloudsDescription,
-        listHourly = this.hourlyWeather.map { hourly ->
-            return@map DomainHourly(
+        listWeatherHourly = this.weatherHourlyWeather.map { hourly ->
+            return@map DomainWeatherHourly(
                 time = hourly.time,
                 temperature = hourly.temperature,
                 imageId = hourly.imageId
             )
         },
-        listDaily = this.dailyWeather.map { daily ->
-            return@map DomainDaily(
+        listWeatherDaily = this.weatherDailyWeather.map { daily ->
+            return@map DomainWeatherDaily(
                 time = daily.time,
                 minTemp = daily.minTemp,
                 maxTemp = daily.maxTemp,

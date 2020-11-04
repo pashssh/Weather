@@ -5,8 +5,8 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.pashssh.weather.database.DatabaseDaily
-import com.pashssh.weather.database.DatabaseHourly
+import com.pashssh.weather.database.DatabaseWeatherDaily
+import com.pashssh.weather.database.DatabaseWeatherHourly
 import com.pashssh.weather.ui.changeCity.ChangeCityAdapter
 import com.pashssh.weather.ui.weatherDisplay.DailyAdapter
 import com.pashssh.weather.ui.weatherDisplay.HourlyAdapter
@@ -30,7 +30,7 @@ fun TextView.setUpdateTime(time: Int) {
 
 //Hourly Adapters
 @BindingAdapter("listHourly")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<DatabaseHourly>?) {
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<DatabaseWeatherHourly>?) {
     val adapter = recyclerView.adapter as HourlyAdapter
 //    val list = data?.chunked(24)
 //    adapter.submitList(list?.get(0))
@@ -38,7 +38,7 @@ fun bindRecyclerView(recyclerView: RecyclerView, data: List<DatabaseHourly>?) {
 }
 
 @BindingAdapter("dateHourlyString")
-fun TextView.setHourlyDateString(item: DatabaseHourly?) {
+fun TextView.setHourlyDateString(item: DatabaseWeatherHourly?) {
     item?.let {
         val sdf = SimpleDateFormat("HH:mm")
         val date = Date(it.time.toLong() * 1000)
@@ -48,7 +48,7 @@ fun TextView.setHourlyDateString(item: DatabaseHourly?) {
 }
 
 @BindingAdapter("dailyText")
-fun TextView.setDailyText(item: DatabaseHourly?) {
+fun TextView.setDailyText(item: DatabaseWeatherHourly?) {
     item?.let {
         text = it.temperature.toString()
     }
@@ -58,13 +58,13 @@ fun TextView.setDailyText(item: DatabaseHourly?) {
 
 //DailyAdapters
 @BindingAdapter("listDaily")
-fun bindRecyclerDaily(recyclerView: RecyclerView, data: List<DatabaseDaily>?) {
+fun bindRecyclerDaily(recyclerView: RecyclerView, data: List<DatabaseWeatherDaily>?) {
     val adapter = recyclerView.adapter as DailyAdapter
     adapter.submitList(data)
 }
 
 @BindingAdapter("dateDailyString")
-fun TextView.setDailyDate(item: DatabaseDaily?) {
+fun TextView.setDailyDate(item: DatabaseWeatherDaily?) {
     item?.let {
         val sdf = SimpleDateFormat("E, dd MMM")
         val date = Date(it.time.toLong() * 1000)
@@ -74,7 +74,7 @@ fun TextView.setDailyDate(item: DatabaseDaily?) {
 }
 
 @BindingAdapter("tempDaily")
-fun TextView.setDailyTemp(item: DatabaseDaily?) {
+fun TextView.setDailyTemp(item: DatabaseWeatherDaily?) {
     item?.let {
         val t: String = "${it.minTemp}\u00B0 / ${it.maxTemp}\u00B0"
         text = t

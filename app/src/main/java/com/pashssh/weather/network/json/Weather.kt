@@ -1,8 +1,8 @@
 package com.pashssh.weather.network.json
 
-import com.pashssh.weather.database.DatabaseCurrent
-import com.pashssh.weather.database.DatabaseDaily
-import com.pashssh.weather.database.DatabaseHourly
+import com.pashssh.weather.database.DatabaseWeatherData
+import com.pashssh.weather.database.DatabaseWeatherDaily
+import com.pashssh.weather.database.DatabaseWeatherHourly
 
 
 data class Weather(
@@ -16,16 +16,9 @@ data class Weather(
 )
 
 
-data class HourlyList (
-    val time: Int,
-    val temperature: Int,
-    val imageId: Int
 
-)
-
-
-fun Weather.asCurrentDatabaseModel(city: String): DatabaseCurrent {
-    return DatabaseCurrent(
+fun Weather.asDatabaseModel(city: String): DatabaseWeatherData {
+    return DatabaseWeatherData(
         time = this.current.dt,
         temperature = this.current.temp.toInt(),
         maxTemp = this.daily[0].temp.max.toInt(),
@@ -36,16 +29,16 @@ fun Weather.asCurrentDatabaseModel(city: String): DatabaseCurrent {
         longitude = this.lon,
         location = city,
         timezone = this.timezone,
-        hourlyWeather = this.hourly.chunked(24)[0].map {
-            return@map DatabaseHourly(
+        weatherHourlyWeather = this.hourly.chunked(24)[0].map {
+            return@map DatabaseWeatherHourly(
                 time = it.dt,
                 temperature = it.temp.toInt(),
                 imageId = it.weather[0].id,
                 iconIdWithUrl = it.weather[0].icon
             )
         },
-        dailyWeather = this.daily.chunked(5)[0].map {
-            return@map DatabaseDaily(
+        weatherDailyWeather = this.daily.chunked(5)[0].map {
+            return@map DatabaseWeatherDaily(
                 time = it.dt,
                 minTemp = it.temp.min.toInt(),
                 maxTemp = it.temp.max.toInt(),

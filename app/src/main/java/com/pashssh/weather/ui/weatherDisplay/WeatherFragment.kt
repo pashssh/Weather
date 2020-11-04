@@ -1,7 +1,6 @@
 package com.pashssh.weather.ui.weatherDisplay
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,16 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
-import com.pashssh.weather.App
 
 import com.pashssh.weather.R
 
 import com.pashssh.weather.databinding.WeatherFragmentBinding
-import com.pashssh.weather.sharedPreferences
 
 class WeatherFragment : Fragment() {
 
@@ -55,7 +50,7 @@ class WeatherFragment : Fragment() {
             Places.initialize(this.requireContext(), "AIzaSyCs_3xUDy1n-m6UKp47vvpKflxtWqpHVY4")
         }
 
-        viewModel.currentWeather.observe(viewLifecycleOwner, Observer {
+        viewModel.dataWeather.observe(viewLifecycleOwner, Observer {
             if (it == null) {
                 Log.e("REPO", "данные по запросу не получены")
             } else {
@@ -64,13 +59,6 @@ class WeatherFragment : Fragment() {
 
         })
 
-        binding.button.setOnClickListener {
-            val fields = listOf(Place.Field.LAT_LNG, Place.Field.NAME)
-            // Start the autocomplete intent.
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(this.requireContext())
-            startActivityForResult(intent, 1)
-        }
 
         setHasOptionsMenu(true)
 
@@ -99,11 +87,11 @@ class WeatherFragment : Fragment() {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        viewModel.refWe(
+                        viewModel.refreshWeatherFromNetwork(
                             place.latLng!!.latitude, place.latLng!!.longitude,
                             place.name!!
                         )
-                        viewModel.updateCurrent(place.name!!)
+                        viewModel.updateDataWeather(place.name!!)
                         Toast.makeText(
                             this.requireContext(),
                             "${place.latLng!!.latitude}, ${place.latLng!!.longitude}, ${place.name}",

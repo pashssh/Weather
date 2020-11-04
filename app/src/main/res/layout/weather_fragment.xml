@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@{viewModel.currentWeather.location}"
+                    android:text="@{viewModel.dataWeather.location}"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="@{@string/temp_format(viewModel.currentWeather.temperature)}"
+                    android:text="@{@string/temp_format(viewModel.dataWeather.temperature)}"
                     android:textAlignment="center"
                     android:textSize="50sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +70,7 @@
                         android:id="@+id/min_temp_current_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/temp_format(viewModel.currentWeather.minTemp)}"
+                        android:text="@{@string/temp_format(viewModel.dataWeather.minTemp)}"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="@+id/minmax_split"
                         app:layout_constraintEnd_toStartOf="@id/minmax_split"
@@ -94,7 +94,7 @@
                         android:id="@+id/max_temp_current_day"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/temp_format(viewModel.currentWeather.maxTemp)}"
+                        android:text="@{@string/temp_format(viewModel.dataWeather.maxTemp)}"
                         android:textSize="20sp"
                         app:layout_constraintBottom_toBottomOf="@+id/minmax_split"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="@{viewModel.currentWeather.cloudsDescription}"
+                    android:text="@{viewModel.dataWeather.cloudsDescription}"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="70dp"
                     android:textSize="12dp"
-                    app:lastUpdateTime="@{viewModel.currentWeather.time}"
+                    app:lastUpdateTime="@{viewModel.dataWeather.time}"
                     android:layout_marginRight="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -150,7 +150,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/separator"
-                app:listHourly="@{viewModel.currentWeather.hourlyWeather}"
+                app:listHourly="@{viewModel.dataWeather.weatherHourlyWeather}"
                 tools:listitem="@layout/hourly_weather_view_item" />
 
             <View
@@ -172,7 +172,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/separator2"
-                app:listDaily="@{viewModel.currentWeather.dailyWeather}"
+                app:listDaily="@{viewModel.dataWeather.weatherDailyWeather}"
                 tools:listitem="@layout/daily_view_item" />
 
 

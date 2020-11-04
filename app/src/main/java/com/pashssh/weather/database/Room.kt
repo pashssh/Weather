@@ -8,22 +8,22 @@ const val loc = "Europe/Moscow"
 
 @Dao
 interface WeatherDao {
-    @Query("select * from databasecurrent where location = :loc")
-    fun getCurrentWeather(loc: String): LiveData<DatabaseCurrent>
+    @Query("select * from databaseweatherdata where location = :loc")
+    fun getWeatherData(loc: String): LiveData<DatabaseWeatherData>
 
-    @Query("select location from databasecurrent")
+    @Query("select location from databaseweatherdata")
     fun getLocationList(): LiveData<List<String>>
 //
 //    @Query("select * from databasedaily where location = :loc")
 //    fun getDailyWeather(loc: String): LiveData<List<DatabaseDaily>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCurrent(databaseCurrent: DatabaseCurrent)
+    fun insertCurrent(databaseCurrent: DatabaseWeatherData)
 
 }
 
 @Database(
-    entities = [DatabaseCurrent::class],
+    entities = [DatabaseWeatherData::class],
     version = 1
 )
 @TypeConverters(HourlyConverter::class, DailyConverter::class)

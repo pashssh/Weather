@@ -1,7 +1,5 @@
 package com.pashssh.weather.network.json
 
-import com.pashssh.weather.database.DatabaseCurrent
-
 data class Current(
     val clouds: Int,
     val dew_point: Double,
