@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="city"
-            type="String" />
+            name="item"
+            type="com.pashssh.weather.database.LocationItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +29,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setCityName="@{city}"
+            app:setCityName="@{item.cityName}"
             tools:text="Minsk" />
 
         <ImageButton

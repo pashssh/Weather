@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pashssh.weather.database.DatabaseWeatherDaily
 import com.pashssh.weather.database.DatabaseWeatherHourly
+import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.ui.changeCity.ChangeCityAdapter
 import com.pashssh.weather.ui.weatherDisplay.DailyAdapter
 import com.pashssh.weather.ui.weatherDisplay.HourlyAdapter
@@ -101,7 +102,7 @@ fun ImageView.setStatusIcon(iconId: String) {
 
 //ChangeCity Adapters
 @BindingAdapter("listCities")
-fun bindRecyclerChangeCity(recyclerView: RecyclerView, data: List<String>?) {
+fun bindRecyclerChangeCity(recyclerView: RecyclerView, data: List<LocationItem>?) {
     val adapter = recyclerView.adapter as ChangeCityAdapter
     adapter.submitList(data)
 }

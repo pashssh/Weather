@@ -1,5 +1,6 @@
 package com.pashssh.weather.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.pashssh.weather.domain.DomainWeatherData
@@ -40,33 +41,14 @@ data class DatabaseWeatherDaily(
 )
 
 
-fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
-    return DomainWeatherData(
-        temperature = this.temperature,
-        minTemp = this.minTemp,
-        maxTemp = this.maxTemp,
-        location = this.location,
-        feelsLike = this.feelsLike,
-        cloudsDescription = this.cloudsDescription,
-        listWeatherHourly = this.weatherHourlyWeather.map { hourly ->
-            return@map DomainWeatherHourly(
-                time = hourly.time,
-                temperature = hourly.temperature,
-                imageId = hourly.imageId
-            )
-        },
-        listWeatherDaily = this.weatherDailyWeather.map { daily ->
-            return@map DomainWeatherDaily(
-                time = daily.time,
-                minTemp = daily.minTemp,
-                maxTemp = daily.maxTemp,
-                imageId = daily.imageId
-            )
-        }
-    )
-}
-
-
+data class LocationItem(
+    @ColumnInfo(name = "location")
+    val cityName: String,
+    @ColumnInfo(name = "latitude")
+    val latitude: Double,
+    @ColumnInfo(name = "longitude")
+    val longitude: Double
+)
 
 
 

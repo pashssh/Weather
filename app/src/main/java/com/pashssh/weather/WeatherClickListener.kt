@@ -1,7 +1,9 @@
 package com.pashssh.weather
 
-interface WeatherClickListener {
-    fun onItemSelectClick(city: String)
+import com.pashssh.weather.database.LocationItem
 
-    fun onItemDeleteClick(city: String)
+interface WeatherClickListener {
+    fun onItemSelectClick(item: LocationItem)
+
+    fun onItemDeleteClick(item: LocationItem)
 }

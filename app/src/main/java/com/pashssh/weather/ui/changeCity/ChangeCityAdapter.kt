@@ -2,24 +2,21 @@ package com.pashssh.weather.ui.changeCity
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.WeatherClickListener
-import com.pashssh.weather.databinding.ChangeCityFragmentBinding
+import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.ChangeCityItemBinding
-import kotlinx.android.synthetic.main.change_city_item.view.*
-import kotlin.coroutines.coroutineContext
 
 //class ChangeCityAdapter(val onClickListener: OnClickListener) :
 class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) :
-    ListAdapter<String, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
+    ListAdapter<LocationItem, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
 
     class ChangeCityViewHolder(private val binding: ChangeCityItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(city: String) {
-            binding.city = city
+        fun bind(item: LocationItem) {
+            binding.item = item
             binding.executePendingBindings()
         }
     }
@@ -31,22 +28,22 @@ class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) 
     }
 
     override fun onBindViewHolder(holder: ChangeCityViewHolder, position: Int) {
-        val city = getItem(position)
+        val item = getItem(position)
 //        holder.itemView.setOnClickListener {
 //            onClickListener.clickListener(city)
 //        }
         holder.itemView.setOnClickListener {
-            weatherClickListener.onItemSelectClick(city)
+            weatherClickListener.onItemSelectClick(item)
         }
-        holder.bind(city)
+        holder.bind(item)
     }
 
-    companion object ChangeCityDiffCall : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    companion object ChangeCityDiffCall : DiffUtil.ItemCallback<LocationItem>() {
+        override fun areItemsTheSame(oldItem: LocationItem, newItem: LocationItem): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: LocationItem, newItem: LocationItem): Boolean {
             return oldItem == newItem
         }
 

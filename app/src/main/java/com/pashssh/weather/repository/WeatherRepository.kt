@@ -2,6 +2,7 @@ package com.pashssh.weather.repository
 
 import androidx.lifecycle.LiveData
 import com.pashssh.weather.database.DatabaseWeatherData
+import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.database.WeatherDatabase
 import com.pashssh.weather.network.Network
 import com.pashssh.weather.network.json.asDatabaseModel
@@ -19,7 +20,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         return weatherData
     }
 
-    fun getLocations(): LiveData<List<String>> {
+    fun getLocations(): LiveData<List<LocationItem>> {
         val locList = weatherDatabase.weatherDao.getLocationList()
         return locList
     }

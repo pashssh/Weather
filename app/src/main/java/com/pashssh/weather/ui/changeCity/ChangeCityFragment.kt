@@ -16,6 +16,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.pashssh.weather.R
 import com.pashssh.weather.WeatherClickListener
+import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.ChangeCityFragmentBinding
 import com.pashssh.weather.putDouble
 import com.pashssh.weather.sharedPreferences
@@ -78,9 +79,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         return binding.root
     }
 
-    override fun onItemSelectClick(city: String) {
-//        navigateOnWeatherFragment(city)
-    }
+
 
     private fun navigateOnWeatherFragment(city: String, lat: Double, lon: Double) {
 
@@ -93,7 +92,11 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
             .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
     }
 
-    override fun onItemDeleteClick(city: String) {
+
+    override fun onItemSelectClick(item: LocationItem) {
+    }
+
+    override fun onItemDeleteClick(item: LocationItem) {
     }
 
 }
