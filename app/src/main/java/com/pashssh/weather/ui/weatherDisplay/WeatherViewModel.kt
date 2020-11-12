@@ -34,9 +34,9 @@ class WeatherViewModel(app: Application) : ViewModel() {
     init {
         initSharedPref(app.applicationContext)
 
-        if (sharedPreferences.contains("cityName") && sharedPreferences.contains("lat") && sharedPreferences.contains(
-                "lon"
-            )
+        if (sharedPreferences.contains("cityName")
+            && sharedPreferences.contains("lat")
+            && sharedPreferences.contains("lon")
         ) {
             sharedPreferences.getString("cityName", "")?.let { updateDataWeather(it) }
             refreshWeatherFromNetwork(

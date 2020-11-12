@@ -94,6 +94,13 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 
 
     override fun onItemSelectClick(item: LocationItem) {
+        sharedPreferences.edit()
+            .putString("cityName", item.cityName)
+            .putDouble("lat", item.latitude)
+            .putDouble("lon", item.longitude)
+            .apply()
+        this.findNavController()
+            .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(item.cityName))
     }
 
     override fun onItemDeleteClick(item: LocationItem) {
