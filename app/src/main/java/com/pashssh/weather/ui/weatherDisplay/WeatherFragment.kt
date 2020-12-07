@@ -41,7 +41,8 @@ class WeatherFragment : Fragment() {
         binding.hourlyWeatherView.adapter = HourlyAdapter()
         binding.dailyWeatherView.adapter = DailyAdapter()
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.myToolbar)
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+
 
 
 //        arguments?.let {
