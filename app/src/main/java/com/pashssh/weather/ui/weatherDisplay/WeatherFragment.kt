@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +40,8 @@ class WeatherFragment : Fragment() {
         binding.viewModel = viewModel
         binding.hourlyWeatherView.adapter = HourlyAdapter()
         binding.dailyWeatherView.adapter = DailyAdapter()
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.myToolbar)
 
 
 //        arguments?.let {
