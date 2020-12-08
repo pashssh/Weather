@@ -41,6 +41,9 @@ class WeatherFragment : Fragment() {
         binding.hourlyWeatherView.adapter = HourlyAdapter()
         binding.dailyWeatherView.adapter = DailyAdapter()
 
+        val toolbar = binding.toolbarLayout
+        toolbar.title = " "
+
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
 
@@ -59,6 +62,7 @@ class WeatherFragment : Fragment() {
                 Log.e("REPO", "данные по запросу не получены")
             } else {
                 Log.e("REPO", "получены данные по запросу")
+                toolbar.title = it.location
             }
 
         })
