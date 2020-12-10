@@ -1,5 +1,5 @@
 package com.pashssh.weather.network.json
 
-data class RainHourly(
+data class SnowCurrent (
     val `1h`: Double?
 )
