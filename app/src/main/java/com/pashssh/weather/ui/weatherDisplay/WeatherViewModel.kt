@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.pashssh.weather.App
 import com.pashssh.weather.database.DatabaseWeatherData
 import com.pashssh.weather.database.getDatabase
 import com.pashssh.weather.getDouble
@@ -15,7 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class WeatherViewModel(app: Application) : ViewModel() {
+class WeatherViewModel() : ViewModel() {
 
 //    private val _currentWeather = MutableLiveData<DatabaseCurrent>()
 //    val currentWeather: LiveData<DatabaseCurrent>
@@ -23,7 +24,7 @@ class WeatherViewModel(app: Application) : ViewModel() {
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-    private val database = getDatabase(app.applicationContext)
+    private val database = getDatabase(App().applicationContext())
     private val weatherRepository = WeatherRepository(database)
 
 
@@ -32,7 +33,6 @@ class WeatherViewModel(app: Application) : ViewModel() {
     val locList = weatherRepository.getLocations()
 
     init {
-        initSharedPref(app.applicationContext)
 
         if (sharedPreferences.contains("cityName")
             && sharedPreferences.contains("lat")
@@ -66,13 +66,4 @@ class WeatherViewModel(app: Application) : ViewModel() {
     }
 
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return WeatherViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
 }

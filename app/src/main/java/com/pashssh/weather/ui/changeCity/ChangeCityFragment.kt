@@ -25,10 +25,8 @@ import com.pashssh.weather.sharedPreferences
 class ChangeCityFragment : Fragment(), WeatherClickListener {
 
     private val viewModel: ChangeCityViewModel by lazy {
-        val activity = requireNotNull(this.activity)
-        ViewModelProvider(this, ChangeCityViewModel.Factory(activity.application)).get(
-            ChangeCityViewModel::class.java
-        )
+        ViewModelProvider(this).get(
+            ChangeCityViewModel::class.java)
     }
 
 
@@ -36,24 +34,18 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val binding = ChangeCityFragmentBinding.inflate(inflater)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.changeCityRecyclerView.adapter = ChangeCityAdapter(this)
-//        binding.changeCityRecyclerView.adapter = ChangeCityAdapter(ChangeCityAdapter.OnClickListener {
-//            this.findNavController().navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(it))
-//        })
 
         val autocompleteFragment =
             childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
                     as AutocompleteSupportFragment
 
-        // Specify the types of place data to return.
         autocompleteFragment.setPlaceFields(listOf(Place.Field.LAT_LNG, Place.Field.NAME))
 
-        // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 Toast.makeText(context, "Place: ${place.name}, ${place.latLng}", Toast.LENGTH_SHORT)
@@ -74,11 +66,8 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
             }
         })
 
-
-
         return binding.root
     }
-
 
 
     private fun navigateOnWeatherFragment(city: String, lat: Double, lon: Double) {
