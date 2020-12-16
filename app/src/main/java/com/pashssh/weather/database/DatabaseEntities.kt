@@ -6,6 +6,8 @@ import androidx.room.PrimaryKey
 import com.pashssh.weather.domain.DomainWeatherData
 import com.pashssh.weather.domain.DomainWeatherDaily
 import com.pashssh.weather.domain.DomainWeatherHourly
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @Entity
@@ -49,6 +51,34 @@ data class LocationItem(
     @ColumnInfo(name = "longitude")
     val longitude: Double
 )
+
+fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
+
+    val sdfHourly = SimpleDateFormat("HH:mm")
+    val sdfDaily = SimpleDateFormat("E, dd MMM")
+
+    return DomainWeatherData(
+        temperature = "${this.temperature}\u00B0",
+        dayTemp = "${this.minTemp}\u00B0 / ${this.maxTemp}\u00B0",
+        location = this.location,
+        feelsLike = "${this.feelsLike}\u00B0",
+        description = this.cloudsDescription,
+        listWeatherHourly = this.weatherHourlyWeather.map {
+            return@map DomainWeatherHourly(
+                time = sdfHourly.format(Date(it.time.toLong() * 1000)),
+                temperature = "${it.temperature}\u00B0",
+                imageId = it.imageId
+            )
+        },
+        listWeatherDaily = this.weatherDailyWeather.map {
+            return@map DomainWeatherDaily(
+                time = sdfDaily.format(Date(it.time.toLong() * 1000)),
+                dayTemp = "${it.minTemp}\u00B0 / ${it.maxTemp}\u00B0",
+                imageId = it.imageId
+            )
+        }
+    )
+}
 
 
 

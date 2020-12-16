@@ -2,11 +2,13 @@ package com.pashssh.weather.ui.weatherDisplay
 
 import android.app.Application
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pashssh.weather.App
 import com.pashssh.weather.database.DatabaseWeatherData
 import com.pashssh.weather.database.getDatabase
+import com.pashssh.weather.domain.DomainWeatherData
 import com.pashssh.weather.getDouble
 import com.pashssh.weather.initSharedPref
 import com.pashssh.weather.repository.WeatherRepository
@@ -29,6 +31,7 @@ class WeatherViewModel() : ViewModel() {
 
 
     var dataWeather = MediatorLiveData<DatabaseWeatherData>()
+    var data = MutableLiveData<DomainWeatherData>()
 
     val locList = weatherRepository.getLocations()
 
