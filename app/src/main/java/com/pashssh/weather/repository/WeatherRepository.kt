@@ -1,9 +1,12 @@
 package com.pashssh.weather.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.pashssh.weather.database.DatabaseWeatherData
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.database.WeatherDatabase
+import com.pashssh.weather.database.asDomainModel
+import com.pashssh.weather.domain.DomainWeatherData
 import com.pashssh.weather.network.Network
 import com.pashssh.weather.network.json.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
@@ -20,10 +23,18 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         return weatherData
     }
 
+    fun getWeather(x: String): LiveData<DomainWeatherData> {
+        val weatherData = weatherDatabase.weatherDao.getWeatherData(x)
+        return Transformations.map(weatherData) {
+            it.asDomainModel()
+        }
+    }
+
     fun getLocations(): LiveData<List<LocationItem>> {
         val locList = weatherDatabase.weatherDao.getLocationList()
         return locList
     }
+
 
     suspend fun refreshWeather(lat: Double, lon: Double, city: String) {
         withContext(Dispatchers.IO) {

@@ -31,7 +31,9 @@ class WeatherViewModel() : ViewModel() {
 
 
     var dataWeather = MediatorLiveData<DatabaseWeatherData>()
-    var data = MutableLiveData<DomainWeatherData>()
+
+    var data = weatherRepository.getWeather("Гонконг")
+
 
     val locList = weatherRepository.getLocations()
 

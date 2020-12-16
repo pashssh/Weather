@@ -13,6 +13,11 @@ interface WeatherDao {
 
     @Query("select location, latitude, longitude from databaseweatherdata")
     fun getLocationList(): LiveData<List<LocationItem>>
+
+    @Query("select location, latitude, longitude from databaseweatherdata limit 1")
+    fun getLocation(): LocationItem
+
+
 //
 //    @Query("select * from databasedaily where location = :loc")
 //    fun getDailyWeather(loc: String): LiveData<List<DatabaseDaily>>
