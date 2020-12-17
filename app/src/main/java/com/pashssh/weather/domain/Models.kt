@@ -18,13 +18,13 @@ data class DomainWeatherData(
 data class DomainWeatherHourly(
     val time: String,
     val temperature: String,
-    val imageId: Int,
+    val iconWithUrl: String,
 )
 
 data class DomainWeatherDaily(
     val time: String,
     val dayTemp: String,
-    val imageId: Int
+    val iconWithUrl: String
 )
 
 

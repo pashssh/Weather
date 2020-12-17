@@ -41,13 +41,6 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
-<!--                <ImageView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:background="@drawable/bg_mostly_cloudy"-->
-<!--                    android:scaleType="center"-->
-<!--                    />-->
-
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -141,7 +134,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/separator"
-                    app:listHourly="@{viewModel.dataWeather.weatherHourlyWeather}"
+                    app:listHourly="@{viewModel.data.listWeatherHourly}"
                     tools:listitem="@layout/hourly_weather_view_item" />
 
                 <View
@@ -162,40 +155,10 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/separator2"
-                    app:listDaily="@{viewModel.dataWeather.weatherDailyWeather}"
+                    app:listDaily="@{viewModel.data.listWeatherDaily}"
                     tools:itemCount="5"
                     tools:listitem="@layout/daily_view_item" />
 
-
-                <!--        TEST-->
-
-                <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-                <!--            android:id="@+id/constraintLayout"-->
-                <!--            android:layout_width="wrap_content"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            app:layout_constraintEnd_toEndOf="parent"-->
-                <!--            app:layout_constraintStart_toStartOf="parent"-->
-                <!--            app:layout_constraintTop_toBottomOf="@+id/current_weather">-->
-
-                <!--            <TextView-->
-                <!--                android:id="@+id/textView123"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:text="@{viewModel.hourlyWeather.toString()}"-->
-                <!--                app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                app:layout_constraintStart_toStartOf="parent"-->
-                <!--                app:layout_constraintTop_toTopOf="parent"-->
-                <!--                tools:text="asdasd" />-->
-
-                <!--            <TextView-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:text="@{viewModel.dailyWeather.toString()}"-->
-                <!--                app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                app:layout_constraintStart_toStartOf="parent"-->
-                <!--                app:layout_constraintTop_toBottomOf="@+id/textView123"-->
-                <!--                tools:text="asdasd" />-->
-                <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,25 +7,26 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.database.DatabaseWeatherHourly
 import com.pashssh.weather.databinding.HourlyWeatherViewItemBinding
+import com.pashssh.weather.domain.DomainWeatherHourly
 
 
 class HourlyAdapter() :
-    ListAdapter<DatabaseWeatherHourly, HourlyAdapter.DomainHourlyViewHolder>(DiffCallback) {
+    ListAdapter<DomainWeatherHourly, HourlyAdapter.DomainHourlyViewHolder>(DiffCallback) {
 
     class DomainHourlyViewHolder(private val binding: HourlyWeatherViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(databaseWeatherHourly: DatabaseWeatherHourly) {
-            binding.hourlyModel = databaseWeatherHourly
+        fun bind(domainWeatherHourly: DomainWeatherHourly) {
+            binding.hourlyItem = domainWeatherHourly
             binding.executePendingBindings()
         }
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<DatabaseWeatherHourly>() {
-        override fun areItemsTheSame(oldItem: DatabaseWeatherHourly, newItem: DatabaseWeatherHourly): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<DomainWeatherHourly>() {
+        override fun areItemsTheSame(oldItem: DomainWeatherHourly, newItem: DomainWeatherHourly): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: DatabaseWeatherHourly, newItem: DatabaseWeatherHourly): Boolean {
+        override fun areContentsTheSame(oldItem: DomainWeatherHourly, newItem: DomainWeatherHourly): Boolean {
             return oldItem.time == newItem.time
         }
 
@@ -42,7 +43,7 @@ class HourlyAdapter() :
     }
 
     override fun onBindViewHolder(holder: DomainHourlyViewHolder, position: Int) {
-            val databaseHourly = getItem(position)
-            holder.bind(databaseHourly)
+            val domainHourly = getItem(position)
+            holder.bind(domainHourly)
     }
 }

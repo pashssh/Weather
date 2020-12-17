@@ -67,14 +67,14 @@ fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
             return@map DomainWeatherHourly(
                 time = sdfHourly.format(Date(it.time.toLong() * 1000)),
                 temperature = "${it.temperature}\u00B0",
-                imageId = it.imageId
+                iconWithUrl = it.iconIdWithUrl
             )
         },
         listWeatherDaily = this.weatherDailyWeather.map {
             return@map DomainWeatherDaily(
                 time = sdfDaily.format(Date(it.time.toLong() * 1000)),
                 dayTemp = "${it.minTemp}\u00B0 / ${it.maxTemp}\u00B0",
-                imageId = it.imageId
+                iconWithUrl = it.iconIdWithUrl
             )
         }
     )
