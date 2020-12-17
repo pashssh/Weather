@@ -61,7 +61,7 @@ fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
         temperature = "${this.temperature}\u00B0",
         dayTemp = "${this.minTemp}\u00B0 / ${this.maxTemp}\u00B0",
         location = this.location,
-        feelsLike = "${this.feelsLike}\u00B0",
+        feelsLike = "ощущается как ${this.feelsLike}\u00B0",
         description = this.cloudsDescription,
         listWeatherHourly = this.weatherHourlyWeather.map {
             return@map DomainWeatherHourly(

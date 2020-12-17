@@ -65,7 +65,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/temp_format(viewModel.dataWeather.temperature)}"
+                        android:text="@{viewModel.data.temperature}"
                         android:textAlignment="center"
                         android:textSize="50sp"
                         tools:text="+5" />
@@ -73,7 +73,15 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/temp_format(viewModel.dataWeather.minTemp)}"
+                        android:text="@{viewModel.data.feelsLike}"
+                        android:textAlignment="center"
+                        android:textSize="10dp"
+                        tools:text="+5 / +8" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.data.dayTemp}"
                         android:textAlignment="center"
                         android:textSize="20dp"
                         tools:text="+5 / +8" />
@@ -81,7 +89,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.dataWeather.cloudsDescription}"
+                        android:text="@{viewModel.data.description}"
                         android:textAlignment="center"
                         android:textSize="20sp"
                         tools:text="облачно" />
@@ -108,116 +116,12 @@
                 android:background="@android:color/transparent"
                 tools:context=".ui.weatherDisplay.WeatherFragment">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/current_weather"
+                <FrameLayout
+                    android:id="@+id/fla"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_height="300dp"/>
 
-                    <!--            android:text="@{viewModel.currentWeather.location}"-->
-                    <TextView
-                        android:id="@+id/location"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@{viewModel.data.location}"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Europe/Minsk" />
-
-                    <!--            android:text="@{@string/temp_format(viewModel.currentWeather.temperature)}"   -->
-                    <TextView
-                        android:id="@+id/currentTemp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:text="@{@string/temp_format(viewModel.dataWeather.temperature)}"
-                        android:textAlignment="center"
-                        android:textSize="50sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/location"
-                        tools:text="23" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/minmax_temp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/currentTemp">
-
-                        <TextView
-                            android:id="@+id/min_temp_current_day"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/temp_format(viewModel.dataWeather.minTemp)}"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/minmax_split"
-                            app:layout_constraintEnd_toStartOf="@id/minmax_split"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/minmax_split"
-                            tools:text="10" />
-
-
-                        <TextView
-                            android:id="@+id/minmax_split"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" / "
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/max_temp_current_day"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/temp_format(viewModel.dataWeather.maxTemp)}"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/minmax_split"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/minmax_split"
-                            app:layout_constraintTop_toTopOf="@+id/minmax_split"
-                            tools:text="15" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@{viewModel.dataWeather.cloudsDescription}"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/minmax_temp"
-                        tools:text="облачно" />
-
-                    <TextView
-                        android:id="@+id/last_update"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="70dp"
-                        android:layout_marginRight="16dp"
-                        android:textSize="12dp"
-                        app:lastUpdateTime="@{viewModel.dataWeather.time}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/description"
-                        tools:text="Обновлено" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:id="@+id/separator"
@@ -225,7 +129,7 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
                     android:background="#C3C3C3"
-                    app:layout_constraintTop_toBottomOf="@+id/current_weather" />
+                    app:layout_constraintTop_toBottomOf="@+id/fla" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hourly_weather_view"
