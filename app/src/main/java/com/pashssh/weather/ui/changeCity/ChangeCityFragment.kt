@@ -14,19 +14,26 @@ import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import com.pashssh.weather.R
-import com.pashssh.weather.WeatherClickListener
+import com.pashssh.weather.*
 import com.pashssh.weather.database.LocationItem
+import com.pashssh.weather.database.WeatherDatabase
+import com.pashssh.weather.database.getDatabase
 import com.pashssh.weather.databinding.ChangeCityFragmentBinding
-import com.pashssh.weather.putDouble
-import com.pashssh.weather.sharedPreferences
+import com.pashssh.weather.repository.CityChangeRepository
+import com.pashssh.weather.repository.WeatherRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ChangeCityFragment : Fragment(), WeatherClickListener {
 
+    lateinit var weatherRepository: CityChangeRepository
+
     private val viewModel: ChangeCityViewModel by lazy {
         ViewModelProvider(this).get(
-            ChangeCityViewModel::class.java)
+            ChangeCityViewModel::class.java
+        )
     }
 
 
@@ -35,6 +42,9 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val binding = ChangeCityFragmentBinding.inflate(inflater)
+
+        val database = getDatabase(App().applicationContext())
+        weatherRepository = CityChangeRepository(database)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -51,11 +61,14 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
                 Toast.makeText(context, "Place: ${place.name}, ${place.latLng}", Toast.LENGTH_SHORT)
                     .show()
                 try {
-                    navigateOnWeatherFragment(
-                        place.name!!,
+                    weatherRepository.insertChangedCity(
                         place.latLng!!.latitude,
-                        place.latLng!!.longitude
+                        place.latLng!!.longitude,
+                        place.name!!
                     )
+
+                    navigateOnWeatherFragment(place.name!!)
+
                 } catch (e: Exception) {
                     Log.i("APP_ERR", e.message.toString())
                 }
@@ -70,12 +83,10 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
     }
 
 
-    private fun navigateOnWeatherFragment(city: String, lat: Double, lon: Double) {
+    private fun navigateOnWeatherFragment(city: String) {
 
         sharedPreferences.edit()
             .putString("cityName", city)
-            .putDouble("lat", lat)
-            .putDouble("lon", lon)
             .apply()
         this.findNavController()
             .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))

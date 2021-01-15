@@ -23,7 +23,7 @@ interface WeatherDao {
 //    fun getDailyWeather(loc: String): LiveData<List<DatabaseDaily>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCurrent(databaseCurrent: DatabaseWeatherData)
+    fun insertCity(databaseWeatherData: DatabaseWeatherData)
 
 }
 

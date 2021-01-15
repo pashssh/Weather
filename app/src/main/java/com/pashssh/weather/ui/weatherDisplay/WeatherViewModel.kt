@@ -1,18 +1,13 @@
 package com.pashssh.weather.ui.weatherDisplay
 
-import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.pashssh.weather.App
 import com.pashssh.weather.database.DatabaseWeatherData
 import com.pashssh.weather.database.getDatabase
 import com.pashssh.weather.domain.DomainWeatherData
-import com.pashssh.weather.getDouble
-import com.pashssh.weather.initSharedPref
 import com.pashssh.weather.repository.WeatherRepository
-import com.pashssh.weather.sharedPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,37 +25,48 @@ class WeatherViewModel() : ViewModel() {
     private val weatherRepository = WeatherRepository(database)
 
 
+
+
+
     var dataWeather = MediatorLiveData<DatabaseWeatherData>()
 
-    var data = weatherRepository.getWeather("Гонконг")
-
+    lateinit var data: LiveData<DomainWeatherData>
 
     val locList = weatherRepository.getLocations()
 
     init {
-
-        if (sharedPreferences.contains("cityName")
-            && sharedPreferences.contains("lat")
-            && sharedPreferences.contains("lon")
-        ) {
-            sharedPreferences.getString("cityName", "")?.let { updateDataWeather(it) }
-            refreshWeatherFromNetwork(
-                sharedPreferences.getDouble("lat", 1.0),
-                sharedPreferences.getDouble("lon", 1.0),
-                sharedPreferences.getString("cityName", "")!!
-            )
+        if (locList.value.isNullOrEmpty()) {
+            coroutineScope.launch {
+                weatherRepository.insertNullData()
+            }
+            data = weatherRepository.getWeather("Default")
         }
     }
 
-    fun updateDataWeather(x: String) {
-        val result = weatherRepository.getWeatherData(x)
-        dataWeather.addSource(result) {
-            dataWeather.value = it
-        }
-    }
+//    init {
+//
+//        if (sharedPreferences.contains("cityName")
+//            && sharedPreferences.contains("lat")
+//            && sharedPreferences.contains("lon")
+//        ) {
+//            sharedPreferences.getString("cityName", "")?.let { updateDataWeather(it) }
+//            refreshWeatherFromNetwork(
+//                sharedPreferences.getDouble("lat", 1.0),
+//                sharedPreferences.getDouble("lon", 1.0),
+//                sharedPreferences.getString("cityName", "")!!
+//            )
+//        }
+//    }
+
+//    fun updateDataWeather(x: String) {
+//        val result = weatherRepository.getWeatherData(x)
+//        dataWeather.addSource(result) {
+//            dataWeather.value = it
+//        }
+//    }
 
     fun refreshWeatherFromNetwork(lat: Double, lon: Double, city: String) {
-        coroutineScope.launch {
+        val launch = coroutineScope.launch {
             weatherRepository.refreshWeather(lat, lon, city)
         }
     }

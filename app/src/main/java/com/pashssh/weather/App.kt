@@ -20,8 +20,9 @@ class App : Application() {
         context = applicationContext
         initSharedPref(applicationContext())
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext(), "AIzaSyCs_3xUDy1n-m6UKp47vvpKflxtWqpHVY4")
+            Places.initialize(applicationContext(), "AIzaSyBmiTZKF-iJdMMy9H6IByCY8FDQYIODEwg")
         }
+
         Log.i("pash", "trtrt")
     }
 
