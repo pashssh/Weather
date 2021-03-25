@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.domain.DomainWeatherDaily
 import com.pashssh.weather.domain.DomainWeatherHourly
-import com.pashssh.weather.ui.changeCity.ChangeCityAdapter
-import com.pashssh.weather.ui.weatherDisplay.DailyAdapter
-import com.pashssh.weather.ui.weatherDisplay.HourlyAdapter
+import com.pashssh.weather.ui.adapters.ChangeCityAdapter
+import com.pashssh.weather.ui.adapters.DailyAdapter
+import com.pashssh.weather.ui.adapters.HourlyAdapter
 
 
 //Hourly Adapters

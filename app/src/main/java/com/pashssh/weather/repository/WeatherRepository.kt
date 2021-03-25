@@ -40,11 +40,45 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
+    suspend fun insertCity(lat: Double, lon: Double, name: String) {
+        withContext(Dispatchers.IO) {
+            weatherDatabase.weatherDao.insertCity(
+                DatabaseWeatherData(
+                    0,
+                    0,
+                    0,
+                    0,
+                    lat,
+                    lon,
+                    name,
+                    "null",
+                    0,
+                    "null",
+                    listOf(DatabaseWeatherHourly(0, 0, 0, "04d")),
+                    listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
+                )
+            )
+        }
+    }
+
     suspend fun insertNullData() {
         withContext(Dispatchers.IO) {
-            weatherDatabase.weatherDao.insertCity(DatabaseWeatherData(1,1,1,1,1.0,1.0,"Default", "Default",1,"null",
-                listOf(DatabaseWeatherHourly(1,1,1,"@2x")), listOf(DatabaseWeatherDaily(1,1,1,1,"@2x"))
-            ))
+            weatherDatabase.weatherDao.insertCity(
+                DatabaseWeatherData(
+                    1,
+                    1,
+                    1,
+                    1,
+                    1.0,
+                    1.0,
+                    "Default",
+                    "Default",
+                    1,
+                    "null",
+                    listOf(DatabaseWeatherHourly(1, 1, 1, "@2x")),
+                    listOf(DatabaseWeatherDaily(1, 1, 1, 1, "@2x"))
+                )
+            )
         }
     }
 }

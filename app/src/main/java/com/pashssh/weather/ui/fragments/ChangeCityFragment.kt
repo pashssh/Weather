@@ -1,6 +1,5 @@
-package com.pashssh.weather.ui.changeCity
+package com.pashssh.weather.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,19 +15,12 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.pashssh.weather.*
 import com.pashssh.weather.database.LocationItem
-import com.pashssh.weather.database.WeatherDatabase
-import com.pashssh.weather.database.getDatabase
 import com.pashssh.weather.databinding.ChangeCityFragmentBinding
-import com.pashssh.weather.repository.CityChangeRepository
-import com.pashssh.weather.repository.WeatherRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.pashssh.weather.ui.adapters.ChangeCityAdapter
+import com.pashssh.weather.ui.viewModels.ChangeCityViewModel
 
 
 class ChangeCityFragment : Fragment(), WeatherClickListener {
-
-    lateinit var weatherRepository: CityChangeRepository
 
     private val viewModel: ChangeCityViewModel by lazy {
         ViewModelProvider(this).get(
@@ -42,9 +34,6 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val binding = ChangeCityFragmentBinding.inflate(inflater)
-
-        val database = getDatabase(App().applicationContext())
-        weatherRepository = CityChangeRepository(database)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -61,11 +50,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
                 Toast.makeText(context, "Place: ${place.name}, ${place.latLng}", Toast.LENGTH_SHORT)
                     .show()
                 try {
-                    weatherRepository.insertChangedCity(
-                        place.latLng!!.latitude,
-                        place.latLng!!.longitude,
-                        place.name!!
-                    )
+                    viewModel.addCityInDb(place.latLng!!.latitude, place.latLng!!.longitude, place.name!!)
 
                     navigateOnWeatherFragment(place.name!!)
 
@@ -84,23 +69,12 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 
 
     private fun navigateOnWeatherFragment(city: String) {
-
-        sharedPreferences.edit()
-            .putString("cityName", city)
-            .apply()
         this.findNavController()
             .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
     }
 
 
     override fun onItemSelectClick(item: LocationItem) {
-        sharedPreferences.edit()
-            .putString("cityName", item.cityName)
-            .putDouble("lat", item.latitude)
-            .putDouble("lon", item.longitude)
-            .apply()
-        this.findNavController()
-            .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(item.cityName))
     }
 
     override fun onItemDeleteClick(item: LocationItem) {

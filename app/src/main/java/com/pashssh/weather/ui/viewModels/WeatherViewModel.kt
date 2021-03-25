@@ -1,7 +1,8 @@
-package com.pashssh.weather.ui.weatherDisplay
+package com.pashssh.weather.ui.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pashssh.weather.App
 import com.pashssh.weather.database.DatabaseWeatherData
@@ -13,7 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class WeatherViewModel() : ViewModel() {
+
+class WeatherViewModel(val location: String) : ViewModel() {
 
 //    private val _currentWeather = MutableLiveData<DatabaseCurrent>()
 //    val currentWeather: LiveData<DatabaseCurrent>
@@ -24,8 +26,7 @@ class WeatherViewModel() : ViewModel() {
     private val database = getDatabase(App().applicationContext())
     private val weatherRepository = WeatherRepository(database)
 
-
-
+     var isEmptyCities = MutableLiveData<Boolean>()
 
 
     var dataWeather = MediatorLiveData<DatabaseWeatherData>()
@@ -35,12 +36,11 @@ class WeatherViewModel() : ViewModel() {
     val locList = weatherRepository.getLocations()
 
     init {
-        if (locList.value.isNullOrEmpty()) {
-            coroutineScope.launch {
-                weatherRepository.insertNullData()
-            }
-            data = weatherRepository.getWeather("Default")
-        }
+        isEmptyCities.value = locList.value.isNullOrEmpty()
+    }
+
+    fun getWeatherData() {
+        data = weatherRepository.getWeather(location)
     }
 
 //    init {

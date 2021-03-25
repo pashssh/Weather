@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.pashssh.weather.ui.changeCity.ChangeCityViewModel" />
+            type="com.pashssh.weather.ui.viewModels.ChangeCityViewModel" />
     </data>
 
 

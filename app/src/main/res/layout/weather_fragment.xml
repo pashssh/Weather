@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.pashssh.weather.ui.weatherDisplay.WeatherViewModel" />
+            type="com.pashssh.weather.ui.viewModels.WeatherViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                tools:context=".ui.weatherDisplay.WeatherFragment">
+                tools:context=".ui.fragments.WeatherFragment">
 
                 <FrameLayout
                     android:id="@+id/fla"

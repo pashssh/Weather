@@ -6,7 +6,10 @@ import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.facebook.stetho.Stetho
+import com.pashssh.weather.App
 import com.pashssh.weather.R
+import com.pashssh.weather.database.getDatabase
+import com.pashssh.weather.repository.WeatherRepository
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +19,14 @@ class MainActivity : AppCompatActivity() {
 
         Stetho.initializeWithDefaults(this)
 
-//        val navController = this.findNavController(R.id.nav_host_fragment)
+//        val database = getDatabase(App().applicationContext())
+//        val weatherRepository = WeatherRepository(database)
+//        if(weatherRepository.getLocations().value == null) {
+//            val navController = this.findNavController(R.id.nav_host_fragment)
+//            navController.navigate(R.id.changeCityFragment)
+//        }
+
+
 //        NavigationUI.setupActionBarWithNavController(this, navController)
     }
 

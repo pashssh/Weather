@@ -1,4 +1,4 @@
-package com.pashssh.weather.ui.changeCity
+package com.pashssh.weather.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

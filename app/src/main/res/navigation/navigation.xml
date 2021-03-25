@@ -6,7 +6,7 @@
     app:startDestination="@id/weatherFragment">
     <fragment
         android:id="@+id/weatherFragment"
-        android:name="com.pashssh.weather.ui.weatherDisplay.WeatherFragment"
+        android:name="com.pashssh.weather.ui.fragments.WeatherFragment"
         android:label="Погода" >
         <argument
             android:name="selectedCity"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/changeCityFragment"
-        android:name="com.pashssh.weather.ui.changeCity.ChangeCityFragment"
+        android:name="com.pashssh.weather.ui.fragments.ChangeCityFragment"
         android:label="Изменение города" >
         <action
             android:id="@+id/action_changeCityFragment_to_weatherFragment"

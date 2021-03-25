@@ -1,15 +1,13 @@
-package com.pashssh.weather.ui.changeCity
+package com.pashssh.weather.ui.viewModels
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.pashssh.weather.App
-import com.pashssh.weather.database.WeatherDatabase
 import com.pashssh.weather.database.getDatabase
 import com.pashssh.weather.repository.WeatherRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ChangeCityViewModel() : ViewModel() {
 
@@ -17,9 +15,21 @@ class ChangeCityViewModel() : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = getDatabase(App().applicationContext())
-    private val repository = WeatherRepository(database)
+    private val weatherRepository = WeatherRepository(database)
 
-    val listCities = repository.getLocations()
+    val listCities = weatherRepository.getLocations()
+
+    fun addCityInDb(latitude: Double, longitude: Double, name: String) {
+        coroutineScope.launch {
+            weatherRepository.insertCity(
+                latitude,
+                longitude,
+                name
+            )
+        }
+
+
+    }
 
 }
 

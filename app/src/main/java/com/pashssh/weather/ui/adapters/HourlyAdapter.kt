@@ -1,11 +1,10 @@
-package com.pashssh.weather.ui.weatherDisplay
+package com.pashssh.weather.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pashssh.weather.database.DatabaseWeatherHourly
 import com.pashssh.weather.databinding.HourlyWeatherViewItemBinding
 import com.pashssh.weather.domain.DomainWeatherHourly
 
