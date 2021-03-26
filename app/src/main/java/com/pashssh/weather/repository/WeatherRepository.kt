@@ -20,10 +20,10 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
-    fun getLocations(): LiveData<List<LocationItem>> {
-        val locList = weatherDatabase.weatherDao.getLocationList()
-        return locList
+    fun getCitiesList(): LiveData<List<LocationItem>> {
+        return weatherDatabase.weatherDao.getLocationList()
     }
+
 
 
     suspend fun refreshWeather(lat: Double, lon: Double, city: String) {

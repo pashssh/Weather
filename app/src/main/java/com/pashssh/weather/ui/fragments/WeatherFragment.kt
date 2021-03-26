@@ -8,20 +8,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.pashssh.weather.App
 
 import com.pashssh.weather.R
+import com.pashssh.weather.database.LocationItem
 
 import com.pashssh.weather.databinding.WeatherFragmentBinding
 import com.pashssh.weather.ui.viewModels.WeatherViewModel
 import com.pashssh.weather.ui.adapters.DailyAdapter
 import com.pashssh.weather.ui.adapters.HourlyAdapter
+import com.pashssh.weather.ui.viewModels.WeatherViewModelFactory
 
-class WeatherFragment : Fragment() {
+class WeatherFragment(val location: LocationItem) : Fragment() {
 
 
-    private val viewModel: WeatherViewModel by lazy {
-        ViewModelProvider(this).get(WeatherViewModel::class.java)
-    }
+    lateinit var viewModel: WeatherViewModel
+//    private val viewModel: WeatherViewModel by lazy {
+//        ViewModelProvider(this, WeatherViewModelFactory(activity?.application, loc)).get(WeatherViewModel::class.java)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +35,16 @@ class WeatherFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding = WeatherFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = WeatherViewModelFactory(application, location)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
         binding.viewModel = viewModel
         binding.hourlyWeatherView.adapter = HourlyAdapter()
         binding.dailyWeatherView.adapter = DailyAdapter()
-
-
 
 
         val toolbar = binding.toolbarLayout
@@ -48,7 +53,7 @@ class WeatherFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
 
-        viewModel.getWeatherData()
+//        viewModel.getWeatherData()
 
         viewModel.dataWeather.observe(viewLifecycleOwner, Observer {
             if (it == null) {
