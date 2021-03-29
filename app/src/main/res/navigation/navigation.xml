@@ -25,6 +25,6 @@
     </fragment>
     <fragment
         android:id="@+id/citiesViewPager"
-        android:name="com.pashssh.weather.ui.fragments.CitiesPager"
+        android:name="com.pashssh.weather.ui.fragments.CitiesPagerFragment"
         android:label="CitiesViewPager" />
 </navigation>

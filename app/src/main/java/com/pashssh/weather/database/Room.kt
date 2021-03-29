@@ -18,6 +18,10 @@ interface WeatherDao {
     fun getLocation(): LocationItem
 
 
+    @Query("select location, latitude, longitude from locationitem")
+    fun getList(): LiveData<List<LocationItem>>
+
+
 //
 //    @Query("select * from databasedaily where location = :loc")
 //    fun getDailyWeather(loc: String): LiveData<List<DatabaseDaily>>
@@ -25,10 +29,13 @@ interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCity(databaseWeatherData: DatabaseWeatherData)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertListItem(locationItem: LocationItem)
+
 }
 
 @Database(
-    entities = [DatabaseWeatherData::class],
+    entities = [DatabaseWeatherData::class, LocationItem::class],
     version = 1
 )
 @TypeConverters(HourlyConverter::class, DailyConverter::class)

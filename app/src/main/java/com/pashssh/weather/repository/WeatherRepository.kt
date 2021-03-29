@@ -24,6 +24,11 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         return weatherDatabase.weatherDao.getLocationList()
     }
 
+    fun getList(): LiveData<List<LocationItem>> {
+        return weatherDatabase.weatherDao.getList()
+    }
+
+
 
 
     suspend fun refreshWeather(lat: Double, lon: Double, city: String) {
@@ -58,6 +63,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                     listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
                 )
             )
+            weatherDatabase.weatherDao.insertListItem(LocationItem(name, lat, lon))
         }
     }
 

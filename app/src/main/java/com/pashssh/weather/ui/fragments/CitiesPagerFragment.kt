@@ -12,7 +12,7 @@ import com.pashssh.weather.databinding.CitiesViewPagerFragmentBinding
 import com.pashssh.weather.ui.CitiesViewPagerAdapter
 import com.pashssh.weather.ui.viewModels.CitiesPagerViewModel
 
-class CitiesPager : Fragment() {
+class CitiesPagerFragment : Fragment() {
 
     val citiesPagerViewModel: CitiesPagerViewModel by lazy {
         ViewModelProvider(this).get(CitiesPagerViewModel::class.java)
@@ -25,15 +25,22 @@ class CitiesPager : Fragment() {
         // Inflate the layout for this fragment
         val binding = CitiesViewPagerFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
-        binding.viewPager2.adapter = CitiesViewPagerAdapter(emptyList(), this)
+//        binding.viewPager2.adapter = CitiesViewPagerAdapter(emptyList(), this)
 
 
 //        val list: List<LocationItem> = listOf(LocationItem("Минск", 53.9006, 27.559), LocationItem("Брест", 52.0997, 23.7637))
 //        binding.viewPager2.adapter = CitiesViewPagerAdapter(list, this)
 
-        citiesPagerViewModel.listCities.observe(viewLifecycleOwner, Observer {
+//        val x = citiesPagerViewModel.listCities.observe(viewLifecycleOwner, Observer {
+//            binding.viewPager2.adapter = CitiesViewPagerAdapter(it, this)
+//            viewLifecycleOwner.lifecycle.removeObserver()
+//        })
+
+        val observer = Observer<List<LocationItem>> {
             binding.viewPager2.adapter = CitiesViewPagerAdapter(it, this)
-        })
+        }
+        citiesPagerViewModel.listCities.observe(viewLifecycleOwner, observer)
+
 
 
         return binding.root

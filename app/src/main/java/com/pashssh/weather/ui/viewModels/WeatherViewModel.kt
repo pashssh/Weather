@@ -40,7 +40,7 @@ class WeatherViewModel(application: Application, val location: LocationItem) : A
 
     init {
 //        isEmptyCities.value = locList.value.isNullOrEmpty()
-//        getWeatherData()
+        getWeatherData()
         data = weatherRepository.getWeather(location.cityName)
         Log.i("MYAPP", "test $location")
     }
@@ -74,7 +74,7 @@ class WeatherViewModel(application: Application, val location: LocationItem) : A
 //    }
 
     fun refreshWeatherFromNetwork(lat: Double, lon: Double, city: String) {
-        val launch = coroutineScope.launch {
+        coroutineScope.launch {
             weatherRepository.refreshWeather(lat, lon, city)
         }
     }

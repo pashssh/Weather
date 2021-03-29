@@ -43,8 +43,10 @@ data class DatabaseWeatherDaily(
 )
 
 
+@Entity
 data class LocationItem(
     @ColumnInfo(name = "location")
+    @PrimaryKey
     val cityName: String,
     @ColumnInfo(name = "latitude")
     val latitude: Double,

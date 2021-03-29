@@ -1,5 +1,6 @@
 package com.pashssh.weather.ui.viewModels
 
+import android.os.AsyncTask
 import androidx.lifecycle.ViewModel
 import com.pashssh.weather.App
 import com.pashssh.weather.database.getDatabase
@@ -17,10 +18,8 @@ class CitiesPagerViewModel() : ViewModel() {
     private val database = getDatabase(App().applicationContext())
     private val weatherRepository = WeatherRepository(database)
 
-    val listCities = weatherRepository.getCitiesList()
+    val listCities = weatherRepository.getList()
 
-    fun getList() {
 
-    }
 
 }
