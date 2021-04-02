@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import com.pashssh.weather.domain.DomainWeatherData
 import com.pashssh.weather.domain.DomainWeatherDaily
 import com.pashssh.weather.domain.DomainWeatherHourly
+import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,7 +53,7 @@ data class LocationItem(
     val latitude: Double,
     @ColumnInfo(name = "longitude")
     val longitude: Double
-)
+) : java.io.Serializable
 
 fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
 

@@ -12,7 +12,7 @@ class CitiesViewPagerAdapter(val listCities: List<LocationItem>, fragment: Fragm
     override fun getItemCount() = listCities.size
 
     override fun createFragment(position: Int): Fragment {
-        return WeatherFragment(listCities[position])
+        return WeatherFragment.newInstance(listCities[position])
     }
 
 

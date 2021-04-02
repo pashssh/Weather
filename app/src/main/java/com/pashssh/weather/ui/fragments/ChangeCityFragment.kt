@@ -51,8 +51,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
                     .show()
                 try {
                     viewModel.addCityInDb(place.latLng!!.latitude, place.latLng!!.longitude, place.name!!)
-
-                    navigateOnWeatherFragment(place.name!!)
+                    this@ChangeCityFragment.findNavController().navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager())
 
                 } catch (e: Exception) {
                     Log.i("APP_ERR", e.message.toString())
@@ -68,10 +67,10 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
     }
 
 
-    private fun navigateOnWeatherFragment(city: String) {
-        this.findNavController()
-            .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
-    }
+//    private fun navigateOnWeatherFragment(city: String) {
+//        this.findNavController()
+//            .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
+//    }
 
 
     override fun onItemSelectClick(item: LocationItem) {
@@ -79,5 +78,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 
     override fun onItemDeleteClick(item: LocationItem) {
     }
+
+
 
 }

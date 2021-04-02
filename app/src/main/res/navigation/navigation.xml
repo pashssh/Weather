@@ -11,20 +11,21 @@
         <argument
             android:name="selectedCity"
              />
-        <action
-            android:id="@+id/action_weatherFragment_to_changeCityFragment"
-            app:destination="@id/changeCityFragment" />
     </fragment>
     <fragment
         android:id="@+id/changeCityFragment"
         android:name="com.pashssh.weather.ui.fragments.ChangeCityFragment"
         android:label="Изменение города" >
         <action
-            android:id="@+id/action_changeCityFragment_to_weatherFragment"
-            app:destination="@id/weatherFragment" />
+            android:id="@+id/action_changeCityFragment_to_citiesViewPager"
+            app:destination="@id/citiesViewPager" />
     </fragment>
     <fragment
         android:id="@+id/citiesViewPager"
         android:name="com.pashssh.weather.ui.fragments.CitiesPagerFragment"
-        android:label="CitiesViewPager" />
+        android:label="CitiesViewPager" >
+        <action
+            android:id="@+id/action_citiesViewPager_to_changeCityFragment"
+            app:destination="@id/changeCityFragment" />
+    </fragment>
 </navigation>

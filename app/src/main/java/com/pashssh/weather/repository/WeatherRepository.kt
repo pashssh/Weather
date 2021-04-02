@@ -29,8 +29,6 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
     }
 
 
-
-
     suspend fun refreshWeather(lat: Double, lon: Double, city: String) {
         withContext(Dispatchers.IO) {
             val weatherData = Network.weather.getWeatherOneCall(
@@ -45,9 +43,32 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
+//    suspend fun insertCity(lat: Double, lon: Double, name: String) {
+//        withContext(Dispatchers.IO) {
+//            weatherDatabase.weatherDao.insertCity(
+//                DatabaseWeatherData(
+//                    0,
+//                    0,
+//                    0,
+//                    0,
+//                    lat,
+//                    lon,
+//                    name,
+//                    "null",
+//                    0,
+//                    "null",
+//                    listOf(DatabaseWeatherHourly(0, 0, 0, "04d")),
+//                    listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
+//                )
+//            )
+//            weatherDatabase.weatherDao.insertListItem(LocationItem(name, lat, lon))
+//        }
+//    }
+
     suspend fun insertCity(lat: Double, lon: Double, name: String) {
         withContext(Dispatchers.IO) {
-            weatherDatabase.weatherDao.insertCity(
+            weatherDatabase.weatherDao.tran(
+                LocationItem(name, lat, lon),
                 DatabaseWeatherData(
                     0,
                     0,
@@ -63,7 +84,6 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                     listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
                 )
             )
-            weatherDatabase.weatherDao.insertListItem(LocationItem(name, lat, lon))
         }
     }
 

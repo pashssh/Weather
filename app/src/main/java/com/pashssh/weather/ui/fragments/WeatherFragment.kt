@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.pashssh.weather.App
 
 import com.pashssh.weather.R
 import com.pashssh.weather.database.LocationItem
@@ -19,7 +19,7 @@ import com.pashssh.weather.ui.adapters.DailyAdapter
 import com.pashssh.weather.ui.adapters.HourlyAdapter
 import com.pashssh.weather.ui.viewModels.WeatherViewModelFactory
 
-class WeatherFragment(val location: LocationItem) : Fragment() {
+class WeatherFragment() : Fragment() {
 
 
     lateinit var viewModel: WeatherViewModel
@@ -40,7 +40,8 @@ class WeatherFragment(val location: LocationItem) : Fragment() {
         val binding = WeatherFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = WeatherViewModelFactory(application, location)
+
+        val viewModelFactory = WeatherViewModelFactory(application, arguments?.getSerializable("key") as LocationItem)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
         binding.viewModel = viewModel
         binding.hourlyWeatherView.adapter = HourlyAdapter()
@@ -81,6 +82,14 @@ class WeatherFragment(val location: LocationItem) : Fragment() {
             R.id.changeCity -> this.findNavController().navigate(R.id.changeCityFragment)
         }
         return true
+    }
+
+    companion object {
+        fun newInstance(locationItem: LocationItem) = WeatherFragment().apply {
+            arguments = bundleOf(
+                "key" to locationItem
+            )
+        }
     }
 
 }

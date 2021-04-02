@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.CitiesViewPagerFragmentBinding
 import com.pashssh.weather.ui.CitiesViewPagerAdapter
@@ -14,7 +16,7 @@ import com.pashssh.weather.ui.viewModels.CitiesPagerViewModel
 
 class CitiesPagerFragment : Fragment() {
 
-    val citiesPagerViewModel: CitiesPagerViewModel by lazy {
+    private val citiesPagerViewModel: CitiesPagerViewModel by lazy {
         ViewModelProvider(this).get(CitiesPagerViewModel::class.java)
     }
 
@@ -36,8 +38,12 @@ class CitiesPagerFragment : Fragment() {
 //            viewLifecycleOwner.lifecycle.removeObserver()
 //        })
 
-        val observer = Observer<List<LocationItem>> {
-            binding.viewPager2.adapter = CitiesViewPagerAdapter(it, this)
+        val observer = Observer<List<LocationItem>> { items ->
+            if (items.isEmpty()) {
+                this.findNavController()
+                    .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
+            }
+            binding.viewPager2.adapter = CitiesViewPagerAdapter(items, this)
         }
         citiesPagerViewModel.listCities.observe(viewLifecycleOwner, observer)
 
