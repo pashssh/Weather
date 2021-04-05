@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pashssh.weather.databinding.DailyViewItemBinding
+import com.pashssh.weather.databinding.ItemDailyViewBinding
 import com.pashssh.weather.domain.DomainWeatherDaily
 
 class DailyAdapter() : ListAdapter<DomainWeatherDaily, DailyAdapter.DailyViewHolder>(DiffCall) {
 
-    class DailyViewHolder(private val binding: DailyViewItemBinding) :
+    class DailyViewHolder(private val binding: ItemDailyViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(domainWeatherDaily: DomainWeatherDaily) {
             binding.dailyItem = domainWeatherDaily
@@ -20,7 +20,7 @@ class DailyAdapter() : ListAdapter<DomainWeatherDaily, DailyAdapter.DailyViewHol
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyViewHolder {
         return DailyViewHolder(
-            DailyViewItemBinding.inflate(
+            ItemDailyViewBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )

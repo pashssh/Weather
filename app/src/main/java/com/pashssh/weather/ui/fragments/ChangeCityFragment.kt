@@ -15,7 +15,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.pashssh.weather.*
 import com.pashssh.weather.database.LocationItem
-import com.pashssh.weather.databinding.ChangeCityFragmentBinding
+import com.pashssh.weather.databinding.FragmentChangeCityBinding
 import com.pashssh.weather.ui.adapters.ChangeCityAdapter
 import com.pashssh.weather.ui.viewModels.ChangeCityViewModel
 
@@ -33,7 +33,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = ChangeCityFragmentBinding.inflate(inflater)
+        val binding = FragmentChangeCityBinding.inflate(inflater)
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -50,8 +50,13 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
                 Toast.makeText(context, "Place: ${place.name}, ${place.latLng}", Toast.LENGTH_SHORT)
                     .show()
                 try {
-                    viewModel.addCityInDb(place.latLng!!.latitude, place.latLng!!.longitude, place.name!!)
-                    this@ChangeCityFragment.findNavController().navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager())
+                    viewModel.addCityInDb(
+                        place.latLng!!.latitude,
+                        place.latLng!!.longitude,
+                        place.name!!
+                    )
+                    this@ChangeCityFragment.findNavController()
+                        .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(true))
 
                 } catch (e: Exception) {
                     Log.i("APP_ERR", e.message.toString())

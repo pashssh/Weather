@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pashssh.weather.databinding.HourlyWeatherViewItemBinding
+import com.pashssh.weather.databinding.ItemHourlyViewBinding
 import com.pashssh.weather.domain.DomainWeatherHourly
 
 
 class HourlyAdapter() :
     ListAdapter<DomainWeatherHourly, HourlyAdapter.DomainHourlyViewHolder>(DiffCallback) {
 
-    class DomainHourlyViewHolder(private val binding: HourlyWeatherViewItemBinding) :
+    class DomainHourlyViewHolder(private val binding: ItemHourlyViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(domainWeatherHourly: DomainWeatherHourly) {
             binding.hourlyItem = domainWeatherHourly
@@ -33,7 +33,7 @@ class HourlyAdapter() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DomainHourlyViewHolder {
         return DomainHourlyViewHolder(
-            HourlyWeatherViewItemBinding.inflate(
+            ItemHourlyViewBinding.inflate(
                 LayoutInflater.from(
                     parent.context
                 )

@@ -18,7 +18,11 @@
         android:label="Изменение города" >
         <action
             android:id="@+id/action_changeCityFragment_to_citiesViewPager"
-            app:destination="@id/citiesViewPager" />
+            app:destination="@id/citiesViewPager" >
+            <argument
+                android:name="added"
+                android:defaultValue="false" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/citiesViewPager"
@@ -27,5 +31,9 @@
         <action
             android:id="@+id/action_citiesViewPager_to_changeCityFragment"
             app:destination="@id/changeCityFragment" />
+        <argument
+            android:name="added"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>
