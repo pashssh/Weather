@@ -28,6 +28,8 @@ fun Weather.asDatabaseModel(city: String): DatabaseWeatherData {
         longitude = this.lon,
         location = city,
         timezone = this.timezone,
+        uvi = this.current.uvi,
+        humidity = this.current.humidity,
         weatherHourlyWeather = this.hourly.chunked(24)[0].map {
             return@map DatabaseWeatherHourly(
                 time = it.dt,

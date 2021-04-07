@@ -43,28 +43,6 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
-//    suspend fun insertCity(lat: Double, lon: Double, name: String) {
-//        withContext(Dispatchers.IO) {
-//            weatherDatabase.weatherDao.insertCity(
-//                DatabaseWeatherData(
-//                    0,
-//                    0,
-//                    0,
-//                    0,
-//                    lat,
-//                    lon,
-//                    name,
-//                    "null",
-//                    0,
-//                    "null",
-//                    listOf(DatabaseWeatherHourly(0, 0, 0, "04d")),
-//                    listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
-//                )
-//            )
-//            weatherDatabase.weatherDao.insertListItem(LocationItem(name, lat, lon))
-//        }
-//    }
-
     suspend fun insertCity(lat: Double, lon: Double, name: String) {
         withContext(Dispatchers.IO) {
             weatherDatabase.weatherDao.tran(
@@ -79,6 +57,8 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                     name,
                     "null",
                     0,
+                    0.0,
+                    0,
                     "null",
                     listOf(DatabaseWeatherHourly(0, 0, 0, "04d")),
                     listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
@@ -87,7 +67,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
-    suspend fun insertNullData() {
+    suspend fun insertCityIfEmptyTable() {
         withContext(Dispatchers.IO) {
             weatherDatabase.weatherDao.insertCity(
                 DatabaseWeatherData(
@@ -100,6 +80,8 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                     "Default",
                     "Default",
                     1,
+                    0.0,
+                    0,
                     "null",
                     listOf(DatabaseWeatherHourly(1, 1, 1, "@2x")),
                     listOf(DatabaseWeatherDaily(1, 1, 1, 1, "@2x"))

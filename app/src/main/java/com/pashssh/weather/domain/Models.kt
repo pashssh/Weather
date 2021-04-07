@@ -11,6 +11,8 @@ data class DomainWeatherData(
     val location: String,
     val feelsLike: String,
     val description: String,
+    val uvi: String,
+    val humidity: String,
     val listWeatherHourly: List<DomainWeatherHourly>,
     val listWeatherDaily: List<DomainWeatherDaily>
 )

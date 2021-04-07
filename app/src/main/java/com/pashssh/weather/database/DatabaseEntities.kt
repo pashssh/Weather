@@ -23,6 +23,8 @@ data class DatabaseWeatherData constructor(
     val location: String,
     val timezone: String,
     val feelsLike: Int,
+    val uvi: Double,
+    val humidity: Int,
     val cloudsDescription: String,
     val weatherHourlyWeather: List<DatabaseWeatherHourly>,
     val weatherDailyWeather: List<DatabaseWeatherDaily>
@@ -64,7 +66,9 @@ fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
         temperature = "${this.temperature}\u00B0",
         dayTemp = "${this.minTemp}\u00B0 / ${this.maxTemp}\u00B0",
         location = this.location,
-        feelsLike = "ощущается как ${this.feelsLike}\u00B0",
+        feelsLike = " ${this.feelsLike}\u00B0",
+        uvi = " ${this.uvi}",
+        humidity = " ${this.humidity}%",
         description = this.cloudsDescription,
         listWeatherHourly = this.weatherHourlyWeather.map {
             return@map DomainWeatherHourly(

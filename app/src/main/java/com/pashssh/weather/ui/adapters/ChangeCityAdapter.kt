@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.WeatherClickListener
 import com.pashssh.weather.database.LocationItem
-import com.pashssh.weather.databinding.ChangeCityItemBinding
+import com.pashssh.weather.databinding.ItemChangeCityBinding
 
 //class ChangeCityAdapter(val onClickListener: OnClickListener) :
 class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) :
     ListAdapter<LocationItem, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
 
-    class ChangeCityViewHolder(private val binding: ChangeCityItemBinding) :
+    class ChangeCityViewHolder(private val binding: ItemChangeCityBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LocationItem) {
             binding.item = item
@@ -23,7 +23,7 @@ class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChangeCityViewHolder {
         return ChangeCityViewHolder(
-            ChangeCityItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemChangeCityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

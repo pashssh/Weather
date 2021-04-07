@@ -41,9 +41,14 @@ class WeatherFragment() : Fragment() {
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
-        binding.hourlyWeatherView.adapter = HourlyAdapter()
-        binding.dailyWeatherView.adapter = DailyAdapter()
-
+        binding.hourlyWeatherView.apply {
+            adapter = HourlyAdapter()
+            itemAnimator = null
+        }
+        binding.dailyWeatherView.apply {
+            adapter = DailyAdapter()
+            itemAnimator = null
+        }
 
         val toolbar = binding.toolbarLayout
         toolbar.title = " "

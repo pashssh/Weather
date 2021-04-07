@@ -1,0 +1,15 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="640"
+    android:viewportHeight="640">
+
+    <path
+        android:name="rot"
+        android:fillColor="#7f3d80"
+        android:pathData="M293.93,159.6L336.66,159.6L336.66,436.23L293.93,436.23L293.93,159.6Z" />
+    <path
+
+        android:fillColor="#2c1446"
+        android:pathData="M204.13,113.25L427.9,113.25L427.9,275.46L204.13,275.46L204.13,113.25Z" />
+</vector>

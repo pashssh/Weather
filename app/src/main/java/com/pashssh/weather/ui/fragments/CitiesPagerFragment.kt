@@ -17,7 +17,7 @@ import com.pashssh.weather.ui.viewModels.CitiesPagerViewModel
 
 class CitiesPagerFragment : Fragment() {
 
-    private lateinit var viewPager : ViewPager2
+    private lateinit var viewPager: ViewPager2
 
     private val citiesPagerViewModel: CitiesPagerViewModel by lazy {
         ViewModelProvider(this).get(CitiesPagerViewModel::class.java)
@@ -35,23 +35,27 @@ class CitiesPagerFragment : Fragment() {
 //        var locationItems = emptyList<LocationItem>()
 //        binding.viewPager2.adapter = CitiesViewPagerAdapter(locationItems, this)
 
-        citiesPagerViewModel.listCities.observe(viewLifecycleOwner, Observer<List<LocationItem>> { items ->
-            if (items.isEmpty()) {
-                this.findNavController()
-                    .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
-            }
-            viewPager.adapter = CitiesViewPagerAdapter(items, this)
-//            if (CitiesPagerFragmentArgs)
-            val args : CitiesPagerFragmentArgs by navArgs()
-            if (args.added) {
-                viewPager.currentItem = items.size
-            }
-        })
+        citiesPagerViewModel.listCities.observe(
+            viewLifecycleOwner,
+            Observer<List<LocationItem>> { items ->
+                val args: CitiesPagerFragmentArgs by navArgs()
+                if (items.isEmpty()) {
+                    if (!args.added) {
+                        this.findNavController()
+                            .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
+                    } else {
+                        viewPager.adapter = CitiesViewPagerAdapter(emptyList(), this)
+                    }
+                } else {
+                    viewPager.adapter = CitiesViewPagerAdapter(items, this)
+                    if (args.added) {
+                        viewPager.currentItem = items.size
+                    }
+                }
+            })
 
         return binding.root
     }
-
-
 
 
 }

@@ -45,35 +45,12 @@ class WeatherViewModel(application: Application, val location: LocationItem) : A
         Log.i("MYAPP", "test $location")
     }
 
-    fun getWeatherData() {
-        refreshWeatherFromNetwork(location.latitude, location.longitude, location.cityName)
+    private fun getWeatherData() {
 //        data = weatherRepository.getWeather(location.cityName)
+        refreshWeatherFromNetwork(location.latitude, location.longitude, location.cityName)
     }
 
-
-//    init {
-//
-//        if (sharedPreferences.contains("cityName")
-//            && sharedPreferences.contains("lat")
-//            && sharedPreferences.contains("lon")
-//        ) {
-//            sharedPreferences.getString("cityName", "")?.let { updateDataWeather(it) }
-//            refreshWeatherFromNetwork(
-//                sharedPreferences.getDouble("lat", 1.0),
-//                sharedPreferences.getDouble("lon", 1.0),
-//                sharedPreferences.getString("cityName", "")!!
-//            )
-//        }
-//    }
-
-//    fun updateDataWeather(x: String) {
-//        val result = weatherRepository.getWeatherData(x)
-//        dataWeather.addSource(result) {
-//            dataWeather.value = it
-//        }
-//    }
-
-    fun refreshWeatherFromNetwork(lat: Double, lon: Double, city: String) {
+    private fun refreshWeatherFromNetwork(lat: Double, lon: Double, city: String) {
         coroutineScope.launch {
             weatherRepository.refreshWeather(lat, lon, city)
         }
@@ -87,6 +64,7 @@ class WeatherViewModel(application: Application, val location: LocationItem) : A
 
 }
 
+@Suppress("UNCHECKED_CAST")
 class WeatherViewModelFactory(val app: Application, val location: LocationItem): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(WeatherViewModel::class.java)) {
