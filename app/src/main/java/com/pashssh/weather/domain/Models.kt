@@ -13,6 +13,10 @@ data class DomainWeatherData(
     val description: String,
     val uvi: String,
     val humidity: String,
+    val sunrise: String,
+    val sunset: String,
+    val windSpeed: String,
+    val windDeg: String,
     val listWeatherHourly: List<DomainWeatherHourly>,
     val listWeatherDaily: List<DomainWeatherDaily>
 )

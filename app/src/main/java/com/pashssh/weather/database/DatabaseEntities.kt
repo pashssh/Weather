@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import com.pashssh.weather.domain.DomainWeatherData
 import com.pashssh.weather.domain.DomainWeatherDaily
 import com.pashssh.weather.domain.DomainWeatherHourly
-import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,6 +24,10 @@ data class DatabaseWeatherData constructor(
     val feelsLike: Int,
     val uvi: Double,
     val humidity: Int,
+    val sunrise: Int,
+    val sunset: Int,
+    val windSpeed: Double,
+    val windDeg: Int,
     val cloudsDescription: String,
     val weatherHourlyWeather: List<DatabaseWeatherHourly>,
     val weatherDailyWeather: List<DatabaseWeatherDaily>
@@ -69,6 +72,10 @@ fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
         feelsLike = " ${this.feelsLike}\u00B0",
         uvi = " ${this.uvi}",
         humidity = " ${this.humidity}%",
+        sunrise = sdfHourly.format(Date(this.sunrise.toLong() * 1000)),
+        sunset = sdfHourly.format(Date(this.sunset.toLong() * 1000)),
+        windSpeed = "${this.windSpeed}",
+        windDeg = windDegToString(this.windDeg),
         description = this.cloudsDescription,
         listWeatherHourly = this.weatherHourlyWeather.map {
             return@map DomainWeatherHourly(
@@ -85,6 +92,21 @@ fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
             )
         }
     )
+}
+
+fun windDegToString(windDeg: Int): String {
+    return when (windDeg) {
+        in 0..22 -> "Север"
+        in 23..67 -> "Северо-Восток"
+        in 68..112 -> "Восток"
+        in 113..157 -> "Юго-Восток"
+        in 158..202 -> "Юг"
+        in 203..247 -> "Юго-Запад"
+        in 248..292 -> "Запад"
+        in 293..337 -> "Северо-Запад"
+        in 339..360 -> "Север"
+        else -> "Север"
+    }
 }
 
 

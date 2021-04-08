@@ -1,5 +1,7 @@
 package com.pashssh.weather.network.json
 
+import androidx.room.ColumnInfo
+
 data class Current(
     val dt: Int,
     val sunrise: Int,
@@ -11,8 +13,10 @@ data class Current(
     val clouds: Int,
     val uvi: Double,
     val visibility: Int,
-    val wind_speed: Double,
-    val wind_deg: Int,
+    @ColumnInfo(name = "full_name")
+    val windSpeed: Double,
+    @ColumnInfo(name = "full_name")
+    val windDeg: Int,
     val rain: RainCurrent?,
     val snow: SnowCurrent?,
     val weather: List<WeatherCurrent>

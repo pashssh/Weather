@@ -69,7 +69,7 @@
                         android:text="@{viewModel.data.feelsLike}"
                         android:textAlignment="center"
                         android:textSize="10dp"
-                        tools:text="+5 / +8" />
+                        tools:text="+5" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -145,87 +145,56 @@
                     tools:itemCount="5"
                     tools:listitem="@layout/item_daily_view" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_height="wrap_content">
-
-
-                    <ImageView
-                        android:layout_width="100dp"
-                        android:src="@drawable/ic_delete_city"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center|start" />
-
-
-                    <GridLayout
-                        android:layout_gravity="center"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_row="1"
-                            android:layout_column="1"
-                            android:text="Ощущается как "
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:layout_row="2"
-                            android:layout_column="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Влажность " />
-
-                        <TextView
-                            android:layout_row="3"
-                            android:layout_column="1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Индекс УФ " />
-
-                        <TextView
-                            android:layout_column="2"
-                            android:layout_row="1"
-                            android:text="@{viewModel.data.feelsLike}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="18"/>
-
-                        <TextView
-                            android:layout_column="2"
-                            android:layout_row="2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.data.humidity}"
-                            tools:text="115"/>
-
-                        <TextView
-                            android:layout_column="2"
-                            android:layout_row="3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{viewModel.data.uvi}"
-                            tools:text="15"/>
-                    </GridLayout>
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
+                <GridLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:id="@+id/wind"
-                        android:layout_width="100dp"
-                        android:src="@drawable/anim_wind"
-                        android:layout_height="100dp"
-                        android:layout_gravity="center|start" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:text="Скорость ветра " />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="2"
+                        android:layout_column="1"
+                        android:text="Влажность " />
 
-                </FrameLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="3"
+                        android:layout_column="1"
+                        android:text="Индекс УФ " />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="2"
+                        android:text="@{viewModel.data.windDeg}"
+                        tools:text="18" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="2"
+                        android:layout_column="2"
+                        android:text="@{viewModel.data.humidity}"
+                        tools:text="115" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="3"
+                        android:layout_column="2"
+                        android:text="@{viewModel.data.uvi}"
+                        tools:text="15" />
+                </GridLayout>
 
             </LinearLayout>
 

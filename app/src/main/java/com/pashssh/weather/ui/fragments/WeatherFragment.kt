@@ -1,8 +1,11 @@
 package com.pashssh.weather.ui.fragments
 
+import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -18,6 +21,7 @@ import com.pashssh.weather.ui.viewModels.WeatherViewModel
 import com.pashssh.weather.ui.adapters.DailyAdapter
 import com.pashssh.weather.ui.adapters.HourlyAdapter
 import com.pashssh.weather.ui.viewModels.WeatherViewModelFactory
+import kotlinx.android.synthetic.main.fragment_weather.*
 
 class WeatherFragment() : Fragment() {
 
@@ -27,7 +31,8 @@ class WeatherFragment() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val application = requireNotNull(this.activity).application
-        val viewModelFactory = WeatherViewModelFactory(application, arguments?.getSerializable("key") as LocationItem)
+        val viewModelFactory =
+            WeatherViewModelFactory(application, arguments?.getSerializable("key") as LocationItem)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
 
     }
@@ -53,14 +58,12 @@ class WeatherFragment() : Fragment() {
         val toolbar = binding.toolbarLayout
         toolbar.title = " "
 
-
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-
 
 //        viewModel.getWeatherData()
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
-            toolbar.title = it.location?: ""
+            toolbar.title = it.location ?: ""
         })
 
         viewModel.dataWeather.observe(viewLifecycleOwner, Observer {
@@ -86,7 +89,8 @@ class WeatherFragment() : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.changeCity -> this.findNavController().navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
+            R.id.changeCity -> this.findNavController()
+                .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
         }
         return true
     }

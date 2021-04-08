@@ -15,7 +15,6 @@ data class Weather(
 )
 
 
-
 fun Weather.asDatabaseModel(city: String): DatabaseWeatherData {
     return DatabaseWeatherData(
         time = this.current.dt,
@@ -30,6 +29,10 @@ fun Weather.asDatabaseModel(city: String): DatabaseWeatherData {
         timezone = this.timezone,
         uvi = this.current.uvi,
         humidity = this.current.humidity,
+        sunrise = this.current.sunrise,
+        sunset = this.current.sunset,
+        windSpeed = this.current.windSpeed,
+        windDeg = this.current.windDeg,
         weatherHourlyWeather = this.hourly.chunked(24)[0].map {
             return@map DatabaseWeatherHourly(
                 time = it.dt,
