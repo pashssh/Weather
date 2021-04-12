@@ -10,9 +10,10 @@
             type="com.pashssh.weather.domain.DomainWeatherHourly" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="2dp"
         android:paddingTop="4dp"
         android:paddingRight="2dp"
@@ -20,35 +21,34 @@
 
         <TextView
             android:id="@+id/hourly_time"
+            style="@style/TextViewApp"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@{hourlyItem.time}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="12:35" />
 
         <ImageView
             android:id="@+id/hourly_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:setWeatherIcon="@{hourlyItem.iconWithUrl}"
-            app:layout_constraintTop_toBottomOf="@+id/hourly_time"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:setWeatherIcon="@{hourlyItem.iconWithUrl}" />
 
 
         <TextView
             android:id="@+id/hourly_temperature"
+            style="@style/TextViewApp"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="@{hourlyItem.temperature}"
-            app:layout_constraintTop_toBottomOf="@+id/hourly_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             tools:text="35" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

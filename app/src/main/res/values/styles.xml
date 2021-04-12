@@ -14,15 +14,29 @@
     </style>
 
     <style name="TextAppearance.MyApp.Title.Collapsed" parent="android:TextAppearance">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/comfortaa_variable_font</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="TextAppearance.MyApp.Title.Expanded" parent="android:TextAppearance">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/comfortaa_variable_font</item>
         <item name="android:textSize">20sp</item>
 
     </style>
+
+
+    <style name="TextViewApp">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:fontFamily">@font/comfortaa_variable_font</item>
+    </style>
+
+    <declare-styleable name="SemiCircleView">
+        <attr name="colorFront" format="color" />
+        <attr name="colorBack" format="color" />
+    </declare-styleable>
 
 
 </resources>

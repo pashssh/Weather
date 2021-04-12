@@ -1,6 +1,7 @@
 package com.pashssh.weather.network.json
 
 import androidx.room.ColumnInfo
+import com.squareup.moshi.Json
 
 data class Current(
     val dt: Int,
@@ -13,9 +14,9 @@ data class Current(
     val clouds: Int,
     val uvi: Double,
     val visibility: Int,
-    @ColumnInfo(name = "full_name")
+    @Json(name = "wind_speed")
     val windSpeed: Double,
-    @ColumnInfo(name = "full_name")
+    @Json(name = "wind_deg")
     val windDeg: Int,
     val rain: RainCurrent?,
     val snow: SnowCurrent?,

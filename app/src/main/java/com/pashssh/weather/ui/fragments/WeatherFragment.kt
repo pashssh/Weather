@@ -1,5 +1,6 @@
 package com.pashssh.weather.ui.fragments
 
+import android.animation.ValueAnimator
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -55,6 +56,8 @@ class WeatherFragment() : Fragment() {
             itemAnimator = null
         }
 
+        val anim = binding.viewA
+
         val toolbar = binding.toolbarLayout
         toolbar.title = " "
 
@@ -102,6 +105,8 @@ class WeatherFragment() : Fragment() {
             )
         }
     }
+
+
 
 
 }
