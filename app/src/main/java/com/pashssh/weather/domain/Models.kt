@@ -34,4 +34,54 @@ data class DomainWeatherDaily(
 )
 
 
+fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
+
+    val sdfHourly = SimpleDateFormat("HH:mm")
+    val sdfDaily = SimpleDateFormat("E, dd MMM")
+
+    return DomainWeatherData(
+        temperature = "${this.temperature}\u00B0",
+        dayTemp = "${this.minTemp}\u00B0 / ${this.maxTemp}\u00B0",
+        location = this.location,
+        feelsLike = " ${this.feelsLike}\u00B0",
+        uvi = " ${this.uvi}",
+        humidity = " ${this.humidity}%",
+        sunrise = sdfHourly.format(Date(this.sunrise.toLong() * 1000)),
+        sunset = sdfHourly.format(Date(this.sunset.toLong() * 1000)),
+        windSpeed = "${this.windSpeed}",
+        windDeg = windDegToString(this.windDeg),
+        description = this.cloudsDescription,
+        listWeatherHourly = this.weatherHourlyWeather.map {
+            return@map DomainWeatherHourly(
+                time = sdfHourly.format(Date(it.time.toLong() * 1000)),
+                temperature = "${it.temperature}\u00B0",
+                iconWithUrl = it.iconIdWithUrl
+            )
+        },
+        listWeatherDaily = this.weatherDailyWeather.map {
+            return@map DomainWeatherDaily(
+                time = sdfDaily.format(Date(it.time.toLong() * 1000)),
+                dayTemp = "${it.minTemp}\u00B0 / ${it.maxTemp}\u00B0",
+                iconWithUrl = it.iconIdWithUrl
+            )
+        }
+    )
+}
+
+fun windDegToString(windDeg: Int): String {
+    return when (windDeg) {
+        in 0..22 -> "Север"
+        in 23..67 -> "Северо-Восток"
+        in 68..112 -> "Восток"
+        in 113..157 -> "Юго-Восток"
+        in 158..202 -> "Юг"
+        in 203..247 -> "Юго-Запад"
+        in 248..292 -> "Запад"
+        in 293..337 -> "Северо-Запад"
+        in 339..360 -> "Север"
+        else -> "Север"
+    }
+}
+
+
 

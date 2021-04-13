@@ -56,7 +56,6 @@ class WeatherFragment() : Fragment() {
             itemAnimator = null
         }
 
-        val anim = binding.viewA
 
         val toolbar = binding.toolbarLayout
         toolbar.title = " "

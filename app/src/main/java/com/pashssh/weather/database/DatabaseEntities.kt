@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import com.pashssh.weather.domain.DomainWeatherData
 import com.pashssh.weather.domain.DomainWeatherDaily
 import com.pashssh.weather.domain.DomainWeatherHourly
+import com.pashssh.weather.network.json.Weather
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -60,54 +61,47 @@ data class LocationItem(
     val longitude: Double
 ) : java.io.Serializable
 
-fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
 
-    val sdfHourly = SimpleDateFormat("HH:mm")
-    val sdfDaily = SimpleDateFormat("E, dd MMM")
 
-    return DomainWeatherData(
-        temperature = "${this.temperature}\u00B0",
-        dayTemp = "${this.minTemp}\u00B0 / ${this.maxTemp}\u00B0",
-        location = this.location,
-        feelsLike = " ${this.feelsLike}\u00B0",
-        uvi = " ${this.uvi}",
-        humidity = " ${this.humidity}%",
-        sunrise = sdfHourly.format(Date(this.sunrise.toLong() * 1000)),
-        sunset = sdfHourly.format(Date(this.sunset.toLong() * 1000)),
-        windSpeed = "${this.windSpeed}",
-        windDeg = windDegToString(this.windDeg),
-        description = this.cloudsDescription,
-        listWeatherHourly = this.weatherHourlyWeather.map {
-            return@map DomainWeatherHourly(
-                time = sdfHourly.format(Date(it.time.toLong() * 1000)),
-                temperature = "${it.temperature}\u00B0",
-                iconWithUrl = it.iconIdWithUrl
+fun Weather.asDatabaseModel(city: String): DatabaseWeatherData {
+    return DatabaseWeatherData(
+        time = this.current.dt,
+        temperature = this.current.temp.toInt(),
+        maxTemp = this.daily[0].temp.max.toInt(),
+        minTemp = this.daily[0].temp.min.toInt(),
+        feelsLike = this.current.feels_like.toInt(),
+        cloudsDescription = this.current.weather[0].description,
+        latitude = this.lat,
+        longitude = this.lon,
+        location = city,
+        timezone = this.timezone,
+        uvi = this.current.uvi,
+        humidity = this.current.humidity,
+        sunrise = this.current.sunrise,
+        sunset = this.current.sunset,
+        windSpeed = this.current.windSpeed,
+        windDeg = this.current.windDeg,
+        weatherHourlyWeather = this.hourly.chunked(24)[0].map {
+            return@map DatabaseWeatherHourly(
+                time = it.dt,
+                temperature = it.temp.toInt(),
+                imageId = it.weather[0].id,
+                iconIdWithUrl = it.weather[0].icon
             )
         },
-        listWeatherDaily = this.weatherDailyWeather.map {
-            return@map DomainWeatherDaily(
-                time = sdfDaily.format(Date(it.time.toLong() * 1000)),
-                dayTemp = "${it.minTemp}\u00B0 / ${it.maxTemp}\u00B0",
-                iconWithUrl = it.iconIdWithUrl
+        weatherDailyWeather = this.daily.chunked(5)[0].map {
+            return@map DatabaseWeatherDaily(
+                time = it.dt,
+                minTemp = it.temp.min.toInt(),
+                maxTemp = it.temp.max.toInt(),
+                imageId = it.weather[0].id,
+                iconIdWithUrl = it.weather[0].icon
             )
         }
     )
 }
 
-fun windDegToString(windDeg: Int): String {
-    return when (windDeg) {
-        in 0..22 -> "Север"
-        in 23..67 -> "Северо-Восток"
-        in 68..112 -> "Восток"
-        in 113..157 -> "Юго-Восток"
-        in 158..202 -> "Юг"
-        in 203..247 -> "Юго-Запад"
-        in 248..292 -> "Запад"
-        in 293..337 -> "Северо-Запад"
-        in 339..360 -> "Север"
-        else -> "Север"
-    }
-}
+
 
 
 

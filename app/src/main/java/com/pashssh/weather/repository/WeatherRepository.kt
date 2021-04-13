@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.pashssh.weather.database.*
 import com.pashssh.weather.domain.DomainWeatherData
+import com.pashssh.weather.domain.asDomainModel
 import com.pashssh.weather.network.Network
-import com.pashssh.weather.network.json.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
