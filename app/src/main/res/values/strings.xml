@@ -4,9 +4,13 @@
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="wind_speed">Скорость ветра </string>
+    <string name="wind_speed">Скорость:</string>
     <string name="wind_speed_value"> км/ч</string>
     <string name="uvi">Индекс УФ </string>
+    <string name="comfort">Комфорт</string>
+    <string name="feels_like">Ощущение:</string>
+    <string name="wind">Ветер</string>
+    <string name="wind_deg">Направление:</string>
 
 
 </resources>
