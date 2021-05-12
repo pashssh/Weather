@@ -43,20 +43,35 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
             childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
                     as AutocompleteSupportFragment
 
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.LAT_LNG, Place.Field.NAME))
+        autocompleteFragment.setPlaceFields(
+            listOf(
+                Place.Field.LAT_LNG,
+                Place.Field.NAME,
+                Place.Field.ID
+            )
+        )
 
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                Toast.makeText(context, "Place: ${place.name}, ${place.latLng}", Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    context,
+                    "Place: ${place.name}, ${place.latLng}, ${place.id}",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
                 try {
-                    viewModel.addCityInDb(
+                    viewModel.addCityInDatabase(
                         place.latLng!!.latitude,
                         place.latLng!!.longitude,
-                        place.name!!
+                        place.name!!,
+                        place.id!!
                     )
                     this@ChangeCityFragment.findNavController()
-                        .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(true))
+                        .navigate(
+                            ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
+                                true
+                            )
+                        )
 
                 } catch (e: Exception) {
                     Log.i("APP_ERR", e.message.toString())
@@ -83,7 +98,6 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 
     override fun onItemDeleteClick(item: LocationItem) {
     }
-
 
 
 }

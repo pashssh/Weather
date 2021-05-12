@@ -11,6 +11,7 @@
     <string name="feels_like">Ощущение:</string>
     <string name="wind">Ветер</string>
     <string name="wind_deg">Направление:</string>
+    <string name="night_theme">Ночная тема</string>
 
 
 </resources>

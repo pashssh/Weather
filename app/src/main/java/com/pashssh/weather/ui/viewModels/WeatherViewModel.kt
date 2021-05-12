@@ -35,7 +35,6 @@ class WeatherViewModel(application: Application, val location: LocationItem) : A
 
     var data: LiveData<DomainWeatherData>
 
-    val locList = weatherRepository.getCitiesList()
 
 
     init {
@@ -47,12 +46,12 @@ class WeatherViewModel(application: Application, val location: LocationItem) : A
 
     private fun getWeatherData() {
 //        data = weatherRepository.getWeather(location.cityName)
-        refreshWeatherFromNetwork(location.latitude, location.longitude, location.cityName)
+        refreshWeatherFromNetwork()
     }
 
-    private fun refreshWeatherFromNetwork(lat: Double, lon: Double, city: String) {
+    private fun refreshWeatherFromNetwork() {
         coroutineScope.launch {
-            weatherRepository.refreshWeather(lat, lon, city)
+            weatherRepository.refreshWeather(location.latitude, location.longitude, location.cityName, location.cityID)
         }
     }
 

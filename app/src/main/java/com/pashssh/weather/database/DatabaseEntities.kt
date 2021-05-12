@@ -3,11 +3,7 @@ package com.pashssh.weather.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pashssh.weather.domain.DomainWeatherData
-import com.pashssh.weather.domain.DomainWeatherDaily
-import com.pashssh.weather.domain.DomainWeatherHourly
 import com.pashssh.weather.network.json.Weather
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -19,8 +15,9 @@ data class DatabaseWeatherData constructor(
     val minTemp: Int,
     val latitude: Double,
     val longitude: Double,
-    @PrimaryKey
     val location: String,
+    @PrimaryKey
+    val cityId: String,
     val timezone: String,
     val feelsLike: Int,
     val uvi: Double,
@@ -33,6 +30,19 @@ data class DatabaseWeatherData constructor(
     val weatherHourlyWeather: List<DatabaseWeatherHourly>,
     val weatherDailyWeather: List<DatabaseWeatherDaily>
 )
+
+@Entity
+data class LocationItem(
+    @ColumnInfo(name = "location")
+    val cityName: String,
+    @PrimaryKey
+    val cityID: String,
+    @ColumnInfo(name = "latitude")
+    val latitude: Double,
+    @ColumnInfo(name = "longitude")
+    val longitude: Double
+) : java.io.Serializable
+
 
 data class DatabaseWeatherHourly(
     val time: Int,
@@ -50,20 +60,9 @@ data class DatabaseWeatherDaily(
 )
 
 
-@Entity
-data class LocationItem(
-    @ColumnInfo(name = "location")
-    @PrimaryKey
-    val cityName: String,
-    @ColumnInfo(name = "latitude")
-    val latitude: Double,
-    @ColumnInfo(name = "longitude")
-    val longitude: Double
-) : java.io.Serializable
 
 
-
-fun Weather.asDatabaseModel(city: String): DatabaseWeatherData {
+fun Weather.asDatabaseModel(city: String, cityId: String): DatabaseWeatherData {
     return DatabaseWeatherData(
         time = this.current.dt,
         temperature = this.current.temp.toInt(),
@@ -74,6 +73,7 @@ fun Weather.asDatabaseModel(city: String): DatabaseWeatherData {
         latitude = this.lat,
         longitude = this.lon,
         location = city,
+        cityId = cityId,
         timezone = this.timezone,
         uvi = this.current.uvi,
         humidity = this.current.humidity,

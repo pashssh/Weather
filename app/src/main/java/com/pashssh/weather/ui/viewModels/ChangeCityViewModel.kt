@@ -17,14 +17,15 @@ class ChangeCityViewModel() : ViewModel() {
     private val database = getDatabase(App().applicationContext())
     private val weatherRepository = WeatherRepository(database)
 
-    val listCities = weatherRepository.getCitiesList()
+    val listCities = weatherRepository.getList()
 
-    fun addCityInDb(latitude: Double, longitude: Double, name: String) {
+    fun addCityInDatabase(latitude: Double, longitude: Double, name: String, cityId: String) {
         coroutineScope.launch {
-            weatherRepository.insertCity(
+            weatherRepository.insertNewCity(
                 latitude,
                 longitude,
-                name
+                name,
+                cityId
             )
         }
 

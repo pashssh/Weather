@@ -57,15 +57,15 @@ class WeatherFragment() : Fragment() {
         }
 
 
-        val toolbar = binding.toolbarLayout
-        toolbar.title = " "
+//        val toolbar = binding.toolbarLayout
+//        toolbar.title = " "
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
 //        viewModel.getWeatherData()
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
-            toolbar.title = it.location ?: ""
+//            toolbar.title = it.location ?: ""
         })
 
         viewModel.dataWeather.observe(viewLifecycleOwner, Observer {

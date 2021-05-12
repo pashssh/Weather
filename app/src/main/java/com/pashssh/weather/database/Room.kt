@@ -11,27 +11,15 @@ interface WeatherDao {
     @Query("select * from databaseweatherdata where location = :loc")
     fun getWeatherData(loc: String): LiveData<DatabaseWeatherData>
 
-    @Query("select location, latitude, longitude from databaseweatherdata")
-    fun getLocationList(): LiveData<List<LocationItem>>
-
-    @Query("select location, latitude, longitude from databaseweatherdata limit 1")
-    fun getLocation(): LocationItem
-
-
-    @Query("select location, latitude, longitude from locationitem")
+    @Query("select location, cityID, latitude, longitude from locationitem")
     fun getList(): LiveData<List<LocationItem>>
 
     @Transaction
-    fun tran(l: LocationItem, d: DatabaseWeatherData) {
+    fun insert(l: LocationItem, d: DatabaseWeatherData) {
         insertCity(d)
         insertListItem(l)
 
     }
-
-
-//
-//    @Query("select * from databasedaily where location = :loc")
-//    fun getDailyWeather(loc: String): LiveData<List<DatabaseDaily>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCity(databaseWeatherData: DatabaseWeatherData)

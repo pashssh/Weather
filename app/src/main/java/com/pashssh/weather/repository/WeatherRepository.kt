@@ -20,16 +20,12 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
-    fun getCitiesList(): LiveData<List<LocationItem>> {
-        return weatherDatabase.weatherDao.getLocationList()
-    }
-
     fun getList(): LiveData<List<LocationItem>> {
         return weatherDatabase.weatherDao.getList()
     }
 
 
-    suspend fun refreshWeather(lat: Double, lon: Double, city: String) {
+    suspend fun refreshWeather(lat: Double, lon: Double, city: String, cityId: String) {
         withContext(Dispatchers.IO) {
             val weatherData = Network.weather.getWeatherOneCall(
                 lat,
@@ -39,14 +35,14 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                 "ru",
                 "minutely"
             ).await()
-            weatherDatabase.weatherDao.insertCity(weatherData.asDatabaseModel(city))
+            weatherDatabase.weatherDao.insertCity(weatherData.asDatabaseModel(city, cityId))
         }
     }
 
-    suspend fun insertCity(lat: Double, lon: Double, name: String) {
+    suspend fun insertNewCity(lat: Double, lon: Double, name: String, cityId: String) {
         withContext(Dispatchers.IO) {
-            weatherDatabase.weatherDao.tran(
-                LocationItem(name, lat, lon),
+            weatherDatabase.weatherDao.insert(
+                LocationItem(name, cityId, lat, lon),
                 DatabaseWeatherData(
                     0,
                     0,
@@ -55,6 +51,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                     lat,
                     lon,
                     name,
+                    cityId,
                     "null",
                     0,
                     0.0,
@@ -71,32 +68,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
-    suspend fun insertCityIfEmptyTable() {
-        withContext(Dispatchers.IO) {
-            weatherDatabase.weatherDao.insertCity(
-                DatabaseWeatherData(
-                    1,
-                    1,
-                    1,
-                    1,
-                    1.0,
-                    1.0,
-                    "Default",
-                    "Default",
-                    1,
-                    0.0,
-                    0,
-                    0,
-                    0,
-                    0.0,
-                    0,
-                    "null",
-                    listOf(DatabaseWeatherHourly(1, 1, 1, "@2x")),
-                    listOf(DatabaseWeatherDaily(1, 1, 1, 1, "@2x"))
-                )
-            )
-        }
-    }
+
 }
 
 
