@@ -21,6 +21,7 @@
             app:destination="@id/citiesViewPager" >
             <argument
                 android:name="added"
+                app:argType="boolean"
                 android:defaultValue="false" />
         </action>
     </fragment>

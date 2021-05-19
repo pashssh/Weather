@@ -40,7 +40,7 @@ data class LocationItem(
     @ColumnInfo(name = "latitude")
     val latitude: Double,
     @ColumnInfo(name = "longitude")
-    val longitude: Double
+    val longitude: Double,
 ) : java.io.Serializable
 
 

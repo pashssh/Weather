@@ -1,15 +1,14 @@
 package com.pashssh.weather.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.pashssh.weather.R
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.FragmentCitiesViewPagerBinding
 import com.pashssh.weather.ui.CitiesViewPagerAdapter
@@ -48,14 +47,30 @@ class CitiesPagerFragment : Fragment() {
                     }
                 } else {
                     viewPager.adapter = CitiesViewPagerAdapter(items, this)
-                    if (args.added) {
-                        viewPager.currentItem = items.size
-                    }
+//                    if (args.added) {
+//                        viewPager.currentItem = items.size
+//                    }
                 }
             })
 
+//        setHasOptionsMenu(true)
+
         return binding.root
     }
+
+
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.weather_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.changeCity -> this.findNavController()
+//                .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
+//        }
+//        return true
+//    }
 
 
 }

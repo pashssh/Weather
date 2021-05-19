@@ -1,26 +1,20 @@
 package com.pashssh.weather.ui.fragments
 
-import android.animation.ValueAnimator
-import android.graphics.drawable.AnimatedVectorDrawable
-import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-
 import com.pashssh.weather.R
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.FragmentWeatherBinding
-
-import com.pashssh.weather.ui.viewModels.WeatherViewModel
 import com.pashssh.weather.ui.adapters.DailyAdapter
 import com.pashssh.weather.ui.adapters.HourlyAdapter
+import com.pashssh.weather.ui.viewModels.WeatherViewModel
 import com.pashssh.weather.ui.viewModels.WeatherViewModelFactory
 import kotlinx.android.synthetic.main.fragment_weather.*
 
@@ -78,11 +72,14 @@ class WeatherFragment() : Fragment() {
 
         })
 
-        setHasOptionsMenu(true)
 
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.weather_menu, menu)

@@ -1,5 +1,6 @@
 package com.pashssh.weather.ui.viewModels
 
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.pashssh.weather.App
 import com.pashssh.weather.database.getDatabase
@@ -29,8 +30,8 @@ class ChangeCityViewModel() : ViewModel() {
             )
         }
 
-
     }
+
 
 }
 
