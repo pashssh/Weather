@@ -60,18 +60,33 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
                 )
                     .show()
                 try {
-                    viewModel.addCityInDatabase(
-                        place.latLng!!.latitude,
-                        place.latLng!!.longitude,
-                        place.name!!,
-                        place.id!!
-                    )
-                    this@ChangeCityFragment.findNavController()
-                        .navigate(
-                            ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
-                                true
-                            )
+                    if (viewModel.listCities.value?.map { it.cityID }?.contains(place.id!!) != true) {
+                        viewModel.addCityInDatabase(
+                            place.latLng!!.latitude,
+                            place.latLng!!.longitude,
+                            place.name!!,
+                            place.id!!
                         )
+                        this@ChangeCityFragment.findNavController()
+                            .navigate(
+                                ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
+                                    true
+                                )
+                            )
+                    } else {
+                        viewModel.updateCityInDatabase(
+                            place.latLng!!.latitude,
+                            place.latLng!!.longitude,
+                            place.name!!,
+                            place.id!!
+                        )
+                        this@ChangeCityFragment.findNavController()
+                            .navigate(
+                                ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
+                                    true
+                                )
+                            )
+                    }
 
                 } catch (e: Exception) {
                     Log.i("APP_ERR", e.message.toString())

@@ -59,7 +59,7 @@ class WeatherFragment() : Fragment() {
 //        viewModel.getWeatherData()
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
-//            toolbar.title = it.location ?: ""
+            toolbar.title = it.location ?: ""
         })
 
         viewModel.dataWeather.observe(viewLifecycleOwner, Observer {

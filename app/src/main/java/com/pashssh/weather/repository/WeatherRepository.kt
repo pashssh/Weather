@@ -68,6 +68,35 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
         }
     }
 
+    suspend fun updateCity(lat: Double, lon: Double, name: String, cityId: String) {
+        withContext(Dispatchers.IO) {
+            weatherDatabase.weatherDao.update(
+                LocationItem(name, cityId, lat, lon),
+                DatabaseWeatherData(
+                    0,
+                    0,
+                    0,
+                    0,
+                    lat,
+                    lon,
+                    name,
+                    cityId,
+                    "null",
+                    0,
+                    0.0,
+                    0,
+                    0,
+                    0,
+                    0.0,
+                    0,
+                    "null",
+                    listOf(DatabaseWeatherHourly(0, 0, 0, "04d")),
+                    listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
+                )
+            )
+        }
+    }
+
 
 }
 

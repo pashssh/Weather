@@ -29,7 +29,17 @@ class ChangeCityViewModel() : ViewModel() {
                 cityId
             )
         }
+    }
 
+    fun updateCityInDatabase(latitude: Double, longitude: Double, name: String, cityId: String) {
+        coroutineScope.launch {
+            weatherRepository.updateCity(
+                latitude,
+                longitude,
+                name,
+                cityId
+            )
+        }
     }
 
 

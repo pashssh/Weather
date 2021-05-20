@@ -18,7 +18,6 @@ interface WeatherDao {
     fun insert(l: LocationItem, d: DatabaseWeatherData) {
         insertCity(d)
         insertListItem(l)
-
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -26,6 +25,19 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertListItem(locationItem: LocationItem)
+
+
+    @Transaction
+    fun update(l: LocationItem, d: DatabaseWeatherData) {
+        updateCity(d)
+        updateListItem(l)
+    }
+
+    @Update
+    fun updateCity(databaseWeatherData: DatabaseWeatherData)
+
+    @Update
+    fun updateListItem(locationItem: LocationItem)
 
 }
 
