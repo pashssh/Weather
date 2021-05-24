@@ -20,10 +20,7 @@
             android:id="@+id/action_changeCityFragment_to_citiesViewPager"
             app:destination="@id/citiesViewPager"
             app:popUpTo="@id/citiesViewPager">
-            <argument
-                android:name="added"
-                android:defaultValue="false"
-                app:argType="boolean" />
+
         </action>
     </fragment>
     <fragment
@@ -35,7 +32,11 @@
             app:destination="@id/changeCityFragment" />
         <argument
             android:name="added"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="placeId"
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
 </navigation>

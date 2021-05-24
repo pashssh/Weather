@@ -1,6 +1,7 @@
 package com.pashssh.weather.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,9 +32,6 @@ class CitiesPagerFragment : Fragment() {
         binding.lifecycleOwner = this
         viewPager = binding.viewPager2
 
-//        var locationItems = emptyList<LocationItem>()
-//        binding.viewPager2.adapter = CitiesViewPagerAdapter(locationItems, this)
-
         citiesPagerViewModel.listCities.observe(
             viewLifecycleOwner,
             Observer<List<LocationItem>> { items ->
@@ -47,30 +45,13 @@ class CitiesPagerFragment : Fragment() {
                     }
                 } else {
                     viewPager.adapter = CitiesViewPagerAdapter(items, this)
-//                    if (args.added) {
-//                        viewPager.currentItem = items.size
-//                    }
+                    val list = items.map { it.cityID }
+                    if (list.contains(args.placeId)) {
+                        viewPager.currentItem = items.indexOf(items[list.indexOf(args.placeId)])
+
+                    }
                 }
             })
-
-//        setHasOptionsMenu(true)
-
         return binding.root
     }
-
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.weather_menu, menu)
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.changeCity -> this.findNavController()
-//                .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
-//        }
-//        return true
-//    }
-
-
 }

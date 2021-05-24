@@ -60,34 +60,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
                 )
                     .show()
                 try {
-                    if (viewModel.listCities.value?.map { it.cityID }?.contains(place.id!!) != true) {
-                        viewModel.addCityInDatabase(
-                            place.latLng!!.latitude,
-                            place.latLng!!.longitude,
-                            place.name!!,
-                            place.id!!
-                        )
-                        this@ChangeCityFragment.findNavController()
-                            .navigate(
-                                ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
-                                    true
-                                )
-                            )
-                    } else {
-                        viewModel.updateCityInDatabase(
-                            place.latLng!!.latitude,
-                            place.latLng!!.longitude,
-                            place.name!!,
-                            place.id!!
-                        )
-                        this@ChangeCityFragment.findNavController()
-                            .navigate(
-                                ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
-                                    true
-                                )
-                            )
-                    }
-
+                    insertOrUpdate(place)
                 } catch (e: Exception) {
                     Log.i("APP_ERR", e.message.toString())
                 }
@@ -101,12 +74,34 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         return binding.root
     }
 
+    private fun insertOrUpdate(place: Place) {
+        if (viewModel.listCities.value?.map { it.cityID }?.contains(place.id!!) != true) {
+            viewModel.addCityInDatabase(
+                place.latLng!!.latitude,
+                place.latLng!!.longitude,
+                place.name!!,
+                place.id!!
+            )
+            navigateToViewPager(place, true)
+        } else {
+            viewModel.updateCityInDatabase(
+                place.latLng!!.latitude,
+                place.latLng!!.longitude,
+                place.name!!,
+                place.id!!
+            )
+            navigateToViewPager(place)
+        }
+    }
 
-//    private fun navigateOnWeatherFragment(city: String) {
-//        this.findNavController()
-//            .navigate(ChangeCityFragmentDirections.actionChangeCityFragmentToWeatherFragment(city))
-//    }
-
+    private fun navigateToViewPager(place: Place, addedCity: Boolean? = false) {
+        this@ChangeCityFragment.findNavController()
+            .navigate(
+                ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
+                    addedCity?: false, place.id!!
+                )
+            )
+    }
 
     override fun onItemSelectClick(item: LocationItem) {
     }
