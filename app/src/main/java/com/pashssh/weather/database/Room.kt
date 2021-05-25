@@ -39,6 +39,19 @@ interface WeatherDao {
     @Update
     fun updateListItem(locationItem: LocationItem)
 
+
+    @Transaction
+    fun delete(l: LocationItem, d: DatabaseWeatherData) {
+        deleteCity(d)
+        deleteListItem(l)
+    }
+
+    @Delete
+    fun deleteCity(databaseWeatherData: DatabaseWeatherData)
+
+    @Delete
+    fun deleteListItem(locationItem: LocationItem)
+
 }
 
 @Database(

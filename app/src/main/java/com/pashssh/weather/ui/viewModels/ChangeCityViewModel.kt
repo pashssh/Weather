@@ -42,6 +42,14 @@ class ChangeCityViewModel() : ViewModel() {
         }
     }
 
+    fun deleteCityInDatabase(cityId: String) {
+        coroutineScope.launch {
+            weatherRepository.deleteCity(
+                cityId
+            )
+        }
+    }
+
 
 }
 

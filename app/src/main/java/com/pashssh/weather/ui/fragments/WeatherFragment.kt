@@ -59,18 +59,18 @@ class WeatherFragment() : Fragment() {
 //        viewModel.getWeatherData()
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
-            toolbar.title = it.location ?: ""
+            toolbar.title = it?.location ?: ""
         })
 
-        viewModel.dataWeather.observe(viewLifecycleOwner, Observer {
-            if (it == null) {
-                Log.e("REPO", "данные по запросу не получены")
-            } else {
-                Log.e("REPO", "получены данные по запросу")
-                toolbar.title = it.location
-            }
-
-        })
+//        viewModel.dataWeather.observe(viewLifecycleOwner, Observer {
+//            if (it == null) {
+//                Log.e("REPO", "данные по запросу не получены")
+//            } else {
+//                Log.e("REPO", "получены данные по запросу")
+//                toolbar.title = it.location
+//            }
+//
+//        })
 
 
         return binding.root
@@ -78,21 +78,9 @@ class WeatherFragment() : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.weather_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.changeCity -> this.findNavController()
-                .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
-        }
-        return true
-    }
 
     companion object {
         fun newInstance(locationItem: LocationItem) = WeatherFragment().apply {

@@ -107,6 +107,9 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
     }
 
     override fun onItemDeleteClick(item: LocationItem) {
+        viewModel.deleteCityInDatabase(item.cityID)
+        Log.i("MYTAG", item.cityID)
+
     }
 
 

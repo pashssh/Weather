@@ -16,7 +16,7 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
     fun getWeather(x: String): LiveData<DomainWeatherData> {
         val weatherData = weatherDatabase.weatherDao.getWeatherData(x)
         return Transformations.map(weatherData) {
-            it.asDomainModel()
+            it?.asDomainModel()
         }
     }
 
@@ -80,6 +80,35 @@ class WeatherRepository(private val weatherDatabase: WeatherDatabase) {
                     lat,
                     lon,
                     name,
+                    cityId,
+                    "null",
+                    0,
+                    0.0,
+                    0,
+                    0,
+                    0,
+                    0.0,
+                    0,
+                    "null",
+                    listOf(DatabaseWeatherHourly(0, 0, 0, "04d")),
+                    listOf(DatabaseWeatherDaily(0, 0, 0, 0, "04d"))
+                )
+            )
+        }
+    }
+
+    suspend fun deleteCity(cityId: String) {
+        withContext(Dispatchers.IO) {
+            weatherDatabase.weatherDao.delete(
+                LocationItem("", cityId, 0.0, 0.0),
+                DatabaseWeatherData(
+                    0,
+                    0,
+                    0,
+                    0,
+                    0.0,
+                    0.0,
+                    "",
                     cityId,
                     "null",
                     0,

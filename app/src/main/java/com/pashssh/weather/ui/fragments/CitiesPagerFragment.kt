@@ -45,13 +45,36 @@ class CitiesPagerFragment : Fragment() {
                     }
                 } else {
                     viewPager.adapter = CitiesViewPagerAdapter(items, this)
-                    val list = items.map { it.cityID }
-                    if (list.contains(args.placeId)) {
-                        viewPager.currentItem = items.indexOf(items[list.indexOf(args.placeId)])
-
-                    }
+//                    val list = items.map { it.cityID }
+//                    if (list.contains(args.placeId)) {
+//                        viewPager.currentItem = items.indexOf(items[list.indexOf(args.placeId)])
+//
+//                    }
                 }
             })
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.weather_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.changeCity -> this.findNavController()
+                .navigate(CitiesPagerFragmentDirections.actionCitiesViewPagerToChangeCityFragment())
+        }
+        return true
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewPager.adapter = CitiesViewPagerAdapter(emptyList(), this)
     }
 }
