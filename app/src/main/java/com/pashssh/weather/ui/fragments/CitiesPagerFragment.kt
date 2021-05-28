@@ -75,6 +75,6 @@ class CitiesPagerFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        viewPager.adapter = CitiesViewPagerAdapter(emptyList(), this)
+//        viewPager.adapter = CitiesViewPagerAdapter(emptyList(), this)
     }
 }

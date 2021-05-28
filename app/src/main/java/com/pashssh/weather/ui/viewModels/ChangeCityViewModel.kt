@@ -49,27 +49,4 @@ class ChangeCityViewModel() : ViewModel() {
             )
         }
     }
-
-
 }
-
-
-// Factory ViewModel
-
-// -> Fragment
-//    private val viewModel: ChangeCityViewModel by lazy {
-//        val activity = requireNotNull(this.activity)
-//        ViewModelProvider(this, ChangeCityViewModel.Factory(activity.application)).get(
-//            ChangeCityViewModel::class.java
-//        )
-//    }
-
-// -> ViewModel
-//class Factory(val app: Application) : ViewModelProvider.Factory {
-//    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(ChangeCityViewModel::class.java)) {
-//            return ChangeCityViewModel(app) as T
-//        }
-//        throw IllegalArgumentException("Unable to construct viewmodel")
-//    }
-//}

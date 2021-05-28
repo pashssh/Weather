@@ -12,7 +12,6 @@ import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.ItemChangeCityBinding
 import kotlinx.android.synthetic.main.item_change_city.view.*
 
-//class ChangeCityAdapter(val onClickListener: OnClickListener) :
 class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) :
     ListAdapter<LocationItem, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
 
@@ -32,9 +31,6 @@ class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) 
 
     override fun onBindViewHolder(holder: ChangeCityViewHolder, position: Int) {
         val item = getItem(position)
-//        holder.itemView.setOnClickListener {
-//            onClickListener.clickListener(city)
-//        }
         holder.itemView.setOnClickListener {
             weatherClickListener.onItemSelectClick(item)
         }
@@ -52,12 +48,5 @@ class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) 
         override fun areContentsTheSame(oldItem: LocationItem, newItem: LocationItem): Boolean {
             return oldItem == newItem
         }
-
     }
-
-//    class OnClickListener(val clickListener: (city: String) -> Unit) {
-//        fun onClick(city: String) {
-//            clickListener(city)
-//        }
-//    }
 }

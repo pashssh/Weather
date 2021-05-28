@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.fragment_weather.*
 
 class WeatherFragment() : Fragment() {
 
-
     lateinit var viewModel: WeatherViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,14 +28,12 @@ class WeatherFragment() : Fragment() {
         val viewModelFactory =
             WeatherViewModelFactory(application, arguments?.getSerializable("key") as LocationItem)
         viewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         val binding = FragmentWeatherBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
@@ -51,36 +48,13 @@ class WeatherFragment() : Fragment() {
         }
 
 
-//        val toolbar = binding.toolbarLayout
-//        toolbar.title = " "
-
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-
-//        viewModel.getWeatherData()
 
         viewModel.data.observe(viewLifecycleOwner, Observer {
             toolbar.title = it?.location ?: ""
         })
-
-//        viewModel.dataWeather.observe(viewLifecycleOwner, Observer {
-//            if (it == null) {
-//                Log.e("REPO", "данные по запросу не получены")
-//            } else {
-//                Log.e("REPO", "получены данные по запросу")
-//                toolbar.title = it.location
-//            }
-//
-//        })
-
-
         return binding.root
     }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-
 
     companion object {
         fun newInstance(locationItem: LocationItem) = WeatherFragment().apply {
@@ -89,8 +63,4 @@ class WeatherFragment() : Fragment() {
             )
         }
     }
-
-
-
-
 }
