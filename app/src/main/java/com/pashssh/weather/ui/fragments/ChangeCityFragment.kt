@@ -17,6 +17,8 @@ import com.pashssh.weather.*
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.FragmentChangeCityBinding
 import com.pashssh.weather.ui.adapters.ChangeCityAdapter
+import com.pashssh.weather.ui.adapters.DeleteCityListener
+import com.pashssh.weather.ui.adapters.SelectCityListener
 import com.pashssh.weather.ui.viewModels.ChangeCityViewModel
 
 
@@ -37,7 +39,10 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.changeCityRecyclerView.adapter = ChangeCityAdapter(this)
+        binding.changeCityRecyclerView.adapter = ChangeCityAdapter(
+            SelectCityListener { item -> viewModel.selectCity(item) },
+            DeleteCityListener { cityId -> viewModel.deleteCity(cityId) }
+        )
 
         val autocompleteFragment =
             childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
@@ -98,17 +103,19 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
         this@ChangeCityFragment.findNavController()
             .navigate(
                 ChangeCityFragmentDirections.actionChangeCityFragmentToCitiesViewPager(
-                    addedCity?: false, place.id!!
+                    addedCity ?: false, place.id!!
                 )
             )
     }
 
     override fun onItemSelectClick(item: LocationItem) {
+        Toast.makeText(App().applicationContext(), "select", Toast.LENGTH_SHORT).show()
     }
 
     override fun onItemDeleteClick(item: LocationItem) {
-        viewModel.deleteCityInDatabase(item.cityID)
-        Log.i("MYTAG", item.cityID)
+//        viewModel.deleteCityInDatabase(item.cityID)
+//        Log.i("MYTAG", item.cityID)
+        Toast.makeText(App().applicationContext(), "delete", Toast.LENGTH_SHORT).show()
 
     }
 

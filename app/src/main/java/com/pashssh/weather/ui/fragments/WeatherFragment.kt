@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,9 +17,10 @@ import com.pashssh.weather.ui.adapters.DailyAdapter
 import com.pashssh.weather.ui.adapters.HourlyAdapter
 import com.pashssh.weather.ui.viewModels.WeatherViewModel
 import com.pashssh.weather.ui.viewModels.WeatherViewModelFactory
-import kotlinx.android.synthetic.main.fragment_weather.*
 
 class WeatherFragment() : Fragment() {
+
+    private lateinit var toolbar: Toolbar
 
     lateinit var viewModel: WeatherViewModel
 
@@ -36,6 +38,8 @@ class WeatherFragment() : Fragment() {
     ): View {
         val binding = FragmentWeatherBinding.inflate(inflater)
         binding.lifecycleOwner = this
+
+        toolbar = binding.toolbar
 
         binding.viewModel = viewModel
         binding.hourlyWeatherView.apply {

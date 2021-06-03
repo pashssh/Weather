@@ -1,8 +1,10 @@
 package com.pashssh.weather.ui.viewModels
 
-import androidx.lifecycle.Transformations
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.pashssh.weather.App
+import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.database.getDatabase
 import com.pashssh.weather.repository.WeatherRepository
 import kotlinx.coroutines.CoroutineScope
@@ -43,6 +45,17 @@ class ChangeCityViewModel() : ViewModel() {
     }
 
     fun deleteCityInDatabase(cityId: String) {
+        coroutineScope.launch {
+            weatherRepository.deleteCity(
+                cityId
+            )
+        }
+    }
+
+    fun selectCity(item: LocationItem) {
+    }
+
+    fun deleteCity(cityId: String) {
         coroutineScope.launch {
             weatherRepository.deleteCity(
                 cityId

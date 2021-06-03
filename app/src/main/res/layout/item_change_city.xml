@@ -8,6 +8,14 @@
         <variable
             name="item"
             type="com.pashssh.weather.database.LocationItem" />
+
+        <variable
+            name="selectCityListener"
+            type="com.pashssh.weather.ui.adapters.SelectCityListener" />
+
+        <variable
+            name="deleteCityListener"
+            type="com.pashssh.weather.ui.adapters.DeleteCityListener" />
     </data>
 
     <FrameLayout
@@ -17,6 +25,7 @@
         android:layout_marginBottom="2dp"
         android:background="#B6C8CF"
         android:paddingStart="16dp"
+        android:onClick="@{() -> selectCityListener.onClick(item)}"
         android:paddingEnd="16dp">
 
         <TextView
@@ -33,6 +42,7 @@
             android:id="@+id/change_city_btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> deleteCityListener.onClick(item.cityID)}"
             android:layout_gravity="center|end"
             android:src="@drawable/ic_delete_city" />
 

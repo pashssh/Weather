@@ -2,25 +2,26 @@ package com.pashssh.weather.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pashssh.weather.App
-import com.pashssh.weather.WeatherClickListener
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.ItemChangeCityBinding
-import kotlinx.android.synthetic.main.item_change_city.view.*
 
-class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) :
+class ChangeCityAdapter(private val selectCityListener: SelectCityListener, private val deleteCityListener: DeleteCityListener) :
     ListAdapter<LocationItem, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
 
-    class ChangeCityViewHolder(private val binding: ItemChangeCityBinding) :
+     class ChangeCityViewHolder(
+        private val binding: ItemChangeCityBinding
+    ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LocationItem) {
+        fun bind(item: LocationItem, selectCityListener: SelectCityListener, deleteCityListener: DeleteCityListener) {
             binding.item = item
+            binding.selectCityListener = selectCityListener
+            binding.deleteCityListener = deleteCityListener
             binding.executePendingBindings()
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChangeCityViewHolder {
@@ -31,13 +32,14 @@ class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) 
 
     override fun onBindViewHolder(holder: ChangeCityViewHolder, position: Int) {
         val item = getItem(position)
-        holder.itemView.setOnClickListener {
-            weatherClickListener.onItemSelectClick(item)
-        }
-        holder.itemView.change_city_btn_delete.setOnClickListener {
-            weatherClickListener.onItemDeleteClick(item)
-        }
-        holder.bind(item)
+//        holder.itemView.setOnClickListener {
+//            weatherClickListener.onItemSelectClick(item)
+//        }
+//        holder.itemView.
+////        holder.itemView.change {
+////            weatherClickListener.onItemDeleteClick(item)
+////        }
+        holder.bind(item, selectCityListener, deleteCityListener)
     }
 
     companion object ChangeCityDiffCall : DiffUtil.ItemCallback<LocationItem>() {
@@ -50,3 +52,14 @@ class ChangeCityAdapter(private val weatherClickListener: WeatherClickListener) 
         }
     }
 }
+
+class DeleteCityListener(val deleteListener: (cityId: String) -> Unit) {
+    fun onClick(cityId: String) = deleteListener(cityId)
+}
+
+class SelectCityListener(val selectListener: (item: LocationItem) -> Unit) {
+    fun onClick(item: LocationItem) = selectListener(item)
+}
+
+
+
