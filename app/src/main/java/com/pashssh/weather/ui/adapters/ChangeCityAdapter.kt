@@ -21,7 +21,6 @@ class ChangeCityAdapter(private val selectCityListener: SelectCityListener, priv
             binding.deleteCityListener = deleteCityListener
             binding.executePendingBindings()
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChangeCityViewHolder {
@@ -32,13 +31,6 @@ class ChangeCityAdapter(private val selectCityListener: SelectCityListener, priv
 
     override fun onBindViewHolder(holder: ChangeCityViewHolder, position: Int) {
         val item = getItem(position)
-//        holder.itemView.setOnClickListener {
-//            weatherClickListener.onItemSelectClick(item)
-//        }
-//        holder.itemView.
-////        holder.itemView.change {
-////            weatherClickListener.onItemDeleteClick(item)
-////        }
         holder.bind(item, selectCityListener, deleteCityListener)
     }
 
