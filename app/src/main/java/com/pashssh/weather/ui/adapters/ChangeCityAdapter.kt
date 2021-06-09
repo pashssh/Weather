@@ -8,14 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.ItemChangeCityBinding
 
-class ChangeCityAdapter(private val selectCityListener: SelectCityListener, private val deleteCityListener: DeleteCityListener) :
+class ChangeCityAdapter(
+    private val selectCityListener: SelectCityListener,
+    private val deleteCityListener: DeleteCityListener
+) :
     ListAdapter<LocationItem, ChangeCityAdapter.ChangeCityViewHolder>(ChangeCityDiffCall) {
 
-     class ChangeCityViewHolder(
+    class ChangeCityViewHolder(
         private val binding: ItemChangeCityBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: LocationItem, selectCityListener: SelectCityListener, deleteCityListener: DeleteCityListener) {
+        fun bind(
+            item: LocationItem,
+            selectCityListener: SelectCityListener,
+            deleteCityListener: DeleteCityListener
+        ) {
             binding.item = item
             binding.selectCityListener = selectCityListener
             binding.deleteCityListener = deleteCityListener

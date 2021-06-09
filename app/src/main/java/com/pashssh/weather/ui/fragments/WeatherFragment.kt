@@ -1,8 +1,12 @@
 package com.pashssh.weather.ui.fragments
 
+import android.animation.ValueAnimator
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.os.bundleOf
@@ -57,8 +61,29 @@ class WeatherFragment() : Fragment() {
         viewModel.data.observe(viewLifecycleOwner, Observer {
             toolbar.title = it?.location ?: ""
         })
+
+//        val arc = findViewById<ArcProgress>(R.id.arcView)
+//        arc.setTotalProgress(100)
+//
+//
+//
+//        arc.setOnClickListener {
+//            val animator = ValueAnimator.ofInt(0, 80).apply {
+//                duration = 1500
+//                start()
+//            }
+//            animator.addUpdateListener { anim ->
+//                val currentProgress = anim.animatedValue as Int
+//                arc.setCurrentProgress(currentProgress)
+//
+//            }
+//        }
+
         return binding.root
     }
+
+
+
 
     companion object {
         fun newInstance(locationItem: LocationItem) = WeatherFragment().apply {

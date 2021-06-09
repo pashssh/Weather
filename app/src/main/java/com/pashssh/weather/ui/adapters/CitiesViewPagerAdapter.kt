@@ -1,4 +1,4 @@
-package com.pashssh.weather.ui
+package com.pashssh.weather.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
