@@ -62,27 +62,22 @@ class WeatherFragment() : Fragment() {
             toolbar.title = it?.location ?: ""
         })
 
-//        val arc = findViewById<ArcProgress>(R.id.arcView)
-//        arc.setTotalProgress(100)
-//
-//
-//
-//        arc.setOnClickListener {
-//            val animator = ValueAnimator.ofInt(0, 80).apply {
-//                duration = 1500
-//                start()
-//            }
-//            animator.addUpdateListener { anim ->
-//                val currentProgress = anim.animatedValue as Int
-//                arc.setCurrentProgress(currentProgress)
-//
-//            }
-//        }
+        val arc = binding.windProgress
+        arc.setTotalProgress(100)
+        arc.setOnClickListener {
+            val animator = ValueAnimator.ofInt(0, 80).apply {
+                duration = 1500
+                start()
+            }
+            animator.addUpdateListener { anim ->
+                val currentProgress = anim.animatedValue as Int
+                arc.setCurrentProgress(currentProgress)
+
+            }
+        }
 
         return binding.root
     }
-
-
 
 
     companion object {

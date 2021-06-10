@@ -2,46 +2,66 @@ package com.pashssh.weather.customView
 
 import android.content.Context
 import android.graphics.*
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
+import com.pashssh.weather.R
 
 class ArcProgress(context: Context, attr: AttributeSet) : View(context, attr) {
 
-    private val mCenterTextColor = Color.GRAY
-    private val mCentralTextSize = 100f
+    private val mCenterTextColor = ContextCompat.getColor(context, R.color.colorAppText)
+    private val mCentralTextSize = 65f
 
     private val mBorderWidth = 30f
+    private val mForegroundColor = Color.argb(80,240, 240, 240)
 
-    private val mForegroundColor = Color.BLUE
-    private val mBackgroundColor = Color.GRAY
-
+    private val mBackgroundColor = Color.argb(70, 204, 204, 204)
     private var mTotalPercent = 0f
+
     private var mCurrentPercent = 0f
 
-    val mBackgroundPaint = Paint().apply {
+    private var textDescription = ""
+
+    private val mBackgroundPaint = Paint().apply {
         isAntiAlias = true
-        strokeWidth = 30f
+        strokeWidth = 15f
         color = mBackgroundColor
         style = Paint.Style.STROKE
         isDither = true
         strokeCap = Paint.Cap.ROUND
     }
 
-    val mForegroundPaint = Paint().apply {
+    private val mForegroundPaint = Paint().apply {
         isAntiAlias = true
-        strokeWidth = 30f
+        strokeWidth = 15f
         isDither = true
         color = mForegroundColor
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
     }
 
-    val mTextPaint = Paint().apply {
+    private val mTextPaint = Paint().apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            typeface = resources.getFont(R.font.comfortaa_variable_font)
+        }
         isAntiAlias = true
         isDither = true
         color = mCenterTextColor
         textSize = mCentralTextSize
     }
+
+    private val mTextPaintDes = Paint().apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            typeface = resources.getFont(R.font.comfortaa_variable_font)
+        }
+        textAlign = Paint.Align.CENTER
+        isAntiAlias = true
+        isDither = true
+        color = mCenterTextColor
+        textSize = mCentralTextSize / 3
+    }
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -76,12 +96,17 @@ class ArcProgress(context: Context, attr: AttributeSet) : View(context, attr) {
         val bounds = Rect()
 
         val s = "${mCurrentPercent.toInt()}%"
+
         mTextPaint.getTextBounds(s, 0, s.length, bounds)
         val start = (width / 2 - bounds.width() / 2).toFloat()
         val metrics = mTextPaint.fontMetrics
         val dy = metrics.bottom - metrics.top / 2 - metrics.bottom
-        val baseLine = height / 2 + dy
-        canvas?.drawText(s, start, baseLine, mTextPaint)
+        val baseLine = height / 2 - dy / 2
+        canvas?.drawText(s,start, baseLine,mTextPaint)
+        val sDes = textDescription
+        val startDes = (width / 2).toFloat()
+        val baseLineDes = height / 2 + dy
+        canvas?.drawText("Влажность",startDes,baseLineDes, mTextPaintDes)
     }
 
     fun setTotalProgress(totalProgress: Int) {
