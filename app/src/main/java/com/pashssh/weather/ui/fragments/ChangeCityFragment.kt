@@ -44,6 +44,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
             DeleteCityListener { cityId -> viewModel.deleteCity(cityId) }
         )
 
+
         val autocompleteFragment =
             childFragmentManager.findFragmentById(R.id.autocomplete_fragment)
                     as AutocompleteSupportFragment

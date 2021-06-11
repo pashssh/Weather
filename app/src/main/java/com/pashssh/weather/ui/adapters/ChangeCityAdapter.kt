@@ -3,6 +3,7 @@ package com.pashssh.weather.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.pashssh.weather.database.LocationItem
@@ -50,6 +51,7 @@ class ChangeCityAdapter(
             return oldItem == newItem
         }
     }
+
 }
 
 class DeleteCityListener(val deleteListener: (cityId: String) -> Unit) {

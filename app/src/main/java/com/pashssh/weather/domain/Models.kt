@@ -12,7 +12,7 @@ data class DomainWeatherData(
     val feelsLike: String,
     val description: String,
     val uvi: String,
-    val humidity: String,
+    val humidity: Int,
     val sunrise: String,
     val sunset: String,
     val windSpeed: String,
@@ -41,11 +41,11 @@ fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
 
     return DomainWeatherData(
         temperature = "${this.temperature}\u00B0",
-        dayTemp = "${this.minTemp}\u00B0 / ${this.maxTemp}\u00B0",
+        dayTemp = "${this.maxTemp}\u00B0 / ${this.minTemp}\u00B0",
         location = this.location,
         feelsLike = " ${this.feelsLike}\u00B0",
         uvi = " ${this.uvi}",
-        humidity = " ${this.humidity}%",
+        humidity = this.humidity,
         sunrise = sdfHourly.format(Date(this.sunrise.toLong() * 1000)),
         sunset = sdfHourly.format(Date(this.sunset.toLong() * 1000)),
         windSpeed = "${this.windSpeed}",
@@ -61,7 +61,7 @@ fun DatabaseWeatherData.asDomainModel(): DomainWeatherData {
         listWeatherDaily = this.weatherDailyWeather.map {
             return@map DomainWeatherDaily(
                 time = sdfDaily.format(Date(it.time.toLong() * 1000)),
-                dayTemp = "${it.minTemp}\u00B0 / ${it.maxTemp}\u00B0",
+                dayTemp = "${it.maxTemp}\u00B0 / ${it.minTemp}\u00B0",
                 iconWithUrl = it.iconIdWithUrl
             )
         }

@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.pashssh.weather.R
+import com.pashssh.weather.customView.ArcProgress
 import com.pashssh.weather.database.LocationItem
 import com.pashssh.weather.databinding.FragmentWeatherBinding
 import com.pashssh.weather.ui.adapters.DailyAdapter
@@ -25,6 +26,8 @@ import com.pashssh.weather.ui.viewModels.WeatherViewModelFactory
 class WeatherFragment() : Fragment() {
 
     private lateinit var toolbar: Toolbar
+    private lateinit var arcProgressHumidity: ArcProgress
+
 
     lateinit var viewModel: WeatherViewModel
 
@@ -45,6 +48,10 @@ class WeatherFragment() : Fragment() {
 
         toolbar = binding.toolbar
 
+        arcProgressHumidity = binding.windProgress
+        arcProgressHumidity.setTotalProgress(100)
+
+
         binding.viewModel = viewModel
         binding.hourlyWeatherView.apply {
             adapter = HourlyAdapter()
@@ -55,26 +62,28 @@ class WeatherFragment() : Fragment() {
             itemAnimator = null
         }
 
-
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-
-        viewModel.data.observe(viewLifecycleOwner, Observer {
-            toolbar.title = it?.location ?: ""
-        })
-
-        val arc = binding.windProgress
-        arc.setTotalProgress(100)
-        arc.setOnClickListener {
-            val animator = ValueAnimator.ofInt(0, 80).apply {
+        arcProgressHumidity.setOnClickListener {
+            val animator = ValueAnimator.ofInt(0, viewModel.data.value!!.humidity ?: 0).apply {
                 duration = 1500
                 start()
             }
             animator.addUpdateListener { anim ->
                 val currentProgress = anim.animatedValue as Int
-                arc.setCurrentProgress(currentProgress)
+                arcProgressHumidity.setCurrentProgress(currentProgress)
 
             }
         }
+
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+
+        viewModel.data.observe(viewLifecycleOwner, Observer {
+            toolbar.title = it?.location ?: ""
+            arcProgressHumidity.setCurrentProgress(it.humidity)
+
+        })
+
+
 
         return binding.root
     }
