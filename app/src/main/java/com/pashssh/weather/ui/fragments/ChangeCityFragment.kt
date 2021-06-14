@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
@@ -39,10 +41,40 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        binding.changeCityRecyclerView.adapter = ChangeCityAdapter(
+        val changeCityRecyclerView = binding.changeCityRecyclerView
+        changeCityRecyclerView.adapter = ChangeCityAdapter(
             SelectCityListener { item -> viewModel.selectCity(item) },
             DeleteCityListener { cityId -> viewModel.deleteCity(cityId) }
         )
+
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
+            override fun getMovementFlags(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder
+            ): Int {
+                return makeMovementFlags(0, ItemTouchHelper.END)
+            }
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                Toast.makeText(
+                    this@ChangeCityFragment.context,
+                    "${viewModel.listCities.value?.get(viewHolder.absoluteAdapterPosition)}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.listCities.value?.let {
+                    viewModel.deleteCity(it[viewHolder.absoluteAdapterPosition].cityID)
+                }
+            }
+
+        }).attachToRecyclerView(changeCityRecyclerView)
 
 
         val autocompleteFragment =
@@ -117,6 +149,7 @@ class ChangeCityFragment : Fragment(), WeatherClickListener {
 //        viewModel.deleteCityInDatabase(item.cityID)
 //        Log.i("MYTAG", item.cityID)
         Toast.makeText(App().applicationContext(), "delete", Toast.LENGTH_SHORT).show()
+
 
     }
 
